@@ -1,6 +1,5 @@
 package com.example.spring.Models;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,23 +10,26 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
-public class Stars {
+@NoArgsConstructor
+public class Roles {
 
     @Id
-    @Column(name = "starId")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int starId;
+    int id;
 
-    @Column(name = "type")
-    String type;
+    @Column(name = "numGold")
+    int numGold;
 
-    @Column(name = "weightage")
-    int weightage;
+    @Column(name = "numSilver")
+    int numSilver;
 
-    @Column(name="createDateTime")
+    @Column(name = "numBronze")
+    int numBronze;
+
+    @Column(name = "createDateTime")
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
@@ -35,4 +37,3 @@ public class Stars {
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 }
-

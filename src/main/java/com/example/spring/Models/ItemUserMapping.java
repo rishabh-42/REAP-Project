@@ -1,38 +1,41 @@
 package com.example.spring.Models;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
-public class Stars {
+@NoArgsConstructor
+public class ItemUserMapping {
 
     @Id
-    @Column(name = "starId")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    int starId;
+    @Column(name = "id")
+    int id;
 
-    @Column(name = "type")
-    String type;
+    @Column(name = "itemId")
+    int itemId;
 
-    @Column(name = "weightage")
-    int weightage;
+    @Column(name = "userId")
+    int userId;
 
-    @Column(name="createDateTime")
+    @Column(name = "quantity")
+    int quantity;
+
+    @Column(name = "createDateTime")
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
     @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
-}
 
+}

@@ -6,49 +6,35 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class Items {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "userId")
-    int userId;
+    @Column(name = "id")
+    int id;
 
     @Column(name = "name")
     String name;
 
-    @Column(name = "email")
-    String email;
-
-    @Column(name = "mobile")
-    String mobile;
-
-    @Column(name = "password")
-    String password;
-
     @Column(name = "photo")
     String photo;
 
-    @Column(name = "active")
-    boolean active;
+    @Column(name = "price")
+    int price;
 
-    @Column(name = "currentRoleId")
-    String currentRoleId;
-
-    @Column(name = "registrationCompleted")
-    boolean registrationCompleted;
-
-    @Column
+    @Column(name = "createDateTime")
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
-    @Column
+    @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
