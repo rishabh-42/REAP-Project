@@ -13,30 +13,21 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Roles {
+public class Values {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
-    @Column(name = "numGold")
-    int numGold;
+    @Column(name = "valueName")
+    String valueName;
 
-    @Column(name = "numSilver")
-    int numSilver;
-
-    @Column(name = "numBronze")
-    int numBronze;
-
-    @Column(name = "priority")
-    int priority;
-
-    @Column(name = "createDateTime")
+    @Column
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
-    @Column(name = "updateDateTime")
+    @Column
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 }

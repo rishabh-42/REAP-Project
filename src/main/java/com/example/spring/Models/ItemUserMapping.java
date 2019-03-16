@@ -30,6 +30,7 @@ public class ItemUserMapping {
     @Column(name = "quantity")
     int quantity;
 
+
     @Column(name = "createDateTime")
     @CreationTimestamp
     private LocalDateTime createDateTime;
@@ -37,5 +38,18 @@ public class ItemUserMapping {
     @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
+
+
+    // we can use cart functionality here
+
+    @Column(name = "inCart")
+    boolean inCart;
+
+    @Column(name = "isPlaced")
+    boolean isPlaced;
+
+    @Column(name = "isDelivered")
+    boolean isDelivered;
+
 
 }
