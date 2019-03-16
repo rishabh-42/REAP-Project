@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>REAP Login</title>
+    <link rel="shortcut icon" href="http://learning.tothenew.com/assets/favicon-c06e02ee158e94e25e754cb87a2328fd.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+        #logo-br {
+            margin: 0;
+        }
+
+        .form-check-label {
+            font-size: 15px;
+        }
+
+        form .form-control:focus {
+            border-color: #ced4da;
+            box-shadow: none;
+        }
+
+        nav {
+            background-color: #FFF;
+            padding: 5px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px;
+        }
+    </style>
+    <script>
+
+        $(document).ready(function () {
+            $("#show-password").click(function () {
+                console.log("test");
+
+                if ($("#password").attr("type") == "password") {
+                    $("i").removeClass('fas fa-eye').addClass('far fa-eye');
+                    $("#password").attr("type", "text");
+                } else {
+                    $("#password").attr("type", "password");
+                    $("i").removeClass('far fa-eye').addClass('fas fa-eye');
+                }
+
+            });
+
+        });
+
+    </script>
+
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+        <a class="navbar-brand" href="#">
+
+            <div>
+                <img class="ml-4" src="Reap_Main.png" width="100px">
+
+                <img src="reap.png" width="200px">
+
+            </div>
+
+
+
+        </a>
+        <form>
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <input type="text" class="form-control form-control-sm " id="username" placeholder="Username"
+                        autocomplete="off" autofocus>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group ">
+
+                        <input type="password" class="form-control form-control-sm" id="password" placeholder="Password"
+                            autocomplete="off">
+                        <div id="show-password" class="input-group-append">
+                            <div class="input-group-text"><i class="fas fa-eye"></i></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-auto">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="checkbox" id="autoSizingCheck">
+                        <label class="form-check-label" for="autoSizingCheck">
+                            Remember me
+                        </label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-sm btn-primary ">Login</button>
+                </div>
+            </div>
+        </form>
+    </nav>
+
+    <div class="container-fluid ">
+
+            <div class="row mt-1 p-3">
+                <div class="col-lg-8  bg-light">
+                    <div class=""> 
+                        <div class="row" style="margin-top:120px">
+                            <div class="mx-auto">
+                                <img style="height: 40px;" class="" src="Reap_Main.png">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mx-auto">
+                                <img class="" src="reap.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class=" bg-light">
+                        <form class="p-4">
+                            <h3><strong>Create a new account</strong></h3>
+                            <div class="form-group">
+                                <div class="form-inline">
+                                    <div class="form-group">
+
+                                            <input type="text" placeholder="First Name" class="form-control form-control-sm">
+                                            <input type="text" placeholder="Last Name" class="ml-2 form-control form-control-sm">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Email" class="form-control form-control-sm">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" placeholder="Password" class="form-control form-control-sm">
+                            </div>
+    
+                            <div class="form-group">
+                                <input type="password" placeholder="Confirm Password" class="form-control form-control-sm">
+                            </div>
+    
+                            <div class="form-group">
+                                <input type="button" placeholder="Confirm Password"
+                                    class="form-control form-control-sm btn btn-sm3 bg-primary" value="Signup">
+                            </div>
+    
+    
+                        </form>
+                    </div>
+    
+    
+    
+                </div>
+    
+            </div>
+        </div>
+
+</body>
+
+</html>
