@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -48,20 +47,23 @@ public class BadgeAssignment {
     //Mapping
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "starId")
+    @JoinColumn(name = "starId",insertable = false,updatable= false)
     private Stars stars;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "senderId")
+    @ManyToOne
+    @JoinColumn(name = "senderId" ,insertable = false ,updatable =  false)
     private User sender;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "recieverId")
+    @ManyToOne
+    @JoinColumn(name = "recieverId",insertable = false,updatable = false)
     private User reciever;
 
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "value")
-    private Values values;
+    @JoinColumn(name = "value",insertable = false,updatable = false)
+    private KarmaValues karmaValues;
+
+
 
 }

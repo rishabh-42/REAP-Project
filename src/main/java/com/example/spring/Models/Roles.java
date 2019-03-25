@@ -39,4 +39,6 @@ public class Roles {
     @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
+
+
 }

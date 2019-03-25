@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Values {
+public class KarmaValues {
 
     @Id
     @Column(name = "id")
