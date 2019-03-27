@@ -38,7 +38,7 @@ public class BadgeBalance {
 
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @PrimaryKeyJoinColumn
     User user;
 
 

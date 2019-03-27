@@ -18,6 +18,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -31,6 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean("authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
+            AuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+
+            ((DaoAuthenticationProvider) authenticationProvider).setUserDetailsService(userDetailsService);
+            ((DaoAuthenticationProvider) authenticationProvider).setPasswordEncoder(new BCryptPasswordEncoder());
         return super.authenticationManagerBean();
     }
 
@@ -103,15 +109,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(new PasswordEncoder() {
             @Override
             public String encode(CharSequence rawPassword) {
-                System.out.println("raw " + rawPassword);
+//                System.out.println("raw " + rawPassword);
                 return rawPassword.toString();
             }
 
             @Override
             public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                if(rawPassword.equals(encodedPassword))
-                    return true;
-                else return false;
+
+                System.out.println("i am heree");
+                System.out.println((rawPassword).toString());
+                System.out.println(encodedPassword);
+                return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
             }
         });
     }

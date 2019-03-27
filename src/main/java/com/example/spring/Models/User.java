@@ -64,10 +64,10 @@ public class User {
     int active;
 
     @Column(name = "currentRoleId")
-    String currentRoleId;
+    int currentRoleId;
 
     @Column(name = "registrationCompleted")
-    int registrationCompleted;
+    boolean registrationCompleted;
 
     @Column(name = "enabled")
     private boolean enabled;
@@ -83,6 +83,17 @@ public class User {
     //Mapping -> bi directional
     @OneToOne(mappedBy = "user")
     BadgeBalance badgeBalance;
+
+    @Transient
+    String confirmPass;
+
+    public String getConfirmPass() {
+        return confirmPass;
+    }
+
+    public void setConfirmPass(String confirmPass) {
+        this.confirmPass = confirmPass;
+    }
 
     @OneToOne
     VerificationToken verificationToken;
@@ -185,19 +196,20 @@ public class User {
         this.active = active;
     }
 
-    public String getCurrentRoleId() {
+
+    public int getCurrentRoleId() {
         return currentRoleId;
     }
 
-    public void setCurrentRoleId(String currentRoleId) {
+    public void setCurrentRoleId(int currentRoleId) {
         this.currentRoleId = currentRoleId;
     }
 
-    public int getRegistrationCompleted() {
+    public boolean isRegistrationCompleted() {
         return registrationCompleted;
     }
 
-    public void setRegistrationCompleted(int registrationCompleted) {
+    public void setRegistrationCompleted(boolean registrationCompleted) {
         this.registrationCompleted = registrationCompleted;
     }
 
