@@ -1,6 +1,6 @@
 package com.example.spring.SecurityConfig;
 
-import com.example.spring.Models.User;
+import com.example.spring.Entities.User;
 import com.example.spring.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,17 +21,17 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 //        System.out.println("yaha aya " + username);
 
-        Optional<User> user = userRepository.findByFirstName(username);
+        User user = userRepository.findByFirstName(username);
 
 //        System.out.println("Yaha bhi aya");
 
 
-        if (user.isPresent()) System.out.println("Yes"+user.get().getFirstName());
-        else {
+
+        if(user==null){
 //            System.out.println("nhn mila");
             throw new UsernameNotFoundException("User 404");
         }
-        return new CustomUserDetails(user.get());
+        return new CustomUserDetails(user);
 
 
     }

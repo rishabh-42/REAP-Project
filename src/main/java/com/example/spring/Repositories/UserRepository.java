@@ -1,19 +1,20 @@
 package com.example.spring.Repositories;
 
-import com.example.spring.Models.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import com.example.spring.Entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<User,Integer> {
+public interface  UserRepository extends CrudRepository<User,Integer> {
 
 
-    Optional<User> findByFirstName(String firstName);
+    User findByFirstName(String firstName);
+    User findByEmail(String email);
+    User findByConfirmationToken(String confirmationToken);
+    User findByResetToken(String resetToken);
+
 
     @Override
     <S extends User> S save(S entity);

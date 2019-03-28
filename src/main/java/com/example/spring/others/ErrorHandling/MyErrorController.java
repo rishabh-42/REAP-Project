@@ -1,4 +1,4 @@
-package com.example.spring.ErrorHandling;
+package com.example.spring.others.CustomAnnotations.ErrorHandling;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;

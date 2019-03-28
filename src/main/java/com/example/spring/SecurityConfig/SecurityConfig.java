@@ -29,14 +29,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Bean(name = "BCryptPasswordEncoder")
+    PasswordEncoder getEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     //for redirectiion to different pages
     @Bean("authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
             AuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 
-            ((DaoAuthenticationProvider) authenticationProvider).setUserDetailsService(userDetailsService);
-            ((DaoAuthenticationProvider) authenticationProvider).setPasswordEncoder(new BCryptPasswordEncoder());
+
         return super.authenticationManagerBean();
     }
 
@@ -116,9 +119,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public boolean matches(CharSequence rawPassword, String encodedPassword) {
 
-                System.out.println("i am heree");
-                System.out.println((rawPassword).toString());
-                System.out.println(encodedPassword);
+//                System.out.println("i am heree");
+//                System.out.println((rawPassword).toString());
+//                System.out.println("encoded "+encodedPassword);
+//                rawPassword= BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt());
+//                System.out.println("raw "+rawPassword);
+                System.out.println(BCrypt.checkpw(rawPassword.toString(), encodedPassword));
                 return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
             }
         });

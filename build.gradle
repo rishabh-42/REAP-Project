@@ -22,7 +22,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-mail:2.0.1'
     implementation 'org.springframework.boot:spring-boot-starter-quartz'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -34,11 +34,19 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
+//    compile group: 'org.springframework', name: 'spring-context', version: '4.2.0.RELEASE'
+// https://mvnrepository.com/artifact/com.nulab-inc/zxcvbn
+    compile group: 'com.nulab-inc', name: 'zxcvbn', version: '1.0.0'
+
+
 
 
     // https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2
     compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '1.0.0.RELEASE'
 
+// https://mvnrepository.com/artifact/javax.mail/mail
+    compile group: 'javax.mail', name: 'mail', version: '1.4'
 
 
 

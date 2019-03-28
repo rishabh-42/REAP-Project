@@ -1,11 +1,10 @@
 package com.example.spring.SecurityConfig;
 
-import com.example.spring.Models.User;
+import com.example.spring.Entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 

@@ -1,4 +1,5 @@
-package com.example.spring.Models;
+package com.example.spring.Entities;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,24 +11,28 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-public class KarmaValues {
+public class Stars {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "starId")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    int starId;
 
-    @Column(name = "valueName")
-    String valueName;
+    @Column(name = "type")
+    String type;
 
-    @Column
+    @Column(name = "weightage")
+    int weightage;
+
+    @Column(name="createDateTime")
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
-    @Column
+    @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 }
+

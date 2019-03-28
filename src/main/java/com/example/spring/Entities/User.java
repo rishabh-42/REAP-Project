@@ -1,7 +1,7 @@
-package com.example.spring.Models;
+package com.example.spring.Entities;
 
 
-import com.example.spring.Registration.VerificationToken;
+import com.example.spring.others.CustomAnnotations.PasswordMatches;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,15 +9,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-
+//@PasswordMatches
 public class User {
 
     @Id
@@ -27,11 +26,11 @@ public class User {
     @Column(name = "userId")
     int userId;
 
-//    @NotNull
+    //    @NotNull
 //    @NotEmpty
     @Column(name = "firstName")
     String firstName;
-//
+    //
 //    @NotNull
 //    @NotEmpty
     @Column(name = "lastName")
@@ -43,17 +42,19 @@ public class User {
     @Column(name = "email")
     String email;
 
-//    @NotNull
+    //    @NotNull
 //    @NotEmpty
     @Column(name = "mobile")
     String mobile;
 
-//    @NotNull
+    //    @NotNull
 //    @NotEmpty
+    @Size(min=2,message = "sahi se ddal")
     @Column(name = "password")
     String password;
 
-
+    @Transient
+    String matchingPassword;
 
 
 
@@ -87,6 +88,29 @@ public class User {
     @Transient
     String confirmPass;
 
+    @Column
+    private String resetToken;
+
+    @Column
+
+    private  String confirmationToken;
+
+    public String getConfirmationToken() {
+        return confirmationToken;
+    }
+
+    public void setConfirmationToken(String confirmationToken) {
+        this.confirmationToken = confirmationToken;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
     public String getConfirmPass() {
         return confirmPass;
     }
@@ -95,20 +119,18 @@ public class User {
         this.confirmPass = confirmPass;
     }
 
-    @OneToOne
-    VerificationToken verificationToken;
 
-
-    public User(){
+    public User() {
 
     }
-    public  User (User user){
+
+    public User(User user) {
 
         System.out.println("Constrc called");
-        this.password=user.getPassword();
-        this.firstName=user.getFirstName();
+        this.password = user.getPassword();
+        this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.currentRoleId=user.getCurrentRoleId();
+        this.currentRoleId = user.getCurrentRoleId();
         this.active = 1;
 
 //        System.out.println("id "+ user.getCurrentRoleId());
@@ -147,15 +169,6 @@ public class User {
     }
 
 
-
-    public VerificationToken getVerificationToken() {
-        return verificationToken;
-    }
-
-    public void setVerificationToken(VerificationToken verificationToken) {
-        this.verificationToken = verificationToken;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -191,6 +204,15 @@ public class User {
     public int getActive() {
         return active;
     }
+
+    public String getMatchingPassword() {
+        return matchingPassword;
+    }
+
+    public void setMatchingPassword(String matchingPassword) {
+        this.matchingPassword = matchingPassword;
+    }
+
 
     public void setActive(int active) {
         this.active = active;

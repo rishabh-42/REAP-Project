@@ -1,4 +1,4 @@
-package com.example.spring.Models;
+package com.example.spring.Entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,30 +6,31 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class ItemUserMapping {
+public class Roles {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
-    @Column(name = "itemId")
-    int itemId;
+    @Column(name = "numGold")
+    int numGold;
 
-    @Column(name = "userId")
-    int userId;
+    @Column(name = "numSilver")
+    int numSilver;
 
-    @Column(name = "quantity")
-    int quantity;
+    @Column(name = "numBronze")
+    int numBronze;
 
+    @Column(name = "priority")
+    int priority;
 
     @Column(name = "createDateTime")
     @CreationTimestamp
@@ -38,18 +39,6 @@ public class ItemUserMapping {
     @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
-
-
-    // we can use cart functionality here
-
-    @Column(name = "inCart")
-    boolean inCart;
-
-    @Column(name = "isPlaced")
-    boolean isPlaced;
-
-    @Column(name = "isDelivered")
-    boolean isDelivered;
 
 
 }

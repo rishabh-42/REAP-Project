@@ -14,15 +14,29 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous" />
+
+
+    <!-- Bootstrap Validator plugin -->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <style>
         #logo-br {
             margin: 0;
         }
+
+
 
         .form-check-label {
             font-size: 15px;
@@ -42,20 +56,54 @@
     <script>
 
         $(document).ready(function () {
-            $("#show-password").click(function () {
+            console.log("dsaas");
+
+            $("#i").click(function () {
                 console.log("test");
 
                 if ($("#password").attr("type") == "password") {
-                    $("i").removeClass('fas fa-eye').addClass('far fa-eye');
+                    $("#i-c").removeClass('glyphicon glyphicon-eye-close').addClass('glyphicon glyphicon-eye-open');
                     $("#password").attr("type", "text");
                 } else {
                     $("#password").attr("type", "password");
-                    $("i").removeClass('far fa-eye').addClass('fas fa-eye');
+                    $("#i-c").removeClass('glyphicon glyphicon-eye-open').addClass('glyphicon glyphicon-eye-close');
                 }
 
             });
 
+            $("#send-password").click(function (e) {
+
+                e.preventDefault();
+
+                console.log("button clicked");
+
+
+
+                console.log("gbhj");
+                console.log(email);
+
+                $.ajax({
+
+
+                    url:"/forgot",
+                    method:"post",
+                    data: {"emailReset":"rishabhr264@gmail.com"},
+                    success:function () {
+                        console.log("success");
+
+
+                    }
+
+                });
+
+
+            });
         });
+
+
+
+
+
 
     </script>
 
@@ -63,7 +111,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
 
         <div>
@@ -75,33 +123,36 @@
 
 
     </a>
-    <form th:action="@{/perform_login}" method="post">
+    <form style="margin-left: 355px" th:action="@{/perform_login}" method="post">
         <div class="form-row align-items-center">
             <div class="col-auto">
-                <input type="text" class="form-control form-control-sm " id="username" placeholder="Username"
-                       autocomplete="off" autofocus name="username">
-            </div>
-            <div class="col-auto">
-                <div class="input-group ">
+                <div class="form-group input-group has-feedback">
 
-                    <input type="password" class="form-control form-control-sm" id="password" placeholder="Password"
-                           autocomplete="off" name="password">
-                    <div id="show-password" class="input-group-append">
-                        <div class="input-group-text"><i class="fas fa-eye"></i></div>
-                    </div>
+                    <input type="text"  name="username"
+                           placeholder="Username" class="form-control" required autofocus />
                 </div>
-
             </div>
-            <div class="col-auto">
+            <div class="col-auto" style="margin-top: 2px;">
+                <div class="form-group input-group has-feedback" style="margin-bottom: 0px  ">
+                    <input type="password"  name="password" id="password"
+                           placeholder="Password" class="form-control" required />
+                    <span class="input-group-addon" id="i">
+            <span  id="i-c" class="glyphicon glyphicon-eye-close"></span>
+          </span>
+                </div>
+                <p style="font-size: 0.8em;margin-bottom: 0;margin-top:3px">
+                    <a href="#" data-target="#pwdModal" data-toggle="modal">&nbsp;Forgot Password ?</a></p>
+            </div>
+            <div class="col-auto" style="margin-top: -15px">
                 <div class="form-check ">
                     <input class="form-check-input" type="checkbox" id="autoSizingCheck">
                     <label class="form-check-label" for="autoSizingCheck">
-                        Remember me
+                       &nbsp;&nbsp;&nbsp; Remember me
                     </label>
                 </div>
             </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-sm btn-primary ">Login</button>
+            <div class="col-auto" style="margin-top: -15px">
+                <button type="submit" class="btn  btn-primary ">Login</button>
             </div>
         </div>
     </form>
@@ -126,54 +177,157 @@
         </div>
         <div class="col-lg-4">
             <div class=" bg-light">
-                <form class="p-4" method="POST" enctype="utf8" th:action="@{loginSignup}" th:object="${user}" >
-                    <h3><strong>Create a new account</strong></h3>
-                    <div class="form-group">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <!--<label th:text="#{label.user.firstName}"></label>-->
-                                <input type="text" placeholder="First Name" class="form-control form-control-sm"
-                                       th:field="*{firstName}" required>
-                                <p th:each="error : ${#fields.errors('firstName')}"
-                                   th:text="${error}">Validation error</p>
-                                <!--<label th:text="#{label.user.lastName}"></label>-->
+                <!--<form class="p-4" method="POST" enctype="utf8" th:action="@{/register}" th:object="${user}">-->
+                    <!--<h3><strong>Create a new account</strong></h3>-->
+                    <!--<div class="form-group">-->
+                        <!--<div class="form-inline">-->
+                            <!--<div class="form-group">-->
+                                <!--&lt;!&ndash;<label th:text="#{label.user.firstName}"></label>&ndash;&gt;-->
+                                <!--<input type="text" placeholder="First Name" class="form-control form-control-sm"-->
+                                       <!--th:field="*{firstName}" required>-->
+                                <!--<p th:each="error : ${#fields.errors('firstName')}"-->
+                                   <!--th:text="${error}">Validation error</p>-->
+                                <!--&lt;!&ndash;<label th:text="#{label.user.lastName}"></label>&ndash;&gt;-->
 
-                                <input type="text" placeholder="Last Name" class="ml-2 form-control form-control-sm"
-                                       th:field="*{lastName}">
-                                <p th:each="error : ${#fields.errors('lastName')}"
-                                   th:text="${error}">Validation error</p>
+                                <!--<input type="text" placeholder="Last Name" class="ml-2 form-control form-control-sm"-->
+                                       <!--th:field="*{lastName}">-->
+                                <!--<p th:each="error : ${#fields.errors('lastName')}"-->
+                                   <!--th:text="${error}">Validation error</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<label th:text="#{label.user.email}"></label>&ndash;&gt;-->
+
+                        <!--<input type="email" placeholder="Email" class="form-control form-control-sm"-->
+                               <!--th:field="*{email}" required>-->
+
+                    <!--</div>-->
+
+                    <!--<label for="files">Select file</label>-->
+                    <!--<input type="file" id="files" class="hidden" placeholder="select profile image" value="Choose Profile Image">-->
+                    <!--<br>-->
+                    <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<label th:text="#{user.password}"></label>&ndash;&gt;-->
+
+                        <!--<input type="password" placeholder="Password" id="form-password" class="form-control form-control-sm"-->
+                               <!--th:field="*{password}" required>-->
+                        <!--<p th:each="error : ${#fields.errors('password')}"-->
+                           <!--th:text="${error}">Validation error</p>-->
+
+                    <!--</div>-->
+
+
+                    <!--<div class="form-group">-->
+                        <!--<input type="password" th:field="*{matchingPassword}" id="form-password-confirm" placeholder="Confirm Password"-->
+                               <!--class="form-control form-control-sm" required>-->
+                        <!--&lt;!&ndash;<p th:each="error : ${#fields.errors('')}"&ndash;&gt;-->
+                           <!--&lt;!&ndash;th:text="${error}">Validation error</p>&ndash;&gt;-->
+                    <!--</div>-->
+
+                    <!--<div class="form-group">-->
+                        <!--<input type="submit" id="signup-button"-->
+                               <!--class="form-control form-control-sm btn btn-sm3 bg-primary" value="Signup" >-->
+                    <!--</div>-->
+
+
+                <!--</form>-->
+
+
+
+                <!--//new-->
+                <div class="middle-box text-center loginscreen animated fadeInDown">
+                    <div>
+
+                        <h4>New User Registration</h4>
+
+                        <form autocomplete="off" action="#" th:action="@{/register}"
+                              th:object="${user}" method="post" class="m-t" role="form"
+                              data-toggle="validator">
+
+                            <div th:if="${confirmationMessage}" class="alert alert-success"
+                                 role="alert" th:text=${confirmationMessage}></div>
+
+                            <div th:if="${alreadyRegisteredMessage}" class="alert alert-danger"
+                                 role="alert" th:text=${alreadyRegisteredMessage}></div>
+
+                            <div th:if="${invalidToken}" class="alert alert-success"
+                                 role="alert" th:text=${invalidToken}></div>
+
+                            <div th:if="${confirmationToken}" class="alert alert-success"
+                                 role="alert" th:text=${confirmationToken}></div>
+
+                            <div th:if="${errorMessage}"
+                                 class="alert alert-danger" role="alert"
+                                 th:text="${errorMessage}"></div>
+
+
+                            <div th:if="${#fields.hasErrors('firstName')}"
+                                 th:errors="*{firstName}"
+                                 class="validation-message alert alert-danger" role="alert"></div>
+
+                            <div th:if="${#fields.hasErrors('lastName')}"
+                                 th:errors="*{lastName}"
+                                 class="validation-message alert alert-danger" role="alert"></div>
+                            <div th:if="${errorMessage}" class="alert alert-danger"
+                                 role="alert" th:text=${errorMessage}></div>
+
+                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                 class="validation-message alert alert-danger" role="alert"></div>
+
+                            <div class="form-group input-group has-feedback">
+                                <label th:if="${#fields.hasErrors('firstName')}"
+                                       th:errors="*{firstName}" class="validation-message"></label>
+                                <span class="input-group-addon">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+
+                                <input type="text" th:field="*{firstName}"
+                                       placeholder="First Name" class="form-control" required />
+                                <span class="glyphicon form-control-feedback"
+                                      aria-hidden="true"></span>
                             </div>
-                        </div>
+
+                            <div class="form-group input-group has-feedback">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-user"></span>
+          </span>
+                                <input type="text" th:field="*{lastName}"
+                                       placeholder="Last Name" class="form-control" required />
+                                <span class="glyphicon form-control-feedback"
+                                      aria-hidden="true"></span>
+                            </div>
+
+                            <div class="form-group input-group has-feedback">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-envelope"></span>
+          </span>
+                                <input type="email" th:field="*{email}"
+                                       placeholder="Email Address" class="form-control"
+                                       data-error="This email address is invalid" required />
+                                <span class="glyphicon form-control-feedback"
+                                      aria-hidden="true"></span>
+
+                            </div>
+                            <div class="form-group input-group">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-lock"></span>
+          </span>
+                                <input name="password" type="password" th:field="*{password}"   placeholder="Password" class="form-control" required />
+                                <span class="glyphicon"
+                                      aria-hidden="true"></span>
+                            </div>
+
+
+
+                            <button type="submit"
+                                    class="btn btn-primary block full-width m-b">Register</button>
+
+                        </form>
+
                     </div>
-                    <div class="form-group">
-                        <!--<label th:text="#{label.user.email}"></label>-->
+                </div>
 
-                        <input type="email" placeholder="Email" class="form-control form-control-sm"
-                               th:field="*{email}" required>
-
-                    </div>
-                    <div class="form-group">
-                        <!--<label th:text="#{label.user.password}"></label>-->
-
-                        <input type="password" placeholder="Password" class="form-control form-control-sm"
-                                th:field="*{password}" required>
-                        <p th:each="error : ${#fields.errors('password')}"
-                           th:text="${error}">Validation error</p>
-
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" th:field="*{confirmPass}" placeholder="Confirm Password"
-                               class="form-control form-control-sm" required>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="submit"
-                               class="form-control form-control-sm btn btn-sm3 bg-primary" value="Signup">
-                    </div>
-
-
-                </form>
 
                 <!--<form th:action="@{/user/registration}" th:object="${user}" method="POST" >-->
                 <!--<div>-->
@@ -213,6 +367,48 @@
     </div>
 </div>
 
+
+<!--modal-->
+<div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+                <h1 class="text-center">What's My Password?</h1>
+            </div>
+            <form id="reset-form" >
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+
+                                <p>If you have forgotten your password you can reset it here.</p>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            <input class="form-control input-lg" placeholder="E-mail Address" name="emailReset" id="email-reset" type="email">
+                                        </div>
+                                        <input class="btn btn-lg btn-primary btn-block" id="send-password" value="Send My Password" type="button">
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+
+                    <button class="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
+
 
 </html>

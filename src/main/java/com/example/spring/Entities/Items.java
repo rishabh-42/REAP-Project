@@ -1,4 +1,4 @@
-package com.example.spring.Models;
+package com.example.spring.Entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -6,31 +6,29 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Roles {
+public class Items {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
 
-    @Column(name = "numGold")
-    int numGold;
+    @Column(name = "name")
+    String name;
 
-    @Column(name = "numSilver")
-    int numSilver;
+    @Column(name = "photo")
+    String photo;
 
-    @Column(name = "numBronze")
-    int numBronze;
-
-    @Column(name = "priority")
-    int priority;
+    @Column(name = "price")
+    int price;
 
     @Column(name = "createDateTime")
     @CreationTimestamp
@@ -39,6 +37,7 @@ public class Roles {
     @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
+
 
 
 }
