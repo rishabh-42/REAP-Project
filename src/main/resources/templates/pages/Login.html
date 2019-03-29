@@ -80,17 +80,22 @@
 
 
                 console.log("gbhj");
-                console.log(email);
+                // console.log(email);
 
                 $.ajax({
 
 
                     url:"/forgot",
                     method:"post",
-                    data: {"emailReset":"rishabhr264@gmail.com"},
+                    data: $('form.feedback').serialize(),
                     success:function () {
                         console.log("success");
+                        $("fieldset").append("<h3 style='color:green'>Email sent</h3>");
 
+
+                    },
+                    failure:function () {
+                        $("fieldset").append("<h3 style='color:red;'>Email not sent</h3>");
 
                     }
 
@@ -165,7 +170,7 @@
             <div class="">
                 <div class="row" style="margin-top:120px">
                     <div class="mx-auto">
-                        <img style="height: 40px;" class="" th:src="@{/assets/Reap_Main.png}">
+                        <img style="height: 40px;" class="" th:s    rc="@{/assets/Reap_Main.png}">
                     </div>
                 </div>
                 <div class="row">
@@ -376,7 +381,7 @@
                     <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
                 <h1 class="text-center">What's My Password?</h1>
             </div>
-            <form id="reset-form" >
+            <form class="feedback" id="reset-form" >
             <div class="modal-body">
                 <div class="col-md-12">
                     <div class="panel panel-default">

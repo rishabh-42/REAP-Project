@@ -55,6 +55,7 @@ public class RegisterController {
 
         if (bindingResult.hasErrors()) {
 
+
             bindingResult.getAllErrors().forEach(System.out::println);
             System.out.println("has errors");
             modelAndView.setViewName("pages/Login");
