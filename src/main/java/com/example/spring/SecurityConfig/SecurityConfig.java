@@ -33,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     PasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
     //for redirectiion to different pages
     @Bean("authenticationManager")
     @Override
@@ -100,7 +102,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 logout().
                 logoutUrl("/logout").clearAuthentication(true).
                 logoutSuccessUrl("/loginSignup").
-                permitAll();
+                 permitAll();
+
 //                .loginProcessingUrl("/rishabh")
 //                .defaultSuccessUrl("/dashboard")
 //                .failureUrl("/loginUser")
@@ -135,7 +138,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         System.out.println("inside config web security");
         web.ignoring()
-                .antMatchers(HttpMethod.GET, "/*.png","/assets/**", "/resources/**", "/static/**", "/images/**", "/css/**");
+                .antMatchers(HttpMethod.GET, "/*.png","/images/**","**/profileImages/**","assets/**", "/resources/**", "**/static/**", "/images/**", "/css/**");
 
 
     }

@@ -3,9 +3,12 @@ package com.example.spring.Controller;
 import com.example.spring.Entities.User;
 import com.example.spring.Repositories.UserRepository;
 
+import com.example.spring.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -95,11 +98,20 @@ public class Login{
         return registered;
     }
 
+    @Autowired
+    UserService userService;
+
     @PreAuthorize("hasAnyRole('1')")
     @RequestMapping(value="/dashboard")
     public ModelAndView dashboard() {
 
         ModelAndView modelAndView = new ModelAndView("pages/Dashboard");
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user = userService.findByFirstName(((UserDetails)principal).getUsername());
+        modelAndView.addObject("user",user);
+
+
         return modelAndView;
 
     }
