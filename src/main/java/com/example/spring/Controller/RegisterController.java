@@ -64,7 +64,7 @@ public class RegisterController {
             // new user so we create user and send confirmation e-mail
 
             // Disable user until they click on confirmation link in email
-            user.setEnabled(false);
+            user.setActive(false);
 
             // Generate random 36-character string token for confirmation link
             user.setConfirmationToken(UUID.randomUUID().toString());
@@ -111,7 +111,7 @@ public class RegisterController {
 
             System.out.println(user.getPassword());
             // Set user to enabled
-            user.setEnabled(true);
+            user.setActive(true);
 
             // Save user
             userService.saveUser(user);

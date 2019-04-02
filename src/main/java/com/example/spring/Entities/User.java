@@ -1,127 +1,101 @@
+
 package com.example.spring.Entities;
 
-
-import com.example.spring.others.CustomAnnotations.PasswordMatches;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-//@PasswordMatches
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
+@Table(name = "user")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer userId;
 
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "userId")
-    int userId;
-
-    //    @NotNull
-//    @NotEmpty
-    @Column(name = "firstName")
+    @Column(nullable = false)
+    @Size(min = 4, max = 30, message = "{user.first.name}")
     String firstName;
-    //
-//    @NotNull
-//    @NotEmpty
-    @Column(name = "lastName")
+
+
+    @Size(min = 4, max = 30, message = "{user.last.name}")
     String lastName;
 
-//    @NotNull
-//    @NotEmpty
-
-    @Column(name = "email")
+    @Email(message = "{user.email}")
     String email;
 
-    //    @NotNull
-//    @NotEmpty
-    @Column(name = "mobile")
-    String mobile;
-
-    //    @NotNull
-//    @NotEmpty
-    @Size(min=2,message = "sahi se ddal")
-    @Column(name = "password")
+    @Size(min = 4)
     String password;
 
-    @Transient
-    String matchingPassword;
-
-
-
-    @Column(name = "photo")
     String photo;
 
-    @Column(name = "active")
-    int active;
+    @Transient
+            String matchingPassword;
 
-    @Column(name = "currentRoleId")
-    int currentRoleId;
 
-    @Column(name = "registrationCompleted")
-    boolean registrationCompleted;
 
-    @Column(name = "enabled")
-    private boolean enabled;
+    String confirmationToken;
 
-    @Column
+
+        String currentRoleId;
+
+    Integer points = 0;
+
+    Integer pointSpent = 0;
+
+    String resetToken;
+
+    boolean active;
+
+
+    @Column(name = "createDateTime")
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
-    @Column
+    @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
 
-    //Mapping -> bi directional
-    @OneToOne(mappedBy = "user")
-    BadgeBalance badgeBalance;
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    Set<UserRole> roles = new HashSet<>();
 
-    @Transient
-    String confirmPass;
-
-    @Column
-    private String resetToken;
-
-    @Column
-
-    private  String confirmationToken;
-
-    public String getConfirmationToken() {
-        return confirmationToken;
-    }
-
-    public void setConfirmationToken(String confirmationToken) {
-        this.confirmationToken = confirmationToken;
-    }
-
-    public String getResetToken() {
-        return resetToken;
-    }
-
-    public void setResetToken(String resetToken) {
-        this.resetToken = resetToken;
-    }
-
-    public String getConfirmPass() {
-        return confirmPass;
-    }
-
-    public void setConfirmPass(String confirmPass) {
-        this.confirmPass = confirmPass;
-    }
-
-
-    public User() {
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" +userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", imageUrl='" + photo+ '\'' +
+                ", points=" + points +
+                ", resetToken='" + resetToken + '\'' +
+                ", active=" + active +
+                ", createdAt=" + createDateTime +
+                ", updatedAt=" + updateDateTime +
+                ", roles=" + roles +
+                '}';
     }
 
     public User(User user) {
@@ -131,9 +105,17 @@ public class User {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.currentRoleId = user.getCurrentRoleId();
-        this.active = 1;
+        this.active = true;
 
 //        System.out.println("id "+ user.getCurrentRoleId());
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -152,37 +134,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     public String getPassword() {
@@ -201,38 +158,44 @@ public class User {
         this.photo = photo;
     }
 
-    public int getActive() {
+    public String getConfirmationToken() {
+        return confirmationToken;
+    }
+
+    public void setConfirmationToken(String confirmationToken) {
+        this.confirmationToken = confirmationToken;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public Integer getPointSpent() {
+        return pointSpent;
+    }
+
+    public void setPointSpent(Integer pointSpent) {
+        this.pointSpent = pointSpent;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public boolean isActive() {
         return active;
     }
 
-    public String getMatchingPassword() {
-        return matchingPassword;
-    }
-
-    public void setMatchingPassword(String matchingPassword) {
-        this.matchingPassword = matchingPassword;
-    }
-
-
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         this.active = active;
-    }
-
-
-    public int getCurrentRoleId() {
-        return currentRoleId;
-    }
-
-    public void setCurrentRoleId(int currentRoleId) {
-        this.currentRoleId = currentRoleId;
-    }
-
-    public boolean isRegistrationCompleted() {
-        return registrationCompleted;
-    }
-
-    public void setRegistrationCompleted(boolean registrationCompleted) {
-        this.registrationCompleted = registrationCompleted;
     }
 
     public LocalDateTime getCreateDateTime() {
@@ -251,11 +214,27 @@ public class User {
         this.updateDateTime = updateDateTime;
     }
 
-    public BadgeBalance getBadgeBalance() {
-        return badgeBalance;
+    public Set<UserRole> getRoles() {
+        return roles;
     }
 
-    public void setBadgeBalance(BadgeBalance badgeBalance) {
-        this.badgeBalance = badgeBalance;
+    public void setRoles(Set<UserRole> roles) {
+        this.roles = roles;
+    }
+
+    public String getMatchingPassword() {
+        return matchingPassword;
+    }
+
+    public void setMatchingPassword(String matchingPassword) {
+        this.matchingPassword = matchingPassword;
+    }
+
+    public String getCurrentRoleId() {
+        return currentRoleId;
+    }
+
+    public void setCurrentRoleId(String currentRoleId) {
+        this.currentRoleId = currentRoleId;
     }
 }

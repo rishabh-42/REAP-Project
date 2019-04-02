@@ -1,34 +1,34 @@
 package com.example.spring.Entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-public class Items {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
+@Table(name = "star")
+public class Star {
 
     @Id
-    @Column(name = "id")
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
 
-    @Column(name = "name")
+    @Column(nullable = false)
     String name;
 
-    @Column(name = "photo")
-    String photo;
+    @Column(nullable = false)
+    Integer weight;
 
-    @Column(name = "price")
-    int price;
 
     @Column(name = "createDateTime")
     @CreationTimestamp
@@ -37,7 +37,5 @@ public class Items {
     @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
-
-
 
 }

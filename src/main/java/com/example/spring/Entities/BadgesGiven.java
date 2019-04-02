@@ -1,38 +1,45 @@
 package com.example.spring.Entities;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@NoArgsConstructor
 @Getter
 @Setter
-public class Stars {
+@ToString
+@NoArgsConstructor
+@Entity
+public class BadgesGiven {
 
     @Id
-    @Column(name = "starId")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    int starId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
 
-    @Column(name = "type")
-    String type;
+    @ManyToOne
+    User giver;
 
-    @Column(name = "weightage")
-    int weightage;
+    @ManyToOne
+    User receiver;
 
-    @Column(name="createDateTime")
+    String comment;
+
+    @OneToOne
+    Star star;
+
+    boolean flag;
+
+    @Column(name = "createDateTime")
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
     @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
-}
 
+}
