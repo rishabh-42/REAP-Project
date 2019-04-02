@@ -1,7 +1,9 @@
 package com.example.spring.Controller;
 
 import com.example.spring.Entities.User;
+import com.example.spring.Entities.UserRole;
 import com.example.spring.Service.EmailService;
+import com.example.spring.Service.UserRoleService;
 import com.example.spring.Service.UserService;
 import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.Zxcvbn;
@@ -20,7 +22,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -34,6 +38,9 @@ public class RegisterController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
 
 
@@ -113,7 +120,11 @@ public class RegisterController {
             // Set user to enabled
             user.setActive(true);
 
+            Set<UserRole> roles = new HashSet<>();
+            roles.add(userRoleService.getRole(1));
+            user.setRoles(roles);
             // Save user
+            user.setPhoto(user.getUserId()+".png");
             userService.saveUser(user);
             modelAndView.addObject("confirmationToken", "Hurray !! Signup success , login to proceed.");
         }

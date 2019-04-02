@@ -33,14 +33,14 @@ public class User {
 
 
     @Column(nullable = false)
-    @Size(min = 4, max = 30, message = "{user.first.name}")
+//    @Size(min = 4, max = 30, message = "{user.first.name}")
     String firstName;
 
 
-    @Size(min = 4, max = 30, message = "{user.last.name}")
+//    @Size(min = 4, max = 30, message = "{user.last.name}")
     String lastName;
 
-    @Email(message = "{user.email}")
+
     String email;
 
     @Size(min = 4)
@@ -106,6 +106,8 @@ public class User {
         this.lastName = user.getLastName();
         this.currentRoleId = user.getCurrentRoleId();
         this.active = true;
+        this.roles= user.getRoles();
+        this.email=user.getEmail();
 
 //        System.out.println("id "+ user.getCurrentRoleId());
     }

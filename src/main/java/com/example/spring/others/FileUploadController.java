@@ -45,7 +45,7 @@ public class FileUploadController {
                 byte[] bytes = file.getBytes();
 
                 // Creating the directory to store file
-                String rootPath = "/home/ttn/Reap/src/main/profileImages";
+                String rootPath = "/home/ttn/Reap/src/main/resources/static/assets/profileImages";
                 File dir = new File(rootPath);
                 if (!dir.exists())
                     dir.mkdirs();

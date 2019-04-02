@@ -5,22 +5,34 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomUserDetails extends User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        System.out.println("Hiiii");
-        System.out.println(getCurrentRoleId());
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_"+getCurrentRoleId()));
+        System.out.println("=========");
+        getRoles().stream().forEach(System.out::println);
+
+//        List<SimpleGrantedAuthority> grantedAuthorities;
+
+//        return Arrays.asList(new SimpleGrantedAuthority("ROLE_"+getCurrentRoleId()));
+
+        return getRoles().stream().map(
+                e-> new SimpleGrantedAuthority("ROLE_"+e.getId().toString()))
+                .collect(Collectors.toSet());
+
     }
+
 
     @Override
     public String getUsername() {
         System.out.println("username os padmklflshjdfahjdfghjasdhj " + super.getFirstName());
-        return super.getFirstName();
+        return super.getEmail();
     }
 
     @Override

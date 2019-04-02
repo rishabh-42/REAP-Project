@@ -101,14 +101,16 @@ public class Login{
     @Autowired
     UserService userService;
 
-    @PreAuthorize("hasAnyRole('1')")
+    @PreAuthorize("hasAnyRole('1','2')")
     @RequestMapping(value="/dashboard")
     public ModelAndView dashboard() {
 
         ModelAndView modelAndView = new ModelAndView("pages/Dashboard");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        User user = userService.findByFirstName(((UserDetails)principal).getUsername());
+        System.out.println("=================" +((UserDetails)principal).getUsername());
+
+        User user = userService.findByEmail(((UserDetails)principal).getUsername());
         modelAndView.addObject("user",user);
 
 

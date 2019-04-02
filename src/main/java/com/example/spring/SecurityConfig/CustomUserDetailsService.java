@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         System.out.println("yaha aya " + username);
 
-        User user = userRepository.findByFirstName(username);
+        User user = userRepository.findByEmail(username);
 
         System.out.println("Yaha bhi aya");
 
