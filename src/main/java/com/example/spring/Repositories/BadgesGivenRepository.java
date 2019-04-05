@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface BadgesGivenRepository extends JpaRepository<BadgesGiven,Integer> {
-
+    List<BadgesGiven> findAllByOrderByIdDesc();
     List<BadgesGiven> findByGiver(User user);
 
     List<BadgesGiven> findByReceiver(User user);

@@ -597,9 +597,9 @@
                                         <div class="form-group col-auto">
                                             <select id="badge">
                                                 <option value="" disabled selected>Choose Badge Type</option>
-                                                <option value="Gold">Gold</option>
-                                                <option value="Silver">Silver</option>
-                                                <option value="Bronze">Bronze</option>
+                                                <option th:value="Gold" th:text="${userStarCount.getGoldStarCount()}+' : Gold'">Gold</option>
+                                                <option value="Silver" th:text="${userStarCount.getSilverStarCount()}+' : Silver'">Silver</option>
+                                                <option value="Bronze" th:text="${userStarCount.getBronzeStarCount()}+' : Bronze'">Bronze</option>
 
                                             </select>
                                         </div>
@@ -619,6 +619,81 @@
                             </div>
                         </div>
                     </div>
+                    <!--// admin-->
+                    <div class="card"
+                         th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}">
+                        <div class="card-header">
+                            Employees
+                        </div>
+
+                        <!--Card Body-->
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+
+                                <table id="example" class=" row-border order-column" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Active</th>
+                                        <th>Email</th>
+                                        <th>Available Points</th>
+                                        <th>
+                                            <p>Badges</p>
+                                            <span><img
+                                                    src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png"
+                                                    height="13" width="15"/>
+                        </span>&nbsp;&nbsp;
+                                            <span><img
+                                                    src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png"
+                                                    height="13" width="15"/>
+                        </span>&nbsp;&nbsp;
+                                            <span><img
+                                                    src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png"
+                                                    height="13" width="15"/>
+                        </span>&nbsp;&nbsp;
+                                        </th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="employeestars:${employeereceivedstarslist}">
+                                        <td th:text="${employeestars.getEmployee().getFullName()}"></td>
+                                        <td>
+                                            <select class="form-control">
+                                                <option th:each="role:${employeestars.getEmployee().getRoles()}"
+                                                        th:value="${role.getRole()}"
+                                                        th:text="${role.getRole()}"
+                                                ></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="checkbox"
+                                                   th:checked="${employeestars.getEmployee().getActive()}"
+                                                   th:value="${employeestars.getEmployee().getActive()}">
+                                        </td>
+                                        <td th:text="${employeestars.getEmployee().getEmail()}"></td>
+                                        <td th:text="${employeestars.getTotalPoints()}"></td>
+                                        <td>
+                                            <span th:text="${employeestars.getEmployee().getGold()}"></span>&nbsp;&nbsp;
+                                            <span th:text="${employeestars.getEmployee().getSilver()}"></span>&nbsp;
+                                            <span th:text="${employeestars.getEmployee().getBronze()}"></span>&nbsp;&nbsp;
+
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <!--// admin-->
                     <div style="margin-top:30px">
                         <div class="card-header p-1">
                             <form class="form-inline">
@@ -675,57 +750,39 @@
 
                         <br>
                         <div class="card-body">
-                            <div class="row comment">
-                                <div class="col-1">
+                            <div th:each="post:${post}" class="row comment">
+                                <div  class="col-1">
                                     <img id="avtr"
-                                         src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/e6dc87e1-c47d-4a93-97d0-85de25ab6c89_Surbhi-Garg-Profile-Pitcure.jpeg"
+                                         th:src="@{''+${post.getReceiver().getPhoto()}}"
                                          class="avatar mt-2">
                                 </div>
                                 <div class="col-11">
-                                    <strong>Surbhi Garg</strong> has received <img class=""
-                                                                                   src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                    from<strong> Vagish Dixit .
-                                </strong> for Karma: Pat on the back <br>
-                                    Reason : You deserve a pat on the back for helping me out.
+                                    <strong th:text="${post.getReceiver().getFirstName()}"></strong>
+                                    <strong th:text="${post.getReceiver().getLastName()}"></strong> has received
+                                    <span th:if="${post.getStar().getId()}==1">
+                                        <img th:src="@{/assets/images/gold.png}">
+                                    </span>
+                                    <span th:if="${post.getStar().getId()}==2">
+                                        <img th:src="@{/assets/images/silver.png}">
+                                    </span>
+                                    <span th:if="${post.getStar().getId()}==3">
+                                        <img th:src="@{/assets/images/bronze.png}">
+                                    </span>
+
+                                    from <strong th:text="${post.getGiver().getFirstName()}">
+                                </strong> <br>
+                                    <strong>Reason : </strong><span th:text="${post.getComment()}"></span>
                                     <br>
-                                    <i>16 hours ago</i>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row comment">
-                                <div class="col-1">
-                                    <img id="avtr"
-                                         src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/83a4ca6e-3414-4759-a72c-fd3b913bc348_Rishabh-Rajput-Profile-Pitcure.jpeg"
-                                         class="avatar mt-2">
-                                </div>
-                                <div class="col-11">
-                                    <strong>Rishabh Rajput</strong> has received <img class=""
-                                                                                      src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                    from<strong> Yukti Sharma .
-                                </strong> for Karma: Pat on the back <br>
-                                    Reason : You deserve a pat on the back for feeding me chocolates.
+                                    <i th:text="${post.getElapsedTime()}"></i><span>ago</span>
                                     <br>
-                                    <i>21 hours ago</i>
+                                    <hr>
                                 </div>
+
+
                             </div>
-                            <hr>
-                            <div class="row comment">
-                                <div class="col-1">
-                                    <img id="avtr"
-                                         src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/bd858d0b-4559-4bee-b53a-bef7c740ab2c_Gagan-Kushwaha-Profile-Pitcure.jpeg"
-                                         class="avatar mt-2">
-                                </div>
-                                <div class="col-11">
-                                    <strong>Gagan Kushwah</strong> has received <img class=""
-                                                                                     src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                    from<strong> Arpit Gupta .
-                                </strong> for Karma: Pat on the back <br>
-                                    Reason : You deserve a pat on the back for nothing.
-                                    <br>
-                                    <i>23 hours ago</i>
-                                </div>
-                            </div>
-                            <hr>
+
+
+
 
                         </div>
                     </div>
@@ -805,43 +862,43 @@
                     </div>
                     <div class="card-body main-id-row-week"
                          style="overflow-y:scroll;overflow-x:hidden; height:300px;">
-                        <div class="row">
+                        <div th:each="topUser:${topUsers}" class="row">
                             <div class="col-auto">
                                 <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/83a4ca6e-3414-4759-a72c-fd3b913bc348_Rishabh-Rajput-Profile-Pitcure.jpeg"
+                                     th:src="@{'/'+${topUser.getUser().getPhoto()}}"
                                      class="avatar mt-3">
 
                             </div>
                             <div class="col-auto">
-                                <strong>Rishabh Rajput</strong>
+                                <strong th:text="${topUser.getUser().getFirstName()} + ' ' +${topUser.getUser().getLastName()}">Rishabh Rajput</strong>
                                 <div class="row">
                                     <div class="col-auto">
                                         <div>
                                             <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
+                                                 th:src="@{/assets/images/gold.png}">
                                         </div>
                                         <div>
-                                            <p>&nbsp;1</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;3</p>
+                                            <p th:text="'&nbsp;'+ ${topUser.getGoldStarRecieved()}">&nbsp;1</p>
                                         </div>
 
                                     </div>
                                     <div class="col-auto">
                                         <div>
                                             <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
+                                                 th:src="@{/assets/images/silver.png}">
                                         </div>
                                         <div>
-                                            <p>&nbsp;2</p>
+                                            <p th:text="'&nbsp;'+ ${topUser.getSilverStarRecieved()}">&nbsp;1</p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <div>
+                                            <img class=""
+                                                 th:src="@{/assets/images/bronze.png}">
+                                        </div>
+                                        <div>
+                                            <p th:text="'&nbsp;'+ ${topUser.getBronzeStarRecieved()}">1</p>
                                         </div>
 
                                     </div>
@@ -852,421 +909,7 @@
 
                         </div>
 
-                        <div class="row">
-                            <div class="col-auto">
-                                <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/405403fd-c349-47f8-9083-298e6ea7ec57_2273-Yukti-Sharma-PROFILEPICTURE.jpeg"
-                                     class="avatar mt-3">
 
-                            </div>
-                            <div class="col-auto">
-                                <strong>Yukti Sharma</strong>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;0</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;1</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;1</p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-auto">
-                                <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/b82effe2-dc2f-427e-826e-62be5862d0dd_Arpit-Gupta-Profile-Pitcure.jpeg"
-                                     class="avatar mt-3">
-
-                            </div>
-                            <div class="col-auto">
-                                <strong>Arpit Gupta</strong>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;5</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>13</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;2</p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-auto">
-                                <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/b82effe2-dc2f-427e-826e-62be5862d0dd_Arpit-Gupta-Profile-Pitcure.jpeg"
-                                     class="avatar mt-3">
-
-                            </div>
-                            <div class="col-auto">
-                                <strong>Arpit Gupta</strong>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;5</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>13</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;2</p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-auto">
-                                <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/b82effe2-dc2f-427e-826e-62be5862d0dd_Arpit-Gupta-Profile-Pitcure.jpeg"
-                                     class="avatar mt-3">
-
-                            </div>
-                            <div class="col-auto">
-                                <strong>Arpit Gupta</strong>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;5</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>13</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;2</p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-auto">
-                                <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/b82effe2-dc2f-427e-826e-62be5862d0dd_Arpit-Gupta-Profile-Pitcure.jpeg"
-                                     class="avatar mt-3">
-
-                            </div>
-                            <div class="col-auto">
-                                <strong>Arpit Gupta</strong>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;5</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>13</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;2</p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-auto">
-                                <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/b82effe2-dc2f-427e-826e-62be5862d0dd_Arpit-Gupta-Profile-Pitcure.jpeg"
-                                     class="avatar mt-3">
-
-                            </div>
-                            <div class="col-auto">
-                                <strong>Arpit Gupta</strong>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;5</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>13</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;2</p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-auto">
-                                <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/b82effe2-dc2f-427e-826e-62be5862d0dd_Arpit-Gupta-Profile-Pitcure.jpeg"
-                                     class="avatar mt-3">
-
-                            </div>
-                            <div class="col-auto">
-                                <strong>Arpit Gupta</strong>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;5</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>13</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;2</p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-auto">
-                                <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/b82effe2-dc2f-427e-826e-62be5862d0dd_Arpit-Gupta-Profile-Pitcure.jpeg"
-                                     class="avatar mt-3">
-
-                            </div>
-                            <div class="col-auto">
-                                <strong>Arpit Gupta</strong>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;5</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>13</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;2</p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-auto">
-                                <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/b9b1ae09-00da-4b72-86a6-907f50e064ce_Vagish-Dixit-Profile-Pitcure.jpeg"
-                                     class="avatar mt-3">
-
-                            </div>
-                            <div class="col-auto">
-                                <strong>Vagish Dixit</strong>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;3</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;1</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-auto">
-                                        <div>
-                                            <img class=""
-                                                 src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
-                                        </div>
-                                        <div>
-                                            <p>&nbsp;0</p>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
 
                     </div>
                     <div class="row">

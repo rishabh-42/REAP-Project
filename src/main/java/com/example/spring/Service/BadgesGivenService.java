@@ -20,6 +20,11 @@ public class BadgesGivenService {
 
     }
 
+    public List<BadgesGiven> getAllPosts(){
+
+        return badgesGivenRepository.findAllByOrderByIdDesc();
+    }
+
 
     public List<BadgesGiven> getListOfGiver(User user){
 

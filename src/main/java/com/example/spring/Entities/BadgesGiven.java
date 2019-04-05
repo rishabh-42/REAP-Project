@@ -1,11 +1,15 @@
 package com.example.spring.Entities;
 
+import static com.example.spring.others.DateTimeUtil.*;
+
+import com.example.spring.others.DateTimeUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -41,6 +45,10 @@ public class BadgesGiven {
     @Column(name = "updateDateTime")
     @UpdateTimestamp
     private LocalDateTime updateDateTime;
+
+    @Transient
+    String elapsedTime;
+
 
     public Integer getId() {
         return id;
@@ -99,10 +107,20 @@ public class BadgesGiven {
     }
 
     public LocalDateTime getUpdateDateTime() {
+
         return updateDateTime;
     }
 
     public void setUpdateDateTime(LocalDateTime updateDateTime) {
         this.updateDateTime = updateDateTime;
+    }
+
+    public String getElapsedTime() {
+        setElapsedTime(DateTimeUtil.get(getUpdateDateTime()));
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(String elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 }

@@ -1,10 +1,13 @@
 package com.example.spring.Service;
 
 import com.example.spring.Entities.User;
+import com.example.spring.Entities.UserStarCount;
 import com.example.spring.Entities.UserStarReceived;
 import com.example.spring.Repositories.UserStarRecievedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserStarRecievedService {
@@ -42,5 +45,12 @@ public class UserStarRecievedService {
     public UserStarReceived findByUser(User user)
     {
         return userStarRecievedRepository.findByUser(user);
+    }
+
+
+
+    public List<UserStarReceived> getSomeUser(){
+
+        return userStarRecievedRepository.findFirst6ByOrderByGoldStarRecievedDesc();
     }
 }

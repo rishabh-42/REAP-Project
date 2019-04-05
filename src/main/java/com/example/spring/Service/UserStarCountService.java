@@ -7,6 +7,8 @@ import com.example.spring.Repositories.UserStarCountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserStarCountService {
 
@@ -51,5 +53,6 @@ public class UserStarCountService {
         userStarCountRepository.save(userStarCount);
 
     }
+
 
 }

@@ -1,10 +1,12 @@
 package com.example.spring.Controller;
 
+import com.example.spring.Entities.BadgesGiven;
 import com.example.spring.Entities.User;
 import com.example.spring.Entities.UserStarCount;
 import com.example.spring.Entities.UserStarReceived;
 import com.example.spring.Repositories.UserRepository;
 
+import com.example.spring.Service.BadgesGivenService;
 import com.example.spring.Service.UserService;
 import com.example.spring.Service.UserStarCountService;
 import com.example.spring.Service.UserStarRecievedService;
@@ -21,6 +23,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class Login{
@@ -38,6 +41,9 @@ public class Login{
 
     @Autowired
     UserStarCountService userStarCountService;
+
+    @Autowired
+    BadgesGivenService badgesGivenService;
 
     @RequestMapping(value="/loginSignup", method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView, User user) {
@@ -127,6 +133,12 @@ public class Login{
 
         UserStarReceived userStarReceived = userStarRecievedService.findByUser(user);
         modelAndView.addObject("starRecieved",userStarReceived);
+
+        List<BadgesGiven> post = badgesGivenService.getAllPosts();
+        modelAndView.addObject("post",post);
+
+        List<UserStarReceived> topUsers = userStarRecievedService.getSomeUser();
+        modelAndView.addObject("topUsers",topUsers);
 
 
 
