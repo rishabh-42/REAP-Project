@@ -37,7 +37,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-context
 //    compile group: 'org.springframework', name: 'spring-context', version: '4.2.0.RELEASE'
 // https://mvnrepository.com/artifact/com.nulab-inc/zxcvbn
-    compile group: 'com.nulab-inc', name: 'zxcvbn', version: '1.0.0'
+
 
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")

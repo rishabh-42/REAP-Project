@@ -2,9 +2,9 @@ package com.example.spring.Controller;
 
 import com.example.spring.Entities.User;
 import com.example.spring.Entities.UserRole;
-import com.example.spring.Service.EmailService;
-import com.example.spring.Service.UserRoleService;
-import com.example.spring.Service.UserService;
+import com.example.spring.Entities.UserStarCount;
+import com.example.spring.Entities.UserStarReceived;
+import com.example.spring.Service.*;
 import com.nulabinc.zxcvbn.Strength;
 import com.nulabinc.zxcvbn.Zxcvbn;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +41,12 @@ public class RegisterController {
 
     @Autowired
     private UserRoleService userRoleService;
+
+    @Autowired
+    UserStarCountService userStarCountService;
+
+    @Autowired
+    UserStarRecievedService userStarRecievedService;
 
 
 
@@ -124,8 +130,43 @@ public class RegisterController {
             roles.add(userRoleService.getRole(1));
             user.setRoles(roles);
             // Save user
-            user.setPhoto(user.getUserId()+".png");
-            userService.saveUser(user);
+            user.setPhoto("assets/profileImages/"+user.getUserId()+".png");
+
+
+
+            User newUser = userService.saveUser(user);
+
+
+            //assigning default stars
+
+            UserStarCount userStarCount = new UserStarCount();
+
+
+            userStarCount.setUser(newUser);
+
+            userStarCount.setGoldStarCount(userRoleService.getRole(1).getGoldStar());
+            userStarCount.setSilverStarCount(userRoleService.getRole(1).getSilverStar());
+            userStarCount.setBronzeStarCount(userRoleService.getRole(1).getBronzeStar());
+
+
+            userStarCountService.saveStars(userStarCount);
+
+            // adding in user star recieved table
+            UserStarReceived userStarReceived = new UserStarReceived();
+            userStarReceived.setUser(newUser);
+            userStarReceived.setGoldStarRecieved(new Integer(0));
+            userStarReceived.setBronzeStarRecieved(new Integer(0));
+            userStarReceived.setSilverStarRecieved(new Integer(0));
+
+            userStarRecievedService.save(userStarReceived);
+
+
+
+
+
+
+
+
             modelAndView.addObject("confirmationToken", "Hurray !! Signup success , login to proceed.");
         }
 

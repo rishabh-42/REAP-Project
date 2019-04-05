@@ -33,7 +33,7 @@ public class FileUploadController {
             .getLogger(FileUploadController.class);
 
     /**
-     * Upload single file using Spring Controller
+     * Upload single file using Spring ProfileController
      */
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public @ResponseBody
@@ -45,7 +45,8 @@ public class FileUploadController {
                 byte[] bytes = file.getBytes();
 
                 // Creating the directory to store file
-                String rootPath = "/home/ttn/Reap/src/main/resources/static/assets/profileImages";
+//                String rootPath = "/home/ttn/Reap/src/main/resources/static/assets/profileImages";
+                String rootPath ="/home/ttn/Reap/out/production/resources/static/assets/profileImages";
                 File dir = new File(rootPath);
                 if (!dir.exists())
                     dir.mkdirs();
@@ -69,12 +70,20 @@ public class FileUploadController {
 
                 }
 
-                    User user = userService.findByFirstName(username);
+
+                    User user = userService.findByEmail(username);
+
+
+                System.out.println("====================" + user);
+                System.out.println("========="+ user);
 
 
                 System.out.println(dir.getAbsolutePath() + "  "+ File.separator);
 
                 // Create the file on server
+//                File serverFile = new File(dir.getAbsolutePath()
+//                        + File.separator+user.getUserId()+".png");
+
                 File serverFile = new File(dir.getAbsolutePath()
                         + File.separator+user.getUserId()+".png");
 

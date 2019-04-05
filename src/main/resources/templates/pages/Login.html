@@ -61,11 +61,11 @@
             $("#i").click(function () {
                 console.log("test");
 
-                if ($("#password").attr("type") == "password") {
+                if ($("#password-show").attr("type") == "password") {
                     $("#i-c").removeClass('glyphicon glyphicon-eye-close').addClass('glyphicon glyphicon-eye-open');
-                    $("#password").attr("type", "text");
+                    $("#password-show").attr("type", "text");
                 } else {
-                    $("#password").attr("type", "password");
+                    $("#password-show").attr("type", "password");
                     $("#i-c").removeClass('glyphicon glyphicon-eye-open').addClass('glyphicon glyphicon-eye-close');
                 }
 
@@ -139,7 +139,7 @@
             </div>
             <div class="col-auto" style="margin-top: 2px;">
                 <div class="form-group input-group has-feedback" style="margin-bottom: 0px  ">
-                    <input type="password"  name="password" id="password"
+                    <input type="password"  name="password" id="password-show"
                            placeholder="Password" class="form-control" required />
                     <span class="input-group-addon" id="i">
             <span  id="i-c" class="glyphicon glyphicon-eye-close"></span>

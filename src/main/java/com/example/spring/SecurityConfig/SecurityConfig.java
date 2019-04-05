@@ -93,10 +93,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeRequests()
-                .antMatchers("**/dashboard/**").authenticated()
-                .anyRequest().permitAll().
+                .antMatchers("**/dashboard/**").permitAll()
+                .anyRequest().authenticated().
                 and()
-                .formLogin().loginPage("/loginSignup").loginProcessingUrl("/perform_login").defaultSuccessUrl("/dashboard").failureUrl("/loginUser").
+
+                .formLogin().loginPage("/loginSignup").loginProcessingUrl("/perform_login").defaultSuccessUrl("/dashboard").
                 permitAll().
                 and().
                 logout().
@@ -138,7 +139,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         System.out.println("inside config web security");
         web.ignoring()
-                .antMatchers(HttpMethod.GET, "/*.png","/images/**","**/profileImages/**","assets/**", "/resources/**", "**/static/**", "/images/**", "/css/**");
+                .antMatchers(HttpMethod.GET, "/*.png","/images/**","**/profileImages/**","/assets/**", "/resources/**", "**/static/**", "/images/**", "/css/**");
 
 
     }

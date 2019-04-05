@@ -1,9 +1,13 @@
 package com.example.spring.Controller;
 
 import com.example.spring.Entities.User;
+import com.example.spring.Entities.UserStarCount;
+import com.example.spring.Entities.UserStarReceived;
 import com.example.spring.Repositories.UserRepository;
 
 import com.example.spring.Service.UserService;
+import com.example.spring.Service.UserStarCountService;
+import com.example.spring.Service.UserStarRecievedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +26,8 @@ import javax.validation.Valid;
 public class Login{
 
 
+    @Autowired
+    UserStarRecievedService userStarRecievedService;
 
     @Autowired
     UserRepository userRepository;
@@ -29,6 +35,9 @@ public class Login{
 
     @Autowired
     JavaMailSender mailSender;
+
+    @Autowired
+    UserStarCountService userStarCountService;
 
     @RequestMapping(value="/loginSignup", method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView, User user) {
@@ -101,7 +110,7 @@ public class Login{
     @Autowired
     UserService userService;
 
-    @PreAuthorize("hasAnyRole('1','2')")
+    @PreAuthorize("hasAnyRole('1','2','3','4')")
     @RequestMapping(value="/dashboard")
     public ModelAndView dashboard() {
 
@@ -112,6 +121,14 @@ public class Login{
 
         User user = userService.findByEmail(((UserDetails)principal).getUsername());
         modelAndView.addObject("user",user);
+
+        UserStarCount userStarCount = userStarCountService.findByUser(user);
+        modelAndView.addObject("userStarCount",userStarCount);
+
+        UserStarReceived userStarReceived = userStarRecievedService.findByUser(user);
+        modelAndView.addObject("starRecieved",userStarReceived);
+
+
 
 
         return modelAndView;

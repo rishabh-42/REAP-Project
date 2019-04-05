@@ -21,7 +21,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "user")
@@ -49,7 +49,7 @@ public class User {
     String photo;
 
     @Transient
-            String matchingPassword;
+    String matchingPassword;
 
 
 
@@ -98,6 +98,7 @@ public class User {
                 '}';
     }
 
+
     public User(User user) {
 
         System.out.println("Constrc called");
@@ -110,6 +111,10 @@ public class User {
         this.email=user.getEmail();
 
 //        System.out.println("id "+ user.getCurrentRoleId());
+    }
+
+    public User(){
+
     }
 
     public Integer getUserId() {

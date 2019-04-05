@@ -391,23 +391,46 @@
     </style>
 
     <script>
+        
+        $(document).ready(function() {
+            
+            $("#recognize-button").click(function () {
+               var email=$("#tags").val();
+                var badge=$("#badge").val();
+                var reason=$("#reason").val();
+
+                console.log("button clicked");
+                $.ajax({
+                    url: "/submitComment",
+                    method: "post",
+                    data: {email: email, badge: badge, reason:reason},
+                    success: function () {
+                        
+                    }
+
+
+                });
+            });
+            
+        });
         $(function () {
             console.log("here i am");
-            var availableTags =[];
+            var availableTags = [];
 
             $.ajax({
                 url: "/getAllUsers",
                 method: "get",
-                data:{},
+                data: {},
+
 
                 success: function (data) {
 
-             for(var i=0;i<data.length;i++){
+                    for (var i = 0; i < data.length; i++) {
 
 
-                 availableTags.push(data[i].email);
+                        availableTags.push(data[i].email);
 
-             }
+                    }
 
 
                 }
@@ -550,47 +573,50 @@
 
 
                     <br>
-                    <div class="card-body ">
-                        <div class="input-group">
-                            <form class="from-inline">
-                                <div class="form-row ">
-                                    <div class="form-group-lg col-auto mr-5">
-                                        <div class="input-group ">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text user-icon"><i class="fas fa-user"></i>
+                    <div id="comment-form">
+                        <div class="card-body ">
+                            <div class="input-group">
+                                <form class="from-inline">
+                                    <div class="form-row ">
+                                        <div class="form-group-lg col-auto mr-5">
+                                            <div class="input-group ">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text user-icon"><i class="fas fa-user"></i>
+                                                    </div>
                                                 </div>
+                                                <input type="text"  class="form-control form-control-sm" id="tags"
+                                                       placeholder="Select a newer">
+
                                             </div>
-                                            <input type="text" class="form-control form-control-sm" id="tags"
-                                                   placeholder="Select a newer">
-
                                         </div>
+                                        <div class="form-group col-auto">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </div>
+                                        <div class="form-group col-auto">
+                                            <select id="badge">
+                                                <option value="" disabled selected>Choose Badge Type</option>
+                                                <option value="Gold">Gold</option>
+                                                <option value="Silver">Silver</option>
+                                                <option value="Bronze">Bronze</option>
+
+                                            </select>
+                                        </div>
+
+
                                     </div>
-                                    <div class="form-group col-auto">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="form-group">
+                                        <label for="reason">Reason:</label>
+                                        <textarea  style="height:140px" placeholder="I want to recognize because...."
+                                                  class="form-control" id="reason"></textarea>
                                     </div>
-                                    <div class="form-group col-auto">
-                                        <select>
-                                            <option value="" disabled selected>Choose Badge Type</option>
-                                           <option value="Gold">Gold</option>
-                                           <option value="Silver">Silver</option>
-                                           <option value="Bronze">Bronze</option>
+                                    <input id="recognize-button" type="button"
+                                           class="btn btn-sm btn-primary float-right" value="Recognize">
 
-                                       </select>
-                                    </div>
+                                </form>
 
-
-
-                                </div>
-                                <div class="form-group">
-                                    <label for="reason">Reason:</label>
-                                    <textarea style="height:140px" placeholder="I want to recognize because...."
-                                              class="form-control" id="reason"></textarea>
-                                </div>
-                                <input id="recognize-button" type="button"
-                                       class="btn btn-sm btn-primary float-right" value="Recognize">
-
-                            </form>
-
+                            </div>
                         </div>
                     </div>
                     <div style="margin-top:30px">
@@ -722,7 +748,7 @@
                         <div class="row ">
                             <div class="col-auto">
                                 <img id="avtr"
-                                     src="http://success-factor.s3.amazonaws.com/prod/profilePicFolder/83a4ca6e-3414-4759-a72c-fd3b913bc348_Rishabh-Rajput-Profile-Pitcure.jpeg"
+                                     th:src="@{''+${user.getPhoto()}}"
                                      class="avatar mt-3">
 
                             </div>
@@ -735,7 +761,7 @@
                                                  src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png">
                                         </div>
                                         <div>
-                                            <p>&nbsp;1</p>
+                                            <p th:text="'&nbsp;'+${starRecieved.getGoldStarRecieved()}">&nbsp;1</p>
                                         </div>
 
                                     </div>
@@ -745,7 +771,7 @@
                                                  src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png">
                                         </div>
                                         <div>
-                                            <p>&nbsp;3</p>
+                                            <p th:text="'&nbsp;'+${starRecieved.getSilverStarRecieved()}">&nbsp;3</p>
                                         </div>
 
                                     </div>
@@ -755,7 +781,7 @@
                                                  src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png">
                                         </div>
                                         <div>
-                                            <p>&nbsp;2</p>
+                                            <p th:text="'&nbsp;'+${starRecieved.getBronzeStarRecieved()}">&nbsp;2</p>
                                         </div>
 
                                     </div>

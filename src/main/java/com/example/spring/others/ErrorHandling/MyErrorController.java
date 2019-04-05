@@ -1,4 +1,4 @@
-package com.example.spring.others.CustomAnnotations.ErrorHandling;
+package com.example.spring.others.ErrorHandling;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -26,6 +26,9 @@ public class MyErrorController implements ErrorController {
             }
             else if(statusCode == HttpStatus.FORBIDDEN.value()) {
                 return "error/403";
+            }
+            else if(statusCode==HttpStatus.BAD_REQUEST.value()){
+                return "error/400";
             }
         }
         return "error";
