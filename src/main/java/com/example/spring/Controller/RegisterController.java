@@ -55,6 +55,7 @@ public class RegisterController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request, Errors errors) {
 
+        System.out.println("=======================register called");
         // Lookup user in database by e-mail
         User userExists = userService.findByEmail(user.getEmail());
 

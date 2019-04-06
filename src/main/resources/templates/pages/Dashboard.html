@@ -327,7 +327,7 @@
             box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px;
         }
 
-        .btn:hover {
+        .active ,.btn:hover {
             background-color: palevioletred;
         }
 
@@ -466,17 +466,19 @@
         <div class="m-auto">
 
             <button class="btn btn-sm nav-btn"><i class="far fa-arrow-alt-circle-left"></i>Newers World</button>
-            <button class="btn btn-sm nav-btn"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button>
-
+            <a href="/dashboard">
+            <button class="btn btn-sm nav-btn active"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button></a>
             <button class="btn btn-sm nav-btn"><img
                     src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Badges
             </button>
 
+            <a href="/dashboard/profile/">
             <button class="btn btn-sm nav-btn"><img
                     src="http://reap.tothenew.com/assets/ico-certificate-d6437fe43be76d37d084caa8f0788b9c.png"
                     height="19px" width="18px">
-                &nbsp;Certificate
+                &nbsp;Profile
             </button>
+            </a>
             <button class="btn btn-sm nav-btn"><i class="fas fa-bell"></i></button>
 
 
@@ -810,7 +812,7 @@
 
                             </div>
                             <div class="col-auto">
-                                <strong>Rishabh Rajput</strong>
+                                <strong th:text="${user.getFirstName()}+' '+${user.getLastName()}">Rishabh Rajput</strong>
                                 <div class="row ">
                                     <div class="col-auto">
                                         <div>
