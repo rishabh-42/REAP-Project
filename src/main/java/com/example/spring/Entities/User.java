@@ -58,7 +58,7 @@ public class User {
 
         String currentRoleId;
 
-    Integer points = 0;
+
 
     Integer pointSpent = 0;
 
@@ -66,6 +66,11 @@ public class User {
 
     boolean active;
 
+
+
+    @JsonManagedReference
+    @OneToOne
+    UserStarReceived userStarReceived;
 
     @Column(name = "createDateTime")
     @CreationTimestamp
@@ -89,7 +94,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", imageUrl='" + photo+ '\'' +
-                ", points=" + points +
+
                 ", resetToken='" + resetToken + '\'' +
                 ", active=" + active +
                 ", createdAt=" + createDateTime +
@@ -98,6 +103,13 @@ public class User {
                 '}';
     }
 
+    public UserStarReceived getUserStarReceived() {
+        return userStarReceived;
+    }
+
+    public void setUserStarReceived(UserStarReceived userStarReceived) {
+        this.userStarReceived = userStarReceived;
+    }
 
     public User(User user) {
 
@@ -173,13 +185,7 @@ public class User {
         this.confirmationToken = confirmationToken;
     }
 
-    public Integer getPoints() {
-        return points;
-    }
 
-    public void setPoints(Integer points) {
-        this.points = points;
-    }
 
     public Integer getPointSpent() {
         return pointSpent;

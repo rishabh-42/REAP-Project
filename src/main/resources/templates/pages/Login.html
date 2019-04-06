@@ -32,6 +32,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <style>
+        .loader,.loader-register {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 60px;
+            height: 60px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+
+            margin: 0 auto;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         #logo-br {
             margin: 0;
         }
@@ -81,15 +103,15 @@
 
                 console.log("gbhj");
                 // console.log(email);
-
+                $(".loader-forgot").css("display","block");
                 $.ajax({
-
 
                     url:"/forgot",
                     method:"post",
                     data: $('form.feedback').serialize(),
                     success:function () {
                         console.log("success");
+                        $(".loader-forgot").css("display","none");
                         $("fieldset").append("<h3 style='color:green'>Email sent</h3>");
 
 
@@ -245,7 +267,7 @@
                     <div>
 
                         <h4>New User Registration</h4>
-
+                        <!--<div class="loader-register"></div>-->
                         <form autocomplete="off" action="#" th:action="@{/register}"
                               th:object="${user}" method="post" class="m-t" role="form"
                               data-toggle="validator">
@@ -325,7 +347,7 @@
 
 
 
-                            <button type="submit"
+                            <button type="submit" id="submit-button"
                                     class="btn btn-primary block full-width m-b">Register</button>
 
                         </form>
@@ -400,6 +422,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="loader loader-forgot" style="display: none;"></div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -412,12 +435,7 @@
         </div>
     </div>
 </div>
-<form method="post" action="/uploadFile" enctype="multipart/form-data">
 
-    <input type="file" name="file">
-    <input type="submit">
-
-</form>
 </body>
 
 

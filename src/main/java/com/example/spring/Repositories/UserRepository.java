@@ -19,4 +19,6 @@ public interface  UserRepository extends CrudRepository<User,Integer> {
     List<User> findAll();
     @Override
     <S extends User> S save(S entity);
+
+
 }

@@ -158,8 +158,12 @@ public class RegisterController {
             userStarReceived.setGoldStarRecieved(new Integer(0));
             userStarReceived.setBronzeStarRecieved(new Integer(0));
             userStarReceived.setSilverStarRecieved(new Integer(0));
+            userStarReceived.setPoints(new Integer(0));
 
             userStarRecievedService.save(userStarReceived);
+
+            newUser.setUserStarReceived(userStarReceived);
+            userService.update(user);
 
 
 
@@ -175,16 +179,7 @@ public class RegisterController {
         return modelAndView;
     }
 
-    // Process confirmation link
-    @RequestMapping(value="/confirm", method = RequestMethod.POST)
-    public ModelAndView processConfirmationForm(ModelAndView modelAndView, BindingResult bindingResult, @RequestParam Map requestParams, RedirectAttributes redir) {
-
-        modelAndView.setViewName("confirm");
 
 
-
-        modelAndView.addObject("successMessage", "Your password has been set!");
-        return modelAndView;
-    }
 
 }

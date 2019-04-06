@@ -1,5 +1,6 @@
 package com.example.spring.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class UserStarReceived {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
+    @JsonBackReference
     @OneToOne(fetch = FetchType.EAGER)
     User user;
 
@@ -27,6 +29,17 @@ public class UserStarReceived {
 
     Integer bronzeStarRecieved;
 
+    Integer points = 0;
+
+    public Integer getPoints() {
+
+        this.points= getBronzeStarRecieved()*10 +getGoldStarRecieved()*30 + getSilverStarRecieved()*20;
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
 
     public Integer getId() {
         return id;

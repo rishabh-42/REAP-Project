@@ -411,8 +411,32 @@
 
                 });
             });
+
+            $("#revoke").click(function () {
+
+
+                var email=$("#tags").val();
+                var badge=$("#badge").val();
+                var reason=$("#reason").val();
+
+                console.log("button clicked");
+                $.ajax({
+                    url: "/submitComment",
+                    method: "post",
+                    data: {email: email, badge: badge, reason:reason},
+                    success: function () {
+
+                    }
+
+
+                });
+            });
             
         });
+
+
+
+
         $(function () {
             console.log("here i am");
             var availableTags = [];
@@ -500,7 +524,7 @@
 
                         <div class="profileModalContent">
 
-                            <h4>Your Name</h4>
+                            <h4>Your Profile</h4>
 
                             <div class="row" style="margin-top: 10px">
 
@@ -508,7 +532,15 @@
                                 <div class="col-md-4">
                                     <img th:src="@{''+${user.getPhoto()}}"
                                          width="80px" height="80px">
+                                    <form method="post" action="/uploadFile" enctype="multipart/form-data">
+
+                                        <input type="file" name="file">
+                                        <input type="submit">
+
+                                    </form>
                                 </div>
+
+
 
                                 <!--Profile Info-->
                                 <div class="col-md-8">
@@ -522,6 +554,13 @@
                                             <p th:text="${user.getFirstName()+ '  ' + user.getLastName()}">user </p>
                                             <p th:text="${user.getEmail()}">UserMail@mail.com</p>
 
+
+                                        </div>
+                                        <div class="row  profileModalFontNormal">
+                                            <span>Badge Balance : </span> &nbsp;&nbsp;
+                                            <img th:src="@{/assets/images/gold.png}">&nbsp;:&nbsp; <span th:text="${userStarCount.getGoldStarCount()}"></span>&nbsp;&nbsp;
+                                            <img th:src="@{/assets/images/silver.png}"> : <span th:text="${userStarCount.getSilverStarCount()}"></span>&nbsp;&nbsp;
+                                            <img th:src="@{/assets/images/bronze.png}"> : <span th:text="${userStarCount.getBronzeStarCount()}"></span>
 
                                         </div>
                                     </div>
@@ -622,10 +661,10 @@
                         </div>
                     </div>
                     <!--// admin-->
-                    <div class="card"
+                    <div class="card mt-4"
                          th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}">
                         <div class="card-header">
-                            Employees
+                            All Users
                         </div>
 
                         <!--Card Body-->
@@ -660,27 +699,28 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="employeestars:${employeereceivedstarslist}">
-                                        <td th:text="${employeestars.getEmployee().getFullName()}"></td>
+                                    <tr th:each="User:${allUsers}">
+                                        <td th:text="${User.getFirstName()} +' '+${User.getLastName()}"></td>
                                         <td>
                                             <select class="form-control">
-                                                <option th:each="role:${employeestars.getEmployee().getRoles()}"
-                                                        th:value="${role.getRole()}"
-                                                        th:text="${role.getRole()}"
+                                                <option th:each="role:${User.getRoles()}"
+                                                        th:value="${role.getName()}"
+                                                        th:text="${role.getName()}"
                                                 ></option>
                                             </select>
                                         </td>
                                         <td>
+                                            &nbsp;&nbsp;
                                             <input type="checkbox"
-                                                   th:checked="${employeestars.getEmployee().getActive()}"
-                                                   th:value="${employeestars.getEmployee().getActive()}">
+                                                   th:checked="${User.isActive()}"
+                                                   th:value="${User.isActive()}">
                                         </td>
-                                        <td th:text="${employeestars.getEmployee().getEmail()}"></td>
-                                        <td th:text="${employeestars.getTotalPoints()}"></td>
+                                        <td th:text="${User.getEmail()}"></td>
+                                        <td th:text="${User.getUserStarReceived().getPoints()}"></td>
                                         <td>
-                                            <span th:text="${employeestars.getEmployee().getGold()}"></span>&nbsp;&nbsp;
-                                            <span th:text="${employeestars.getEmployee().getSilver()}"></span>&nbsp;
-                                            <span th:text="${employeestars.getEmployee().getBronze()}"></span>&nbsp;&nbsp;
+                                            <span th:text="${User.getUserStarReceived().getGoldStarRecieved()}"></span>&nbsp;&nbsp;
+                                            <span th:text="${User.getUserStarReceived().getSilverStarRecieved()}"></span>&nbsp;
+                                            <span th:text="${User.getUserStarReceived().getBronzeStarRecieved()}"></span>&nbsp;&nbsp;
 
                                         </td>
                                     </tr>
@@ -771,11 +811,19 @@
                                         <img th:src="@{/assets/images/bronze.png}">
                                     </span>
 
-                                    from <strong th:text="${post.getGiver().getFirstName()}">
+                                    from <strong th:text="${post.getGiver().getFirstName()} + ' '+ ${post.getGiver().getLastName()}">
                                 </strong> <br>
                                     <strong>Reason : </strong><span th:text="${post.getComment()}"></span>
                                     <br>
                                     <i th:text="${post.getElapsedTime()}"></i><span>ago</span>
+
+                                    <span th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}" >
+                                        <button style="margin-left: 280px;"  class="btn btn-danger" data-toggle="modal" data-target="#recognize-revoke">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                        <input type="text" style="display: none" class="del-row-id" th:value="${post.getId()}">
+                                            </button>
+                                    </span>
+
                                     <br>
                                     <hr>
                                 </div>
@@ -934,12 +982,56 @@
     </div>
 </div>
 
-<form method="post" action="/uploadFile" enctype="multipart/form-data">
+<div id="recognize-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-    <input type="file" name="file">
-    <input type="submit">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p id="recognize-info"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
 
-</form>
+    </div>
+</div>
+
+<div id="recognize-revoke" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Revoke Recognition</h4>
+            </div>
+            <div class="modal-body">
+                <input type="radio" name="gender" value="male"> Selected Incorect Name<br>
+                <input type="radio" name="gender" value="female"> Selected Incorect Badge<br>
+                <input type="radio" name="gender" value="other"> Selected Incorect Badge<br>
+                <input type="radio" name="gender" value="other"> Inappropriate Language Used<br>
+                <input type="text"  placeholder="Other Reason/Comments(Optional)"></input>
+
+                <br>
+                <br>
+                <input style="margin: 0 auto" id="revoke" type="button" value="Revoke Recognition">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
 </body>
 
 </html>

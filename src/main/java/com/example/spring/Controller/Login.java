@@ -120,6 +120,7 @@ public class Login{
     @RequestMapping(value="/dashboard")
     public ModelAndView dashboard() {
 
+
         ModelAndView modelAndView = new ModelAndView("pages/Dashboard");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -139,6 +140,12 @@ public class Login{
 
         List<UserStarReceived> topUsers = userStarRecievedService.getSomeUser();
         modelAndView.addObject("topUsers",topUsers);
+
+        List<User> allUsers = userService.findAllUsers();
+        modelAndView.addObject("allUsers",allUsers);
+
+
+
 
 
 
