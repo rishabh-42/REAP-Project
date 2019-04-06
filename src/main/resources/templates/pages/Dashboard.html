@@ -31,6 +31,32 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
+        .loader,.loader-register {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 60px;
+            height: 60px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+
+            margin: 0 auto;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #logo-br {
+            margin: 0;
+        }
+
         .nav-menu {
             line-height: 48px;
             float: left;
@@ -420,8 +446,42 @@
                 $("#hidden-id-del").val(id);
 
             } );
-            
+            $("#revoke-post").click(function (){
+                console.log("revoke clicked");
+                var radioValue = $("input[name='reason']:checked").val();
+
+                var delId = $("#hidden-id-del").val();
+
+                var additionalComment = $("#additional-comment").val();
+
+                console.log(radioValue + delId);
+
+                if(radioValue!=undefined || additionalComment!="") {
+                    $(".loader-forgot").css("display","block");
+                    $.ajax({
+                        url: "/revoke",
+                        method: "post",
+                        data: {id: delId, reson: radioValue, additionalComment: additionalComment},
+                        success: function () {
+                            console.log("post revoked !!");
+                            $(".loader-forgot").css("display","none");
+                            alert("post revoked");
+                            location.reload(this);
+
+                        }
+
+
+                    });
+                }
+                else{
+                    alert("select a reason first or add comment");
+                }
+
+            });
         });
+
+
+
 
 
 
@@ -962,7 +1022,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 float-right">
-                            <a href="#" class="float-right mr-3"><strong>View All</strong></a>
+                            <!--<a href="#" class="float-right mr-3"><strong>View All</strong></a>-->
 
                         </div>
 
@@ -1011,15 +1071,17 @@
             </div>
             <div class="modal-body">
                 <input name="del-post-id" id="hidden-id-del" style="display:none">
-                <input type="radio" name="reason" value="male"> Selected Incorect Name<br>
-                <input type="radio" name="reason" value="female"> Selected Incorect Badge<br>
-                <input type="radio" name="reason" value="other"> Selected Incorect Badge<br>
-                <input type="radio" name="reason" value="other"> Inappropriate Language Used<br>
-                <input type="text"  placeholder="Other Reason/Comments(Optional)">
+                <input type="radio" name="reason" value="Selected Incorect Name"> Selected Incorect Name<br>
+                <input type="radio" name="reason" value="Incorect Badge"> Selected Incorect Badge<br>
+                <input type="radio" name="reason" value="Selected Incorect Karma"> Selected Incorect Karma<br>
+                <input type="radio" name="reason" value="Inappropriate Language Used"> Inappropriate Language Used<br>
+                <input type="text"  id="additional-comment" placeholder="Other Reason/Comments(Optional)">
 
                 <br>
                 <br>
-                <input style="margin: 0 auto" id="revoke" type="button" value="Revoke Recognition">
+                <input style="margin: 0 auto" id="revoke-post" type="button" value="Revoke Recognition">
+
+                <div class="loader loader-forgot" style="display: none;"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
