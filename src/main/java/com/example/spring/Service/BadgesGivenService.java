@@ -22,17 +22,17 @@ public class BadgesGivenService {
 
     public List<BadgesGiven> getAllPosts(){
 
-        return badgesGivenRepository.findAllByOrderByIdDesc();
+        return badgesGivenRepository.findByActiveOrderByIdDesc(true);
     }
 
 
     public List<BadgesGiven> getListOfGiver(User user){
 
-        return badgesGivenRepository.findByGiver(user);
+        return badgesGivenRepository.findByGiverAndActive(user,true);
     }
 
    public List<BadgesGiven> getListOfReciever(User user){
 
-        return badgesGivenRepository.findByReceiver(user);
+        return badgesGivenRepository.findByReceiverAndActive(user,true);
     }
 }

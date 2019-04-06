@@ -412,25 +412,14 @@
                 });
             });
 
-            $("#revoke").click(function () {
+            $(".all-posts").on('click','.selected-row',function (e) {
+                console.log("button clicked.......")
+                var id = $(this).find(".del-row-id").val();
+                console.log(id+ " ssssssssssss");
 
+                $("#hidden-id-del").val(id);
 
-                var email=$("#tags").val();
-                var badge=$("#badge").val();
-                var reason=$("#reason").val();
-
-                console.log("button clicked");
-                $.ajax({
-                    url: "/submitComment",
-                    method: "post",
-                    data: {email: email, badge: badge, reason:reason},
-                    success: function () {
-
-                    }
-
-
-                });
-            });
+            } );
             
         });
 
@@ -806,7 +795,7 @@
                                          th:src="@{''+${post1.getReceiver().getPhoto()}}"
                                          class="avatar mt-2">
                                 </div>
-                                <div class="col-11">
+                                <div class="col-11 all-posts">
                                     <strong th:text="${post1.getReceiver().getFirstName()}"></strong>
                                     <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
                                     <span th:if="${post1.getStar().getId()}==1">
@@ -825,10 +814,11 @@
                                     <br>
                                     <i th:text="${post1.getElapsedTime()}"></i><span>ago</span>
 
-                                    <span th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}" >
-                                        <button style="margin-left: 280px;"  class="btn btn-danger" data-toggle="modal" data-target="#recognize-revoke">
+                                    <span  th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}" >
+
+                                        <button style="float: right"  class="btn btn-danger selected-row"  data-toggle="modal" data-target="#recognize-revoke">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
-                                        <input type="text" style="display: none" class="del-row-id" th:value="${post.getId()}">
+                                        <input type="text" style="display: none" class="del-row-id" th:value="${post1.getId()}">
                                             </button>
                                     </span>
 
@@ -1020,11 +1010,12 @@
                 <h4 class="modal-title">Revoke Recognition</h4>
             </div>
             <div class="modal-body">
-                <input type="radio" name="gender" value="male"> Selected Incorect Name<br>
-                <input type="radio" name="gender" value="female"> Selected Incorect Badge<br>
-                <input type="radio" name="gender" value="other"> Selected Incorect Badge<br>
-                <input type="radio" name="gender" value="other"> Inappropriate Language Used<br>
-                <input type="text"  placeholder="Other Reason/Comments(Optional)"></input>
+                <input name="del-post-id" id="hidden-id-del" style="display:none">
+                <input type="radio" name="reason" value="male"> Selected Incorect Name<br>
+                <input type="radio" name="reason" value="female"> Selected Incorect Badge<br>
+                <input type="radio" name="reason" value="other"> Selected Incorect Badge<br>
+                <input type="radio" name="reason" value="other"> Inappropriate Language Used<br>
+                <input type="text"  placeholder="Other Reason/Comments(Optional)">
 
                 <br>
                 <br>

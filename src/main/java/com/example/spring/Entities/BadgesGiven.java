@@ -49,6 +49,8 @@ public class BadgesGiven {
     @Transient
     String elapsedTime;
 
+    boolean active;
+
 
     public Integer getId() {
         return id;

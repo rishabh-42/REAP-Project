@@ -9,10 +9,10 @@ import java.util.List;
 
 @Repository
 public interface BadgesGivenRepository extends JpaRepository<BadgesGiven,Integer> {
-    List<BadgesGiven> findAllByOrderByIdDesc();
-    List<BadgesGiven> findByGiver(User user);
+    List<BadgesGiven> findByActiveOrderByIdDesc(boolean active);
+    List<BadgesGiven> findByGiverAndActive(User user,boolean active);
 
-    List<BadgesGiven> findByReceiver(User user);
+    List<BadgesGiven> findByReceiverAndActive(User user,boolean active);
     @Override
     <S extends BadgesGiven> S save(S entity);
 }
