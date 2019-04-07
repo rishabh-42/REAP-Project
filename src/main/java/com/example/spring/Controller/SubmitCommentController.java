@@ -61,6 +61,7 @@ public class SubmitCommentController {
         badgesGiven.setComment(fields.get("reason"));
         badgesGiven.setStar(starRepository.findByName(fields.get("badge")));
         badgesGiven.setFlag(true);
+        badgesGiven.setActive(true);
 
         badgesGivenService.save(badgesGiven);
 

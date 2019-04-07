@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BadgesGivenRepository extends JpaRepository<BadgesGiven,Integer> {
@@ -15,4 +16,6 @@ public interface BadgesGivenRepository extends JpaRepository<BadgesGiven,Integer
     List<BadgesGiven> findByReceiverAndActive(User user,boolean active);
     @Override
     <S extends BadgesGiven> S save(S entity);
+
+    Optional<BadgesGiven> findById(Integer i);
 }

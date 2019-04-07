@@ -461,7 +461,7 @@
                     $.ajax({
                         url: "/revoke",
                         method: "post",
-                        data: {id: delId, reson: radioValue, additionalComment: additionalComment},
+                        data: {id: delId, reason: radioValue, additionalComment: additionalComment},
                         success: function () {
                             console.log("post revoked !!");
                             $(".loader-forgot").css("display","none");

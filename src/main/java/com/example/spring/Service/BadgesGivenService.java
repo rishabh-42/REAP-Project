@@ -34,5 +34,12 @@ public class BadgesGivenService {
    public List<BadgesGiven> getListOfReciever(User user){
 
         return badgesGivenRepository.findByReceiverAndActive(user,true);
+
+    }
+
+
+    public BadgesGiven findById(int id){
+
+        return badgesGivenRepository.findById(id).get();
     }
 }

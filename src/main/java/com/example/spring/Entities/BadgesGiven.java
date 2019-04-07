@@ -117,6 +117,10 @@ public class BadgesGiven {
         this.updateDateTime = updateDateTime;
     }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public String getElapsedTime() {
         setElapsedTime(DateTimeUtil.get(getUpdateDateTime()));
         return elapsedTime;
