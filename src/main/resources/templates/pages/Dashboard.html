@@ -30,6 +30,9 @@
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" crossorigin="anonymous">
     <style>
         .loader,.loader-register {
             border: 16px solid #f3f3f3;
@@ -419,6 +422,15 @@
     <script>
         
         $(document).ready(function() {
+
+            $("#mySearch").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#all-post #first-name").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $('#data-table').DataTable();
             var email;
             var badge;
             var reason;
@@ -426,10 +438,12 @@
                 email=$("#tags").val();
                  badge=$("#badge").val();
                 reason=$("#reason").val();
+                console.log("badge" + badge);
 
-                if(email=="" || badge=="" || reason==""){
-                    $('#recognize-modal').modal('toggle');
+                if(email=="" || badge==null || reason==""){
+
                     alert("Please Fill all the details correctly !!")
+
                 }
 
                 else {
@@ -440,6 +454,8 @@
                     $("#recognize-info-sender").text($("#logged-in-user").text());
 
                 }
+                console.log("hiding modal");
+                $("#recognize-modal .close-now").click();
                 // console.log("button clicked");
                 // $.ajax({
                 //     url: "/submitComment",
@@ -769,7 +785,7 @@
 
                             <div class="table-responsive">
 
-                                <table id="example" class=" row-border order-column" style="width:100%">
+                                <table id="data-table" class=" row-border order-column" style="width:100%;text-align: center">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
@@ -846,7 +862,7 @@
                                                     class="fas fa-search"></i>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm btn-xs"
+                                        <input type="text" id="mySearch"class="form-control form-control-sm btn-xs"
                                                placeholder="Search" autocomplete="off">
 
                                     </div>
@@ -888,7 +904,7 @@
 
 
                         <br>
-                        <div class="card-body">
+                        <div id="all-post"class="card-body">
                             <div th:each="post1:${post}" class="row comment">
                                 <div  class="col-1">
                                     <img id="avtr"
@@ -896,7 +912,7 @@
                                          class="avatar mt-2">
                                 </div>
                                 <div class="col-11 all-posts">
-                                    <strong th:text="${post1.getReceiver().getFirstName()}"></strong>
+                                    <strong id="first-name" th:text="${post1.getReceiver().getFirstName()}"></strong>
                                     <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
                                     <span th:if="${post1.getStar().getId()}==1">
                                         <img th:src="@{/assets/images/gold.png}">
@@ -1086,7 +1102,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close close-now" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Modal Header</h4>
             </div>
             <div class="modal-body">
@@ -1104,7 +1120,7 @@
                 <div class="loader loader-forgot" style="display: none;"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default"  data-dismiss="modal">Close</button>
             </div>
         </div>
 
