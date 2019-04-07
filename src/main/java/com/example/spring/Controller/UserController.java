@@ -3,11 +3,13 @@ package com.example.spring.Controller;
 import com.example.spring.Entities.User;
 import com.example.spring.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
@@ -19,6 +21,11 @@ public class UserController {
     List<User> get(){
 
         List<User> userList= userService.findAllUsers();
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String userName =((UserDetails)principal).getUsername();
+        userList=userList.stream().filter(e->!e.getEmail().equals(userName)).collect(Collectors.toList());
         return userList;
     }
 }

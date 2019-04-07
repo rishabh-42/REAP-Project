@@ -419,24 +419,63 @@
     <script>
         
         $(document).ready(function() {
-            
+            var email;
+            var badge;
+            var reason;
             $("#recognize-button").click(function () {
-               var email=$("#tags").val();
-                var badge=$("#badge").val();
-                var reason=$("#reason").val();
+                email=$("#tags").val();
+                 badge=$("#badge").val();
+                reason=$("#reason").val();
 
-                console.log("button clicked");
+                if(email=="" || badge=="" || reason==""){
+                    $('#recognize-modal').modal('toggle');
+                    alert("Please Fill all the details correctly !!")
+                }
+
+                else {
+
+                    $("#recognize-info-reason").text(reason);
+                    $("#recognize-info-star").text(badge);
+                    $("#recognize-info-receiver").text(email);
+                    $("#recognize-info-sender").text($("#logged-in-user").text());
+
+                }
+                // console.log("button clicked");
+                // $.ajax({
+                //     url: "/submitComment",
+                //     method: "post",
+                //     data: {email: email, badge: badge, reason:reason},
+                //     success: function () {
+                //
+                //     }
+                //
+                //
+                // });
+            });
+            $("#submit-recognition").click(function () {
+
+                if(email=="" || badge=="" || reason==""){
+                    alert("Please Fill all the details correctly !!")
+                }
+                else{
+
+                $(".loader-forgot").css("display","block");
                 $.ajax({
                     url: "/submitComment",
                     method: "post",
                     data: {email: email, badge: badge, reason:reason},
                     success: function () {
-                        
+                        $(".loader-forgot").css("display","none");
+                        alert("post submitted");
+                        location.reload(this);
                     }
 
 
-                });
+                });}
+
             });
+
+
 
             $(".all-posts").on('click','.selected-row',function (e) {
                 console.log("button clicked.......")
@@ -601,7 +640,8 @@
                                         </div>
                                         <div class="col-md-8 profileModalFontBold">
                                             <p th:text="${user.getFirstName()+ '  ' + user.getLastName()}">user </p>
-                                            <p th:text="${user.getEmail()}">UserMail@mail.com</p>
+                                            <p id="logged-in-user" th:text="${user.getEmail()}">UserMail@mail.com</p>
+
 
 
                                         </div>
@@ -709,7 +749,7 @@
                                         <textarea  style="height:140px" placeholder="I want to recognize because...."
                                                   class="form-control" id="reason"></textarea>
                                     </div>
-                                    <input id="recognize-button" type="button"
+                                    <input id="recognize-button" type="button" data-toggle="modal" data-target="#recognize-modal"
                                            class="btn btn-sm btn-primary float-right" value="Recognize">
 
                                 </form>
@@ -1050,7 +1090,18 @@
                 <h4 class="modal-title">Modal Header</h4>
             </div>
             <div class="modal-body">
-                <p id="recognize-info"></p>
+
+                <p id="recognize-info-sender" style="display: none"></p>
+                <strong> To : </strong>
+                <p id="recognize-info-receiver" s></p>
+                <strong> Star Type : </strong>
+                <p id="recognize-info-star"></p>
+                <strong> Reason : </strong>
+                <p id="recognize-info-reason"></p>
+
+                <input style="margin: 0 auto" id="submit-recognition" type="button" value="Submit Recognition">
+
+                <div class="loader loader-forgot" style="display: none;"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1090,6 +1141,8 @@
 
     </div>
 </div>
+
+
 
 
 
