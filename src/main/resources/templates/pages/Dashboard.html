@@ -32,9 +32,10 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
-    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"
+          crossorigin="anonymous">
     <style>
-        .loader,.loader-register {
+        .loader, .loader-register {
             border: 16px solid #f3f3f3;
             border-radius: 50%;
             border-top: 16px solid #3498db;
@@ -48,14 +49,23 @@
 
         /* Safari */
         @-webkit-keyframes spin {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
+
         #logo-br {
             margin: 0;
         }
@@ -356,7 +366,7 @@
             box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px;
         }
 
-        .active ,.btn:hover {
+        .active, .btn:hover {
             background-color: palevioletred;
         }
 
@@ -420,8 +430,91 @@
     </style>
 
     <script>
-        
-        $(document).ready(function() {
+
+        $(document).ready(function () {
+
+
+            function format(tr, email) {
+
+
+                $.ajax({
+                    url: '/getUserRoles' +
+                        '',
+                    data: {
+                        email: email
+                    },
+                    dataType: 'json',
+                    success: function (json) {
+                        console.log(json);
+
+                        var roles = "";
+                        var user = "<input type='checkbox' checked> User";
+                        var usernot = "<input type='checkbox'> User";
+
+                        var practiceHead = "<input type='checkbox' checked> PracticeHead";
+                        var practiceHeadNot = "<input type='checkbox'> PracticeHead";
+
+                        var superVisor = "<input type='checkbox' checked> Supervisor";
+                        var superVisorNot = "<input type='checkbox'> Supervisor";
+
+                        var Admin = "<input type='checkbox' checked> Admin";
+                        var AdminNot = "<input type='checkbox'> Admin";
+
+                        for (i = 0; i < json.length; i++) {
+                            if (json[i].name == "User") {
+                                roles = roles + user;
+                            }
+                            if (json[i].name == "Admin") {
+                                roles = roles + Admin;
+                            }
+                            if (json[i].name == "Supervisor") {
+                                role = roles + superVisor;
+                            }
+                            if (json[i].name == "PracticeHead") {
+                                roles = roles + practiceHead;
+                            }
+
+
+
+
+
+                        }
+                        if(roles.indexOf("Admin")==-1){
+                            roles=roles+AdminNot;
+                        }
+                        if(roles.indexOf("Supervisor")==-1){
+                            roles=roles+superVisorNot;
+                        }
+                        if(roles.indexOf("PracticeHead")==-1){
+                            roles=roles+practiceHeadNot;
+                        }
+
+                        $('<tr class="detail-row" ><td colspan="6">' + roles +'&nbsp;&nbsp;&nbsp;&nbsp;<button class="updateRole btn btn-primary btn-xs">Update Roles</button> '+ '</td></tr>').insertAfter(tr);
+
+                    }
+                });
+
+
+            }
+
+            $('#data-table tbody').on('click', '.showinfo', function () {
+
+                console.log("butttttttttt")
+                var tr = $(this).closest('tr');
+                console.log(tr);
+                if ($(this).closest('tr').next().hasClass("detail-row")) {
+                    $(this).closest('tr').next().remove();
+                }
+                else {
+
+                    var email1 = $(this).closest('tr').find($(".email")).text();
+
+                    console.log(email1);
+                    format(tr, email1);
+
+                }
+            });
+
             //
             // $("#mySearch").keyup(function () {
             //     var value = $(this).val().toLowerCase();
@@ -430,32 +523,34 @@
             //     });
             // });
 
-                $('.showinfo').click(function(e){
-                    e.preventDefault();
-                    console.log("href");
-                    $(this).closest('tr').find(".test").toggle();
-                });
+            $('.showinfo').click(function (e) {
+                e.preventDefault();
+                console.log("href");
+                $("#form1").toggle();
+                $(this).closest('tr').find(".test").toggle();
+            });
 
 
-            $("#mySearch").on("keyup", function() {
+            $("#mySearch").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#all-post #first-name").filter(function() {
+                $("#all-post #first-name").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
 
 
             $('#data-table').DataTable();
+
             var email;
             var badge;
             var reason;
             $("#recognize-button").click(function () {
-                email=$("#tags").val();
-                 badge=$("#badge").val();
-                reason=$("#reason").val();
+                email = $("#tags").val();
+                badge = $("#badge").val();
+                reason = $("#reason").val();
                 console.log("badge" + badge);
 
-                if(email=="" || badge==null || reason==""){
+                if (email == "" || badge == null || reason == "") {
 
                     alert("Please Fill all the details correctly !!")
 
@@ -471,8 +566,7 @@
                 }
                 console.log("hiding modal");
                 setTimeout(
-                    function()
-                    {
+                    function () {
                         //do something special
                     }, 500);
                 $("#recognize-modal").hide();
@@ -492,38 +586,38 @@
             });
             $("#submit-recognition").click(function () {
 
-                if(email=="" || badge=="" || reason==""){
+                if (email == "" || badge == "" || reason == "") {
                     alert("Please Fill all the details correctly !!")
                 }
-                else{
+                else {
 
-                $(".loader-forgot").css("display","block");
-                $.ajax({
-                    url: "/submitComment",
-                    method: "post",
-                    data: {email: email, badge: badge, reason:reason},
-                    success: function () {
-                        $(".loader-forgot").css("display","none");
-                        alert("post submitted");
-                        location.reload(this);
-                    }
+                    $(".loader-forgot").css("display", "block");
+                    $.ajax({
+                        url: "/submitComment",
+                        method: "post",
+                        data: {email: email, badge: badge, reason: reason},
+                        success: function () {
+                            $(".loader-forgot").css("display", "none");
+                            alert("post submitted");
+                            location.reload(this);
+                        }
 
 
-                });}
+                    });
+                }
 
             });
 
 
-
-            $(".all-posts").on('click','.selected-row',function (e) {
+            $(".all-posts").on('click', '.selected-row', function (e) {
                 console.log("button clicked.......")
                 var id = $(this).find(".del-row-id").val();
-                console.log(id+ " ssssssssssss");
+                console.log(id + " ssssssssssss");
 
                 $("#hidden-id-del").val(id);
 
-            } );
-            $("#revoke-post").click(function (){
+            });
+            $("#revoke-post").click(function () {
                 console.log("revoke clicked");
                 var radioValue = $("input[name='reason']:checked").val();
 
@@ -533,15 +627,15 @@
 
                 console.log(radioValue + delId);
 
-                if(radioValue!=undefined || additionalComment!="") {
-                    $(".loader-forgot").css("display","block");
+                if (radioValue != undefined || additionalComment != "") {
+                    $(".loader-forgot").css("display", "block");
                     $.ajax({
                         url: "/revoke",
                         method: "post",
                         data: {id: delId, reason: radioValue, additionalComment: additionalComment},
                         success: function () {
                             console.log("post revoked !!");
-                            $(".loader-forgot").css("display","none");
+                            $(".loader-forgot").css("display", "none");
                             alert("post revoked");
                             location.reload(this);
 
@@ -550,17 +644,12 @@
 
                     });
                 }
-                else{
+                else {
                     alert("select a reason first or add comment");
                 }
 
             });
         });
-
-
-
-
-
 
 
         $(function () {
@@ -617,17 +706,18 @@
 
             <button class="btn btn-sm nav-btn"><i class="far fa-arrow-alt-circle-left"></i>Newers World</button>
             <a href="/dashboard">
-            <button class="btn btn-sm nav-btn active"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button></a>
+                <button class="btn btn-sm nav-btn active"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button>
+            </a>
             <button class="btn btn-sm nav-btn"><img
                     src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Badges
             </button>
 
             <a href="/dashboard/profile/">
-            <button class="btn btn-sm nav-btn"><img
-                    src="http://reap.tothenew.com/assets/ico-certificate-d6437fe43be76d37d084caa8f0788b9c.png"
-                    height="19px" width="18px">
-                &nbsp;Profile
-            </button>
+                <button class="btn btn-sm nav-btn"><img
+                        src="http://reap.tothenew.com/assets/ico-certificate-d6437fe43be76d37d084caa8f0788b9c.png"
+                        height="19px" width="18px">
+                    &nbsp;Profile
+                </button>
             </a>
             <button class="btn btn-sm nav-btn"><i class="fas fa-bell"></i></button>
 
@@ -667,7 +757,6 @@
                                 </div>
 
 
-
                                 <!--Profile Info-->
                                 <div class="col-md-8">
 
@@ -681,13 +770,15 @@
                                             <p id="logged-in-user" th:text="${user.getEmail()}">UserMail@mail.com</p>
 
 
-
                                         </div>
                                         <div class="row  profileModalFontNormal">
                                             <span>Badge Balance : </span> &nbsp;&nbsp;
-                                            <img th:src="@{/assets/images/gold.png}">&nbsp;:&nbsp; <span th:text="${userStarCount.getGoldStarCount()}"></span>&nbsp;&nbsp;
-                                            <img th:src="@{/assets/images/silver.png}"> : <span th:text="${userStarCount.getSilverStarCount()}"></span>&nbsp;&nbsp;
-                                            <img th:src="@{/assets/images/bronze.png}"> : <span th:text="${userStarCount.getBronzeStarCount()}"></span>
+                                            <img th:src="@{/assets/images/gold.png}">&nbsp;:&nbsp; <span
+                                                th:text="${userStarCount.getGoldStarCount()}"></span>&nbsp;&nbsp;
+                                            <img th:src="@{/assets/images/silver.png}"> : <span
+                                                th:text="${userStarCount.getSilverStarCount()}"></span>&nbsp;&nbsp;
+                                            <img th:src="@{/assets/images/bronze.png}"> : <span
+                                                th:text="${userStarCount.getBronzeStarCount()}"></span>
 
                                         </div>
                                     </div>
@@ -752,7 +843,7 @@
                                                     <div class="input-group-text user-icon"><i class="fas fa-user"></i>
                                                     </div>
                                                 </div>
-                                                <input type="text"  class="form-control form-control-sm" id="tags"
+                                                <input type="text" class="form-control form-control-sm" id="tags"
                                                        placeholder="Select a newer">
 
                                             </div>
@@ -769,14 +860,35 @@
                                                 <!--<option value="Silver" th:text="${userStarCount.getSilverStarCount()}+' : Silver'">Silver</option>-->
                                                 <!--<option value="Bronze" th:text="${userStarCount.getBronzeStarCount()}+' : Bronze'">Bronze</option>-->
 
-                                                <option th:value="Gold" th:if="${userStarCount.getGoldStarCount()!=0}"  th:text="${userStarCount.getGoldStarCount()}+' : Gold'">Gold</option>
-                                                <option th:value="Gold" th:if="${userStarCount.getGoldStarCount()==0}"  th:text="${userStarCount.getGoldStarCount()}+' : Gold'" disabled>Gold</option>
+                                                <option th:value="Gold" th:if="${userStarCount.getGoldStarCount()!=0}"
+                                                        th:text="${userStarCount.getGoldStarCount()}+' : Gold'">Gold
+                                                </option>
+                                                <option th:value="Gold" th:if="${userStarCount.getGoldStarCount()==0}"
+                                                        th:text="${userStarCount.getGoldStarCount()}+' : Gold'"
+                                                        disabled>Gold
+                                                </option>
 
-                                                <option th:value="Silver" th:if="${userStarCount.getSilverStarCount()!=0}"  th:text="${userStarCount.getSilverStarCount()}+' : Silver'">Silver</option>
-                                                <option th:value="Silver" th:if="${userStarCount.getSilverStarCount()==0}"  th:text="${userStarCount.getSilverStarCount()}+' : Silver'" disabled>Silver</option>
+                                                <option th:value="Silver"
+                                                        th:if="${userStarCount.getSilverStarCount()!=0}"
+                                                        th:text="${userStarCount.getSilverStarCount()}+' : Silver'">
+                                                    Silver
+                                                </option>
+                                                <option th:value="Silver"
+                                                        th:if="${userStarCount.getSilverStarCount()==0}"
+                                                        th:text="${userStarCount.getSilverStarCount()}+' : Silver'"
+                                                        disabled>Silver
+                                                </option>
 
-                                                <option th:value="Bronze" th:if="${userStarCount.getBronzeStarCount()!=0}"  th:text="${userStarCount.getBronzeStarCount()}+' : Bronze'">Bronze</option>
-                                                <option th:value="Bronze" th:if="${userStarCount.getBronzeStarCount()==0}"  th:text="${userStarCount.getBronzeStarCount()}+' : Bronze'" disabled>Bronze</option>
+                                                <option th:value="Bronze"
+                                                        th:if="${userStarCount.getBronzeStarCount()!=0}"
+                                                        th:text="${userStarCount.getBronzeStarCount()}+' : Bronze'">
+                                                    Bronze
+                                                </option>
+                                                <option th:value="Bronze"
+                                                        th:if="${userStarCount.getBronzeStarCount()==0}"
+                                                        th:text="${userStarCount.getBronzeStarCount()}+' : Bronze'"
+                                                        disabled>Bronze
+                                                </option>
                                             </select>
                                         </div>
 
@@ -784,10 +896,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="reason">Reason:</label>
-                                        <textarea  style="height:140px" placeholder="I want to recognize because...."
+                                        <textarea style="height:140px" placeholder="I want to recognize because...."
                                                   class="form-control" id="reason"></textarea>
                                     </div>
-                                    <input id="recognize-button" type="button" data-toggle="modal" data-target="#recognize-modal"
+                                    <input id="recognize-button" type="button" data-toggle="modal"
+                                           data-target="#recognize-modal"
                                            class="btn btn-sm btn-primary float-right" value="Recognize">
 
                                 </form>
@@ -807,7 +920,8 @@
 
                             <div class="table-responsive">
 
-                                <table id="data-table" class=" row-border order-column" style="width:100%;text-align: center">
+                                <table id="data-table" class=" row-border order-column"
+                                       style="width:100%;text-align: center">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
@@ -836,17 +950,19 @@
                                     <tbody>
                                     <tr th:each="User:${allUsers}">
                                         <!--<td>-->
-                                            <!--<button class="showinfo" >Click me</button>-->
-                                            <!--<tr class="test" >Test</tr>-->
+                                        <!--<button class="showinfo" >Click me</button>-->
+
+
                                         <!--</td>-->
                                         <td th:text="${User.getFirstName()} +' '+${User.getLastName()}"></td>
                                         <td>
-                                            <select class="form-control">
-                                                <option th:each="role:${User.getRoles()}"
-                                                        th:value="${role.getName()}"
-                                                        th:text="${role.getName()}"
-                                                ></option>
-                                            </select>
+                                            <!--<select class="form-control">-->
+                                            <!--<option th:each="role:${User.getRoles()}"-->
+                                            <!--th:value="${role.getName()}"-->
+                                            <!--th:text="${role.getName()}"-->
+                                            <!--&gt;</option>-->
+                                            <!--</select>-->
+                                            <button class="showinfo btn-xs btn-primary">Manage Roles</button>
                                         </td>
                                         <td>
                                             &nbsp;&nbsp;
@@ -854,7 +970,7 @@
                                                    th:checked="${User.isActive()}"
                                                    th:value="${User.isActive()}">
                                         </td>
-                                        <td th:text="${User.getEmail()}"></td>
+                                        <td class="email" th:text="${User.getEmail()}"></td>
                                         <td th:text="${User.getUserStarReceived().getPoints()}"></td>
                                         <td>
                                             <span th:text="${User.getUserStarReceived().getGoldStarRecieved()}"></span>&nbsp;&nbsp;
@@ -862,6 +978,8 @@
                                             <span th:text="${User.getUserStarReceived().getBronzeStarRecieved()}"></span>&nbsp;&nbsp;
 
                                         </td>
+
+
                                     </tr>
 
                                     </tbody>
@@ -932,7 +1050,7 @@
                         <br>
                         <div id="all-post" class="card-body">
                             <div id="first-name" th:each="post1:${post}" class="row comment">
-                                <div  class="col-1">
+                                <div class="col-1">
                                     <img id="avtr"
                                          th:src="@{''+${post1.getReceiver().getPhoto()}}"
                                          class="avatar mt-2">
@@ -950,17 +1068,20 @@
                                         <img th:src="@{/assets/images/bronze.png}">
                                     </span>
 
-                                    from <strong th:text="${post1.getGiver().getFirstName()} + ' '+ ${post1.getGiver().getLastName()}">
+                                    from <strong
+                                        th:text="${post1.getGiver().getFirstName()} + ' '+ ${post1.getGiver().getLastName()}">
                                 </strong> <br>
                                     <strong>Reason : </strong><span th:text="${post1.getComment()}"></span>
                                     <br>
                                     <i th:text="${post1.getElapsedTime()}"></i><span>ago</span>
 
-                                    <span  th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}" >
+                                    <span th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}">
 
-                                        <button style="float: right"  class="btn btn-danger selected-row"  data-toggle="modal" data-target="#recognize-revoke">
+                                        <button style="float: right" class="btn btn-danger selected-row"
+                                                data-toggle="modal" data-target="#recognize-revoke">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
-                                        <input type="text" style="display: none" class="del-row-id" th:value="${post1.getId()}">
+                                        <input type="text" style="display: none" class="del-row-id"
+                                               th:value="${post1.getId()}">
                                             </button>
                                     </span>
 
@@ -970,8 +1091,6 @@
 
 
                             </div>
-
-
 
 
                         </div>
@@ -1000,7 +1119,8 @@
 
                             </div>
                             <div class="col-auto">
-                                <strong th:text="${user.getFirstName()}+' '+${user.getLastName()}">Rishabh Rajput</strong>
+                                <strong th:text="${user.getFirstName()}+' '+${user.getLastName()}">Rishabh
+                                    Rajput</strong>
                                 <div class="row ">
                                     <div class="col-auto">
                                         <div>
@@ -1060,7 +1180,8 @@
 
                             </div>
                             <div class="col-auto">
-                                <strong th:text="${topUser.getUser().getFirstName()} + ' ' +${topUser.getUser().getLastName()}">Rishabh Rajput</strong>
+                                <strong th:text="${topUser.getUser().getFirstName()} + ' ' +${topUser.getUser().getLastName()}">Rishabh
+                                    Rajput</strong>
                                 <div class="row">
                                     <div class="col-auto">
                                         <div>
@@ -1098,7 +1219,6 @@
                             </div>
 
                         </div>
-
 
 
                     </div>
@@ -1146,7 +1266,7 @@
                 <div class="loader loader-forgot" style="display: none;"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"  data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
 
@@ -1168,7 +1288,7 @@
                 <input type="radio" name="reason" value="Incorect Badge"> Selected Incorect Badge<br>
                 <input type="radio" name="reason" value="Selected Incorect Karma"> Selected Incorect Karma<br>
                 <input type="radio" name="reason" value="Inappropriate Language Used"> Inappropriate Language Used<br>
-                <input type="text"  id="additional-comment" placeholder="Other Reason/Comments(Optional)">
+                <input type="text" id="additional-comment" placeholder="Other Reason/Comments(Optional)">
 
                 <br>
                 <br>
@@ -1183,9 +1303,6 @@
 
     </div>
 </div>
-
-
-
 
 
 </body>
