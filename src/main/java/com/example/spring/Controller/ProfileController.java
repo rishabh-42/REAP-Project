@@ -9,6 +9,7 @@ import com.example.spring.Service.UserService;
 import com.example.spring.Service.UserStarCountService;
 import com.example.spring.Service.UserStarRecievedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,7 @@ public class ProfileController {
     BadgesGivenService badgesGivenService;
 
 
+    @PreAuthorize("hasAnyRole('1','2','3','4')")
     @RequestMapping(value ={"/dashboard/profile/"})
     @ResponseBody
     ModelAndView getProfilePage (){
