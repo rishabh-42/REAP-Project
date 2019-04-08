@@ -36,7 +36,7 @@ public class FileUploadController {
      * Upload single file using Spring ProfileController
      */
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public @ResponseBody
+    public
     String uploadFileHandler(@RequestParam("file") MultipartFile file) {
 
         System.out.println("aadhfsdnfjkdhasd");
@@ -95,7 +95,7 @@ public class FileUploadController {
                 logger.info("Server File Location="
                         + serverFile.getAbsolutePath());
 
-                return "You successfully uploaded file=";
+                return "redirect:dashboard";
             } catch (Exception e) {
                 return "You failed to upload " + " => " + e.getMessage();
             }

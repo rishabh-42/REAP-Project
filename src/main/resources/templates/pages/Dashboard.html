@@ -448,17 +448,17 @@
                         console.log(json);
 
                         var roles = "";
-                        var user = "<input type='checkbox' checked> User";
-                        var usernot = "<input type='checkbox'> User";
+                        var user = "<input id='User' type='checkbox' value='User' checked> User";
+                        var usernot = "<input id='User' type='checkbox'> User";
 
-                        var practiceHead = "<input type='checkbox' checked> PracticeHead";
-                        var practiceHeadNot = "<input type='checkbox'> PracticeHead";
+                        var practiceHead = "<input id='PracticeHead' value='PracticeHead' type='checkbox' checked> PracticeHead";
+                        var practiceHeadNot = "<input id='PracticeHead' type='checkbox'> PracticeHead";
 
-                        var superVisor = "<input type='checkbox' checked> Supervisor";
-                        var superVisorNot = "<input type='checkbox'> Supervisor";
+                        var superVisor = "<input id='Supervisor' type='checkbox' value='Supervisor' checked> Supervisor";
+                        var superVisorNot = "<input id='Supervisor' type='checkbox'> Supervisor";
 
-                        var Admin = "<input type='checkbox' checked> Admin";
-                        var AdminNot = "<input type='checkbox'> Admin";
+                        var Admin = "<input id='Admin' type='checkbox' value='Admin' checked> Admin";
+                        var AdminNot = "<input id='Admin' type='checkbox'> Admin";
 
                         for (i = 0; i < json.length; i++) {
                             if (json[i].name == "User") {
@@ -468,15 +468,11 @@
                                 roles = roles + Admin;
                             }
                             if (json[i].name == "Supervisor") {
-                                role = roles + superVisor;
+                                roles = roles + superVisor;
                             }
                             if (json[i].name == "PracticeHead") {
                                 roles = roles + practiceHead;
                             }
-
-
-
-
 
                         }
                         if(roles.indexOf("Admin")==-1){
@@ -513,6 +509,41 @@
                     format(tr, email1);
 
                 }
+            });
+
+            $("#data-table").on('click','.updateRole',function () {
+
+                console.log("update button clicked");
+
+                var a=$(this).parent();
+                var radioValue = a.find($("input[type='checkbox']:checked"));
+                console.log(radioValue);
+
+
+                var values="";
+                var updateEmail= $(this).parent().parent().prev().find($(".email")).text();
+               radioValue.each(function (index) {
+                   // console.log($(this).attr('id'));
+                   values=values+ $(this).attr('id') + " ";
+
+
+                   
+               })
+                console.log(values);
+
+               $.ajax({
+                   url:"/updateRoles",
+                   method:"post",
+                   data:{email:updateEmail,newRoles:values},
+                   success:function (e) {
+                       location.reload(this);
+
+                   }
+
+               })
+
+
+
             });
 
             //
@@ -962,7 +993,7 @@
                                             <!--th:text="${role.getName()}"-->
                                             <!--&gt;</option>-->
                                             <!--</select>-->
-                                            <button class="showinfo btn-xs btn-primary">Manage Roles</button>
+                                            <button class="btn showinfo btn-xs btn-primary">Manage Roles</button>
                                         </td>
                                         <td>
                                             &nbsp;&nbsp;

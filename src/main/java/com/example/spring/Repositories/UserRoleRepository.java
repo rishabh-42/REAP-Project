@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRoleRepository extends JpaRepository<UserRole,Integer> {
 
     UserRole findById(int i);
-
+    UserRole findByName(String name);
+    UserRole findByPriority(int i);
 
 }

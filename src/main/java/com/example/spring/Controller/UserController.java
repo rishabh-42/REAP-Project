@@ -2,10 +2,12 @@ package com.example.spring.Controller;
 
 import com.example.spring.Entities.User;
 import com.example.spring.Entities.UserRole;
+import com.example.spring.Service.UserRoleService;
 import com.example.spring.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    UserRoleService userRoleService;
 
 
 
@@ -39,8 +43,20 @@ public class UserController {
 
         Set<UserRole> userRoles= userService.findByEmail(email).getRoles();
 
+        System.out.println(email + " =========== "+ userRoles);
+
 
         return userRoles;
     }
+
+    @PostMapping("/updateRoles")
+    public  int updateRoles(@RequestParam("email") String email,@RequestParam("newRoles") String newRoles){
+
+        String roles[] =newRoles.split(" ");
+         userRoleService.updateRoles(email,roles);
+        return 1;
+    }
+
+
 
 }
