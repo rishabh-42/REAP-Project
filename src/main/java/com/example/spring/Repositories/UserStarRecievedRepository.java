@@ -10,5 +10,5 @@ public interface UserStarRecievedRepository extends JpaRepository<UserStarReceiv
 
     UserStarReceived findByUser(User user);
 
-    List<UserStarReceived> findFirst6ByOrderByGoldStarRecievedDesc();
+    List<UserStarReceived> findFirst6ByOrderByPointsDesc();
 }

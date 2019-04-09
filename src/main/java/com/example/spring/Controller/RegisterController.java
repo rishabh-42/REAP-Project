@@ -5,8 +5,7 @@ import com.example.spring.Entities.UserRole;
 import com.example.spring.Entities.UserStarCount;
 import com.example.spring.Entities.UserStarReceived;
 import com.example.spring.Service.*;
-import com.nulabinc.zxcvbn.Strength;
-import com.nulabinc.zxcvbn.Zxcvbn;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -70,8 +69,8 @@ public class RegisterController {
         if (bindingResult.hasErrors()) {
 
 
-            bindingResult.getAllErrors().forEach(System.out::println);
-            System.out.println("has errors");
+//            bindingResult.getAllErrors().forEach(System.out::println);
+//            System.out.println("has errors");
             modelAndView.setViewName("pages/Login");
         } else {
 

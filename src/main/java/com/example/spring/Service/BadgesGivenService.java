@@ -6,6 +6,7 @@ import com.example.spring.Repositories.BadgesGivenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -41,5 +42,10 @@ public class BadgesGivenService {
     public BadgesGiven findById(int id){
 
         return badgesGivenRepository.findById(id).get();
+    }
+
+    public List<BadgesGiven> findBetweenDate(LocalDateTime startDate, LocalDateTime endDate){
+
+        return badgesGivenRepository.findAllByCreateDateTimeBetween(startDate,endDate);
     }
 }

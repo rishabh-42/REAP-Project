@@ -428,11 +428,25 @@
             background-color: white;
         }
     </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <script>
 
         $(document).ready(function () {
 
+
+            $('span[name="dates"]').daterangepicker({
+
+
+            },function (start,end,label) {
+                console.log(start.format('YYYY-MM-DD') +end.format('YYYY-MM-DD') )
+                var startDate = start.format('YYYY-MM-DD HH:mm:ss');
+                var endDate = end.format('YYYY-MM-DD HH:mm:ss');
+                $('#startDate').val(startDate);
+                $('#endDate').val(endDate);
+            });
 
             function format(tr, email) {
 
@@ -614,6 +628,35 @@
                 //
                 //
                 // });
+            });
+
+            $(".user-active").change(function () {
+
+                var emaiil = $(this).parent().next().text();
+
+               if($(this).is(":checked")){
+                   $.ajax({
+                   url:"/setActive",
+                       data: {email:emaiil,checked:true},
+                       method:"post",
+                       success: function (e) {
+                       alert("user "+ emaiil +" set to Active");
+
+                       }
+               })
+               }
+               else
+               {
+                   $.ajax({
+                       url:"/setActive",
+                       data: {email:emaiil,checked:false},
+                       method:"post",
+                       success: function (e) {
+                           alert("user "+ emaiil +" set to inactive");
+
+                       }
+                   })
+               }
             });
             $("#submit-recognition").click(function () {
 
@@ -997,7 +1040,7 @@
                                         </td>
                                         <td>
                                             &nbsp;&nbsp;
-                                            <input type="checkbox"
+                                            <input  class="user-active" type="checkbox"
                                                    th:checked="${User.isActive()}"
                                                    th:value="${User.isActive()}">
                                         </td>
@@ -1030,7 +1073,7 @@
                                 <img class="ml-4"
                                      src="http://reap.tothenew.com/assets/ico-wall-hover-b0efac84ef2af6d4790cd642372d7c9b.png">&nbsp;
                                 <strong class="mr-5">&nbsp;WALL OF FAME</strong>
-                                <div class="form-group-lg col-auto " style="margin-left:120px">
+                                <div class="form-group-lg col-auto " style="margin-left:550px">
                                     <div class="input-group ">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text btn-xs user-icon"><i
@@ -1042,35 +1085,16 @@
 
                                     </div>
                                 </div>
-                                <div class="form-group col-auto ">
-                                    <div class="dropdown">
-                                        <button class="btn btn-xs btn-light dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                            Business Unit
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-auto ">
-                                    <div class="dropdown">
-                                        <button class="btn btn-xs btn-light dropdown-toggle" type="button"
-                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
-                                            Reason
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <i class="fas fa-calendar-alt ml-2"></i>
+
+                                <!--<div class="col-md-4">-->
+                                    <input type="hidden" name="startDate" id="startDate">
+                                    <input type="hidden" name="endDate" id="endDate">
+                                <span id="dt" name="dates"><i class="fa fa-calendar fa-style" aria-hidden="true"></i></span>
+                                    <a href=""
+                                       onclick="this.href='/download?startDate='+document.getElementById('startDate').value+'&endDate='+document.getElementById('endDate').value" id="download">
+                                        <i class="fa fa-download fa-style" aria-hidden="true" style="color: white"></i></a>
+
+                                <!--</div>-->
 
                             </form>
 

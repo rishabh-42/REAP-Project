@@ -68,6 +68,7 @@ public class User {
 
 
 
+
     @JsonManagedReference
     @OneToOne
     UserStarReceived userStarReceived;
@@ -250,4 +251,6 @@ public class User {
     public void setCurrentRoleId(String currentRoleId) {
         this.currentRoleId = currentRoleId;
     }
+
+
 }

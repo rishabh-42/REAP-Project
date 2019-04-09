@@ -22,16 +22,17 @@ public class UserStarRecievedService {
         if(star.equals("Gold"))
         {
             userStarReceived.setGoldStarRecieved(userStarReceived.getGoldStarRecieved()+1);
+            userStarReceived.setPoints(userStarReceived.getPoints()+30);
         }
         else if(star.equals("Silver")){
 
             userStarReceived.setSilverStarRecieved(userStarReceived.getSilverStarRecieved()+1);
-
+            userStarReceived.setPoints(userStarReceived.getPoints()+20);
         }
 
         else if(star.equals("Bronze")){
             userStarReceived.setBronzeStarRecieved(userStarReceived.getBronzeStarRecieved()+1);
-
+            userStarReceived.setPoints(userStarReceived.getPoints()+10);
         }
 
         userStarRecievedRepository.save(userStarReceived);
@@ -51,6 +52,6 @@ public class UserStarRecievedService {
 
     public List<UserStarReceived> getSomeUser(){
 
-        return userStarRecievedRepository.findFirst6ByOrderByGoldStarRecievedDesc();
+        return userStarRecievedRepository.findFirst6ByOrderByPointsDesc();
     }
 }

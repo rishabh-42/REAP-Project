@@ -5,6 +5,7 @@ import com.example.spring.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,4 +19,6 @@ public interface BadgesGivenRepository extends JpaRepository<BadgesGiven,Integer
     <S extends BadgesGiven> S save(S entity);
 
     Optional<BadgesGiven> findById(Integer i);
+
+    List<BadgesGiven> findAllByCreateDateTimeBetween(LocalDateTime startDate ,LocalDateTime endDate);
 }

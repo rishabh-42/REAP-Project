@@ -33,7 +33,7 @@ public class UserStarReceived {
 
     public Integer getPoints() {
 
-        this.points= getBronzeStarRecieved()*10 +getGoldStarRecieved()*30 + getSilverStarRecieved()*20;
+
         return points;
     }
 

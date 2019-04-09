@@ -91,10 +91,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/register/**","/forgot/**","/reset/**").permitAll();
+        http.authorizeRequests().antMatchers("/reset/**","/confirm/**").permitAll();
 
         http.authorizeRequests()
-                .antMatchers("**/dashboard/**").authenticated()
-                .anyRequest().permitAll().
+                .antMatchers("/dashboard/**","/getAllUsers/**","/getUserRoles/**").permitAll()
+                .anyRequest().authenticated().
                 and()
 
                 .formLogin().loginPage("/loginSignup").loginProcessingUrl("/perform_login").defaultSuccessUrl("/dashboard").
@@ -102,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 and().
                 logout().
                 logoutUrl("/logout").clearAuthentication(true).
-                logoutSuccessUrl("/loginSignup").
+
                  permitAll();
 
 //                .loginProcessingUrl("/rishabh")
@@ -128,7 +130,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                System.out.println("encoded "+encodedPassword);
 //                rawPassword= BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt());
 //                System.out.println("raw "+rawPassword);
-                System.out.println(BCrypt.checkpw(rawPassword.toString(), encodedPassword));
+
                 return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
             }
         });

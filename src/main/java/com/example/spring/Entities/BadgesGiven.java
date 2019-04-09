@@ -49,6 +49,10 @@ public class BadgesGiven {
     @Transient
     String elapsedTime;
 
+    public boolean isActive() {
+        return active;
+    }
+
     boolean active;
 
 

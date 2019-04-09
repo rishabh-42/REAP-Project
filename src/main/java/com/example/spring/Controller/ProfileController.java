@@ -53,7 +53,10 @@ public class ProfileController {
             System.out.println("=================" +((UserDetails)principal).getUsername());
 
             User user = userService.findByEmail(((UserDetails)principal).getUsername());
-            modelAndView.addObject("user",user);
+
+         if(user.isActive()==false) return new ModelAndView("pages/UserInactive");
+
+         modelAndView.addObject("user",user);
 
             UserStarCount userStarCount = userStarCountService.findByUser(user);
             modelAndView.addObject("userStarCount",userStarCount);

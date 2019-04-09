@@ -31,15 +31,14 @@ public class DateTimeUtil {
 
        long seconds = tempDateTime.until( toDateTime, ChronoUnit.SECONDS);
 
-       if(hours==0)
-       {
-           return minutes +" minutes ";
-       }
+       StringBuffer s=new StringBuffer("");
+
        if(days!=0){
-           return days + " days " +
-                   hours + " hours ";
+           s= s.append(days + " days ");
        }
-       return hours + " hours ";
+
+       s=s.append(hours+" hours "+minutes+" minutes ");
+       return s.toString();
 
    }
 }

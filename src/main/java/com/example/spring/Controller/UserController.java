@@ -58,5 +58,21 @@ public class UserController {
     }
 
 
+    @PostMapping("/setActive")
+    public int setActive(@RequestParam("email") String email ,@RequestParam("checked") String checked){
+
+        User user = userService.findByEmail(email);
+        if(checked.equals("true")){
+            user.setActive(true);
+        }
+        else {
+            user.setActive(false);
+
+        }
+
+        userService.saveUser(user);
+        return 1;
+    }
+
 
 }

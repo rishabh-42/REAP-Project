@@ -21,6 +21,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -127,6 +128,9 @@ public class Login{
         System.out.println("=================" +((UserDetails)principal).getUsername());
 
         User user = userService.findByEmail(((UserDetails)principal).getUsername());
+
+        if(user.isActive()==false) return new ModelAndView("pages/UserInactive");
+
         modelAndView.addObject("user",user);
 
         UserStarCount userStarCount = userStarCountService.findByUser(user);
