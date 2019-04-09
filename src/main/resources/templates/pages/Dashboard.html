@@ -756,6 +756,16 @@
         });
     </script>
 
+
+    <style>
+        .ui-autocomplete{
+            overflow-y: scroll;
+            background-color: #ced4da;
+            height: 120px;
+            position: absolute;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -1089,11 +1099,12 @@
                                 <!--<div class="col-md-4">-->
                                     <input type="hidden" name="startDate" id="startDate">
                                     <input type="hidden" name="endDate" id="endDate">
+                                <span th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}">
                                 <span id="dt" name="dates"><i class="fa fa-calendar fa-style" aria-hidden="true"></i></span>
                                     <a href=""
                                        onclick="this.href='/download?startDate='+document.getElementById('startDate').value+'&endDate='+document.getElementById('endDate').value" id="download">
                                         <i class="fa fa-download fa-style" aria-hidden="true" style="color: white"></i></a>
-
+                                </span>
                                 <!--</div>-->
 
                             </form>
