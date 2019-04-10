@@ -104,7 +104,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 and().
                 logout().
                 logoutUrl("/logout").clearAuthentication(true).
-
                  permitAll();
 
 //                .loginProcessingUrl("/rishabh")

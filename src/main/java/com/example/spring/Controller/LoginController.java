@@ -27,7 +27,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class Login{
+public class LoginController {
 
 
     @Autowired

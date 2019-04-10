@@ -60,9 +60,14 @@ public class RevokeRecognitionController {
         //reduce one star from receiver
 
         UserStarReceived userStarReceived = userStarRecievedService.findByUser(postRow.getReceiver());
-        if(starType.getName().equals("Gold")) userStarReceived.setGoldStarRecieved(userStarReceived.getGoldStarRecieved()-1);
-        if(starType.getName().equals("Silver")) userStarReceived.setSilverStarRecieved(userStarReceived.getSilverStarRecieved()-1);
-        if(starType.getName().equals("Bronze")) userStarReceived.setBronzeStarRecieved(userStarReceived.getBronzeStarRecieved()-1);
+        if(starType.getName().equals("Gold")) {userStarReceived.setGoldStarRecieved(userStarReceived.getGoldStarRecieved()-1);
+        userStarReceived.setPoints(userStarReceived.getPoints()-30);
+        }
+        if(starType.getName().equals("Silver")) {userStarReceived.setSilverStarRecieved(userStarReceived.getSilverStarRecieved()-1);
+            userStarReceived.setPoints(userStarReceived.getPoints()-20);}
+        if(starType.getName().equals("Bronze")) {userStarReceived.setBronzeStarRecieved(userStarReceived.getBronzeStarRecieved()-1);
+            userStarReceived.setPoints(userStarReceived.getPoints()-10);
+        }
         userStarRecievedService.save(userStarReceived);
 
         // send mail to reciever for reducing a star

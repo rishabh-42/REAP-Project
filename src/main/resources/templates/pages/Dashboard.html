@@ -577,6 +577,7 @@
 
 
             $("#mySearch").on("keyup", function () {
+                console.log("mysearch")
                 var value = $(this).val().toLowerCase();
                 $("#all-post #first-name").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
@@ -792,10 +793,11 @@
             <a href="/dashboard">
                 <button class="btn btn-sm nav-btn active"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button>
             </a>
+            <a href="/warehouse">
             <button class="btn btn-sm nav-btn"><img
-                    src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Badges
+                    src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Shop
             </button>
-
+            </a>
             <a href="/dashboard/profile/">
                 <button class="btn btn-sm nav-btn"><img
                         src="http://reap.tothenew.com/assets/ico-certificate-d6437fe43be76d37d084caa8f0788b9c.png"

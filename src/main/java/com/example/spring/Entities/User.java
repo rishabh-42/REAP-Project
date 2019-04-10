@@ -16,7 +16,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -85,6 +87,10 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<UserRole> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    List<Order> order = new ArrayList<>();
+
 
     @Override
     public String toString() {
@@ -188,6 +194,13 @@ public class User {
 
 
 
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
     public Integer getPointSpent() {
         return pointSpent;
     }
