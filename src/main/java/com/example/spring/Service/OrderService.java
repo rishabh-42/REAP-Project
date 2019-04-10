@@ -11,7 +11,7 @@ public class OrderService {
     @Autowired
     OrderRepository orderRepository;
 
-    public void saveOder(Order order){
+    public void saveOrder(Order order){
 
         orderRepository.save(order);
     }

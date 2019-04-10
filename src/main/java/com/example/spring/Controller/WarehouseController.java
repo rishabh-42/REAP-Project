@@ -86,7 +86,9 @@ public class WarehouseController {
             order.setTotalPrice(cartPrice);
             order.setUser(user);
             userStarReceived.setPoints(userStarReceived.getPoints()-cartPrice);
-            orderService.saveOder(order);
+            userStarRecievedService.save(userStarReceived);
+
+            orderService.saveOrder(order);
 
 
         }
