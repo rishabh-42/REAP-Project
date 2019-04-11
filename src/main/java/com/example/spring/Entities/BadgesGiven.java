@@ -1,12 +1,8 @@
 package com.example.spring.Entities;
 
-import static com.example.spring.others.DateTimeUtil.*;
 
-import com.example.spring.others.DateTimeUtil;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import com.example.spring.others.ElapsedDateTimeUtil;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,10 +10,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
 @Entity
 public class BadgesGiven {
 
@@ -54,6 +46,7 @@ public class BadgesGiven {
     }
 
     boolean active;
+
 
 
     public Integer getId() {
@@ -126,7 +119,7 @@ public class BadgesGiven {
     }
 
     public String getElapsedTime() {
-        setElapsedTime(DateTimeUtil.get(getUpdateDateTime()));
+        setElapsedTime(ElapsedDateTimeUtil.getElapsedTime(getUpdateDateTime()));
         return elapsedTime;
     }
 

@@ -16,9 +16,7 @@ public class MvcConfig implements WebMvcConfigurer {
             "classpath:/static/", "classpath:/public/" };
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-
-            registry.addResourceHandler("/profileImages/**").addResourceLocations(  "file:/profileImages/"   );
+            registry.addResourceHandler("/profileImages/**").addResourceLocations(  "file:/profileImages/");
 
         if (!registry.hasMappingForPattern("/**")) {
             registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);

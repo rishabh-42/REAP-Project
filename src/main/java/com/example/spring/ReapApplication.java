@@ -10,16 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @SpringBootApplication
-//        (exclude = { SecurityAutoConfiguration.class })
 @EntityScan(basePackages = {"com.example.spring"})
 @EnableJpaRepositories(basePackages = {"com.example.spring"})
 
 public class ReapApplication {
-
-
-
     public static void main(String[] args) {
         SpringApplication.run(ReapApplication.class, args);
     }
-
 }

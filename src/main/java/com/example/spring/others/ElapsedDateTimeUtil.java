@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-public class DateTimeUtil {
+public class ElapsedDateTimeUtil {
 
-   public static String get(LocalDateTime fromDateTime){
+   public static String getElapsedTime(LocalDateTime fromDateTime){
 
 
        LocalDateTime toDateTime = LocalDateTime.now();
@@ -27,9 +27,6 @@ public class DateTimeUtil {
        tempDateTime = tempDateTime.plusHours( hours );
 
        long minutes = tempDateTime.until( toDateTime, ChronoUnit.MINUTES);
-       tempDateTime = tempDateTime.plusMinutes( minutes );
-
-       long seconds = tempDateTime.until( toDateTime, ChronoUnit.SECONDS);
 
        StringBuffer s=new StringBuffer("");
 

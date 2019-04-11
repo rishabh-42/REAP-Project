@@ -39,66 +39,37 @@ public class SubmitCommentController {
     @Autowired
     UserStarRecievedService userStarRecievedService;
 
-
     @RequestMapping(value = "/submitComment", method = RequestMethod.POST)
     @ResponseBody
     public String submitComment(@RequestParam Map<String, String> fields) {
-
-        System.out.println("===========");
-        System.out.println(fields);
-
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if(fields.get("email").equals(((UserDetails)principal).getUsername())){
+        if (fields.get("email").equals(((UserDetails) principal).getUsername())) {
             return "cannot recognize yourself";
-
         }
-
-
-        User userGiver = userService.findByEmail(((UserDetails)principal).getUsername());
-        User userReciever = userService.findByEmail(fields.get("email"));
-
-        if(userReciever==null){
+        User userGiver = userService.findByEmail(((UserDetails) principal).getUsername());
+        User userReceiver = userService.findByEmail(fields.get("email"));
+        if (userReceiver == null) {
             return "Selected newer doesn't exists";
         }
-
-
         BadgesGiven badgesGiven = new BadgesGiven();
-
         badgesGiven.setGiver(userGiver);
-        badgesGiven.setReceiver(userReciever);
-
+        badgesGiven.setReceiver(userReceiver);
         badgesGiven.setComment(fields.get("reason"));
         badgesGiven.setStar(starRepository.findByName(fields.get("badge")));
         badgesGiven.setFlag(true);
         badgesGiven.setActive(true);
-
         badgesGivenService.save(badgesGiven);
-
         //reducing stars from sender
-        userStarCountService.update(userGiver,fields.get("badge"));
-
+        userStarCountService.update(userGiver, fields.get("badge"));
         //Giving star to reciever
-
-        userStarRecievedService.giveStar(userReciever,fields.get("badge"));
-
-
+        userStarRecievedService.giveStar(userReceiver, fields.get("badge"));
         SimpleMailMessage commentEmail = new SimpleMailMessage();
         commentEmail.setTo(fields.get("email"));
-        commentEmail.setSubject("Wohooo!! You have been recognised by your colleage.");
-        commentEmail.setText("You recieved a star from " +userGiver.getFirstName()+" "+ userGiver.getLastName()+"\n"
+        commentEmail.setSubject("You have been recognised.");
+        commentEmail.setText("You recieved a star from " + userGiver.getFirstName() + " " + userGiver.getLastName() + "\n"
                 + "Message : " + fields.get("reason"));
         commentEmail.setFrom("no-reply@tothenew.com");
-
         emailService.sendEmail(commentEmail);
-
-
-
-
-
-
-
-        return  "success";
+        return "success";
     }
 }

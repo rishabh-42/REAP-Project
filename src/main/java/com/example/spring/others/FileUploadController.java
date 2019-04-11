@@ -1,7 +1,6 @@
 package com.example.spring.others;
 
 
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,12 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * Handles requests for the application file upload requests
- */
 @Controller
 public class FileUploadController {
 
@@ -32,60 +27,25 @@ public class FileUploadController {
     private static final Logger logger = LoggerFactory
             .getLogger(FileUploadController.class);
 
-    /**
-     * Upload single file using Spring ProfileController
-     */
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public
-    String uploadFileHandler(@RequestParam("file") MultipartFile file) {
-
-        System.out.println("aadhfsdnfjkdhasd");
+    public String uploadFileHandler(@RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-
-                // Creating the directory to store file
-//                String rootPath = "/home/ttn/Reap/src/main/resources/static/assets/profileImages";
-                String rootPath ="/home/ttn/Reap/out/production/resources/static/assets/profileImages";
+                String rootPath = "/home/ttn/Reap/out/production/resources/static/assets/profileImages";
                 File dir = new File(rootPath);
                 if (!dir.exists())
                     dir.mkdirs();
-
-                // principal
                 String username;
-
                 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-                System.out.println("principal " + principal);
                 if (principal instanceof UserDetails) {
-
-                    username= ((UserDetails)principal).getUsername();
-                    System.out.println(username + "inside username");
-
+                    username = ((UserDetails) principal).getUsername();
                 } else {
-
                     username = principal.toString();
-                    System.out.println(username + "inside else username");
-
-
                 }
-
-
-                    User user = userService.findByEmail(username);
-
-
-                System.out.println("====================" + user);
-                System.out.println("========="+ user);
-
-
-                System.out.println(dir.getAbsolutePath() + "  "+ File.separator);
-
-                // Create the file on server
-//                File serverFile = new File(dir.getAbsolutePath()
-//                        + File.separator+user.getUserId()+".png");
-
+                User user = userService.findByEmail(username);
                 File serverFile = new File(dir.getAbsolutePath()
-                        + File.separator+user.getUserId()+".png");
+                        + File.separator + user.getUserId() + ".png");
 
                 BufferedOutputStream stream = new BufferedOutputStream(
                         new FileOutputStream(serverFile));
@@ -104,7 +64,4 @@ public class FileUploadController {
                     + " because the file was empty.";
         }
     }
-
-
-
 }

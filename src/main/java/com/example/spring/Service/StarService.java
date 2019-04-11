@@ -8,12 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class StarService {
 
-
     @Autowired
     StarRepository starRepository;
 
     public Star getStar(String s){
-
         return starRepository.findByName(s);
     }
 }

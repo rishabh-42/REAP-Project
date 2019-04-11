@@ -40,64 +40,39 @@ public class WarehouseController {
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping("/warehouse")
     public ModelAndView getWarehouse(){
-
         ModelAndView modelAndView = new ModelAndView("pages/Warehouse");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        System.out.println("=================" +((UserDetails)principal).getUsername());
-
         User user = userService.findByEmail(((UserDetails)principal).getUsername());
-
         modelAndView.addObject("user",user);
-
         UserStarCount userStarCount =userStarCountService.findByUser(user);
         modelAndView.addObject("userStarCount",userStarCount);
-
         UserStarReceived userStarReceived = userStarRecievedService.findByUser(user);
         modelAndView.addObject("userStarRecieved",userStarReceived);
-
         return modelAndView;
-
     }
+
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @PostMapping("/warehouse")
     @ResponseBody
     public String redeemPoints(@RequestParam("items") String items,@RequestParam("price") String price,@RequestParam("imgUrl") String imgUrl,@RequestParam("totalPrice") String totalPrice){
-
-
         int cartPrice = Integer.parseInt(totalPrice);
         String itemArr[]=items.split(" ");
-
         String imgArr[]=imgUrl.split(" ");
-
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        System.out.println("=================" +((UserDetails)principal).getUsername());
-
         User user = userService.findByEmail(((UserDetails)principal).getUsername());
-
         UserStarReceived userStarReceived = userStarRecievedService.findByUser(user);
-
         if(cartPrice>userStarReceived.getPoints()){
             return "not enough points";
         }
         else {
-
             Order order = new Order();
             order.setItemUrl(Arrays.asList(itemArr));
             order.setTotalPrice(cartPrice);
             order.setUser(user);
             userStarReceived.setPoints(userStarReceived.getPoints()-cartPrice);
             userStarRecievedService.save(userStarReceived);
-
             orderService.saveOrder(order);
-
-
         }
-
-
-
         return "done";
-
     }
 }

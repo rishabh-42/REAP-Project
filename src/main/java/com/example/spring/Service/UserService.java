@@ -14,35 +14,22 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-
     public List<User> findAllUsers(){
         return userRepository.findAll();
-    }
-
-    public User findByFirstName(String name) {
-        return userRepository.findByFirstName(name);
     }
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
     public User findByResetToken(String resetToken){
         return userRepository.findByResetToken(resetToken);
     }
-
     public User findByConfirmationToken(String confirmationToken) {
         return userRepository.findByConfirmationToken(confirmationToken);
     }
-
     public User saveUser(User user) {
         return userRepository.save(user);
     }
-
-
     public void update(User user){
         userRepository.save(user);
     }
-
-
 }

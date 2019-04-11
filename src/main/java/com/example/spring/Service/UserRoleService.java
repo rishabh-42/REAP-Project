@@ -25,91 +25,50 @@ public class UserRoleService {
     @Autowired
     UserStarCountService userStarCountService;
 
-    public UserRole getRole(String name){
-
-        return  userRoleRepository.findByName(name);
-
+    public UserRole getRole(String name) {
+        return userRoleRepository.findByName(name);
     }
 
-    public void updateRoles(String email , String roles[]){
-
-        int newPriority=-1;
-
+    public void updateRoles(String email, String roles[]) {
+        int newPriority = -1;
         Set<UserRole> rolesToBeAdded = new HashSet<>();
         User user = userRepository.findByEmail(email);
         Set<UserRole> userRoles = user.getRoles();
-        boolean exits=false;
-
-        int currentPriority=-1;
-
-        for(UserRole userRole : userRoles){
-            if(userRole.getPriority()>currentPriority){
-                currentPriority=userRole.getPriority();
-
+        boolean exits = false;
+        int currentPriority = -1;
+        for (UserRole userRole : userRoles) {
+            if (userRole.getPriority() > currentPriority) {
+                currentPriority = userRole.getPriority();
             }
-
         }
-//        System.out.println("====== cuurent p"+ currentPriority);
-
-        for(int i=0;i<roles.length;i++){
-            System.out.println("for "+roles[i]);
-            for(UserRole userRole : userRoles){
-                if(userRole.getName().equals(roles[i])){
-                    exits=true;
+        for (int i = 0; i < roles.length; i++) {
+            for (UserRole userRole : userRoles) {
+                if (userRole.getName().equals(roles[i])) {
+                    exits = true;
                     rolesToBeAdded.add(userRoleRepository.findByName(roles[i]));
                     break;
-
                 }
-
             }
-            if(!exits){
-
-//                userRoles.add(userRoleRepository.findByName(roles[i]));
+            if (!exits) {
                 rolesToBeAdded.add(userRoleRepository.findByName(roles[i]));
-
             }
-
-            exits=false;
-
-
-
-
+            exits = false;
         }
-
-        for(UserRole userRole : rolesToBeAdded){
+        for (UserRole userRole : rolesToBeAdded) {
             userRoles.add(userRole);
-            if(userRole.getPriority()>newPriority)
-            {
-                if(userRole.getPriority()!=4){
-                    newPriority=userRole.getPriority();
+            if (userRole.getPriority() > newPriority) {
+                if (userRole.getPriority() != 4) {
+                    newPriority = userRole.getPriority();
                 }
-
             }
-
         }
-
-//        System.out.println("============ old roles  " + userRoles);
-//        System.out.println("============ New roles  " + rolesToBeAdded);
-//
-//        System.out.println(currentPriority + "   "+ newPriority);
-
-
         user.setRoles(rolesToBeAdded);
-
         userRepository.save(user);
-
         UserRole roleWithMaxPriority = userRoleRepository.findByPriority(newPriority);
-
         UserStarCount userStarCount = userStarCountService.findByUser(user);
         userStarCount.setGoldStarCount(roleWithMaxPriority.getGoldStar());
         userStarCount.setSilverStarCount(roleWithMaxPriority.getSilverStar());
         userStarCount.setBronzeStarCount(roleWithMaxPriority.getBronzeStar());
-
         userStarCountService.saveStars(userStarCount);
-
-
-
-
-
     }
 }

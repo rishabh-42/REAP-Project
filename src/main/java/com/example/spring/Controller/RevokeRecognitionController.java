@@ -34,31 +34,22 @@ public class RevokeRecognitionController {
     @PostMapping("/revoke")
     @ResponseBody
     public String revokeRecognition(@RequestParam Map<String,String> postData){
-
-
         int postRowId = Integer.parseInt(postData.get("id"));
-        String additionalComment = (String) postData.get("additionalComment");
-
-        String reason = (String) postData.get("reason");
-
-
+        String additionalComment =  postData.get("additionalComment");
+        String reason = postData.get("reason");
         // Inactivating the post
         BadgesGiven postRow = badgesGivenService.findById(postRowId);
         postRow.setActive(false);
         badgesGivenService.save(postRow);
-
         //getting star
         Star starType = postRow.getStar();
-
         // Add one star in giver
         UserStarCount userStarCount = userStarCountService.findByUser(postRow.getGiver());
         if(starType.getName().equals("Gold")) userStarCount.setGoldStarCount(userStarCount.getGoldStarCount()+1);
         if(starType.getName().equals("Silver")) userStarCount.setSilverStarCount(userStarCount.getSilverStarCount()+1);
         if(starType.getName().equals("Bronze")) userStarCount.setBronzeStarCount(userStarCount.getBronzeStarCount()+1);
         userStarCountService.saveStars(userStarCount);
-
         //reduce one star from receiver
-
         UserStarReceived userStarReceived = userStarRecievedService.findByUser(postRow.getReceiver());
         if(starType.getName().equals("Gold")) {userStarReceived.setGoldStarRecieved(userStarReceived.getGoldStarRecieved()-1);
         userStarReceived.setPoints(userStarReceived.getPoints()-30);
@@ -69,7 +60,6 @@ public class RevokeRecognitionController {
             userStarReceived.setPoints(userStarReceived.getPoints()-10);
         }
         userStarRecievedService.save(userStarReceived);
-
         // send mail to reciever for reducing a star
         SimpleMailMessage senderEmail = new SimpleMailMessage();
         senderEmail.setTo(postRow.getGiver().getEmail());
@@ -78,7 +68,6 @@ public class RevokeRecognitionController {
                 + "has been revoked by Admin\nReason : " + reason + "("+additionalComment+")" + "\nFor more details, Please contact Admin");
         senderEmail.setFrom("no-reply@tothenew.com");
         emailService.sendEmail(senderEmail);
-
         //Receivers Mail
         SimpleMailMessage recieverEmail = new SimpleMailMessage();
         recieverEmail.setTo(postRow.getReceiver().getEmail());
@@ -87,9 +76,6 @@ public class RevokeRecognitionController {
                 + "has been revoked by Admin\n"+"\nFor more details, Please contact Admin");
         recieverEmail.setFrom("no-reply@tothenew.com");
         emailService.sendEmail(recieverEmail);
-
-
        return  "done";
-
     }
 }

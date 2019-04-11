@@ -32,8 +32,6 @@ public class UserStarReceived {
     Integer points = 0;
 
     public Integer getPoints() {
-
-
         return points;
     }
 

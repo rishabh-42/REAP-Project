@@ -14,34 +14,20 @@ import java.util.stream.Collectors;
 public class CustomUserDetails extends User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        System.out.println("=========");
-        getRoles().stream().forEach(System.out::println);
-
-//        List<SimpleGrantedAuthority> grantedAuthorities;
-
-//        return Arrays.asList(new SimpleGrantedAuthority("ROLE_"+getCurrentRoleId()));
-
         return getRoles().stream().map(
                 e-> new SimpleGrantedAuthority("ROLE_"+e.getName()))
                 .collect(Collectors.toSet());
-
     }
-
 
     @Override
     public String getUsername() {
-        System.out.println("username os padmklflshjdfahjdfghjasdhj " + super.getFirstName());
         return super.getEmail();
     }
 
     @Override
    public String getPassword(){
-        System.out.println("PASSword os padmklfl dhsjjjhdkskh " + super.getPassword());
-
         return super.getPassword();
     }
-
 
     @Override
     public boolean isAccountNonExpired() {
@@ -66,8 +52,4 @@ public class CustomUserDetails extends User implements UserDetails {
     public CustomUserDetails(final User user){
         super(user);
     }
-
-
-
-
 }

@@ -29,87 +29,45 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
     @Bean(name = "BCryptPasswordEncoder")
     PasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 
-    //for redirectiion to different pages
     @Bean("authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
-            AuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-
-
         return super.authenticationManagerBean();
     }
 
-
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
-
-//    @Bean
-//    public AuthenticationProvider authProvide(){
-//
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setUserDetailsService(userDetailsService);
-//        provider.setPasswordEncoder(new PasswordEncoder() {
-//            @Override
-//            public String encode(CharSequence rawPassword) {
-//
-//                return rawPassword.toString();
-//            }
-//
-//            @Override
-//            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-//                if(rawPassword.equals(encodedPassword))
-//                return true;
-//                else return false;
-//            }
-//        });
-//
-//        return provider;
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        System.out.println("configure");
-//        http.httpBasic().disable();
-
-        System.out.println("again");
         http.csrf().disable();
-
-//        http.authorizeRequests().antMatchers("/*.png","/resources/**", "/static/**","/images/**","/css/**").permitAll();
-//        http.formLogin()
-//                .loginPage("/loginUser.html")
-//                .loginProcessingUrl("/pe")
-//                .defaultSuccessUrl("/homepage.html",true)
-//                .failureUrl("/login.html?error=true");
-
-
-
-
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/register/**","/forgot/**","/reset/**").permitAll();
-        http.authorizeRequests().antMatchers("/reset/**","/confirm/**").permitAll();
-
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/register/**", "/forgot/**", "/reset/**").permitAll();
         http.authorizeRequests()
-                .antMatchers("/dashboard/**","/getAllUsers/**","/getUserRoles/**").permitAll()
-                .anyRequest().authenticated().
-                and()
-
-                .formLogin().loginPage("/loginSignup").loginProcessingUrl("/perform_login").defaultSuccessUrl("/dashboard").
+                .antMatchers("/reset/**", "/confirm/**")
+                .permitAll();
+        http.authorizeRequests()
+                .antMatchers("/dashboard/**", "/getAllUsers/**", "/getUserRoles/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/loginSignup")
+                .loginProcessingUrl("/perform_login")
+                .defaultSuccessUrl("/dashboard").
                 permitAll().
                 and().
                 logout().
-                logoutUrl("/logout").clearAuthentication(true).
-                 permitAll();
-
-//                .loginProcessingUrl("/rishabh")
-//                .defaultSuccessUrl("/dashboard")
-//                .failureUrl("/loginUser")
-//                .and().logout().permitAll();
+                logoutUrl("/logout")
+                .clearAuthentication(true).
+                permitAll();
     }
 
     @Override
@@ -117,19 +75,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(new PasswordEncoder() {
             @Override
             public String encode(CharSequence rawPassword) {
-//                System.out.println("raw " + rawPassword);
                 return rawPassword.toString();
             }
 
             @Override
             public boolean matches(CharSequence rawPassword, String encodedPassword) {
-
-//                System.out.println("i am heree");
-//                System.out.println((rawPassword).toString());
-//                System.out.println("encoded "+encodedPassword);
-//                rawPassword= BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt());
-//                System.out.println("raw "+rawPassword);
-
                 return BCrypt.checkpw(rawPassword.toString(), encodedPassword);
             }
         });
@@ -137,17 +87,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-
-        System.out.println("inside config web security");
         web.ignoring()
-                .antMatchers(HttpMethod.GET, "/*.png","/images/**","**/profileImages/**","/assets/**", "/resources/**", "**/static/**", "/images/**", "/css/**","/confirm/**").
-                and()
-        .ignoring()
-        .antMatchers(HttpMethod.POST,"**/register/**")
+                .antMatchers(HttpMethod.GET, "/*.png", "/images/**", "**/profileImages/**", "/assets/**", "/resources/**", "**/static/**", "/images/**", "/css/**", "/confirm/**")
+                .and()
+                .ignoring()
+                .antMatchers(HttpMethod.POST, "**/register/**")
         ;
-
-
     }
-
-
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserStarCountRepository extends JpaRepository<UserStarCount,Integer> {
-
     UserStarCount findByUser(User user);
     @Override
     <S extends UserStarCount> S save(S entity);

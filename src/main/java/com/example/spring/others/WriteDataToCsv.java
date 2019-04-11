@@ -25,7 +25,6 @@ public class WriteDataToCsv {
                         badgesGiven1.getCreateDateTime().toString(),
                         badgesGiven1.getUpdateDateTime().toString()
                 );
-
                 csvPrinter.printRecord(data);
             }
             csvPrinter.flush();

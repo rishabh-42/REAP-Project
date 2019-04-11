@@ -15,43 +15,33 @@ public class BadgesGivenService {
     @Autowired
     BadgesGivenRepository badgesGivenRepository;
 
-    public void save(BadgesGiven badgesGiven){
-
+    public void save(BadgesGiven badgesGiven) {
         badgesGivenRepository.save(badgesGiven);
-
-
     }
 
-    public List<BadgesGiven> getAllPosts(){
-
+    public List<BadgesGiven> getAllPosts() {
         return badgesGivenRepository.findByActiveOrderByIdDesc(true);
     }
 
 
-    public List<BadgesGiven> getListOfGiver(User user){
-
-        return badgesGivenRepository.findByGiverAndActive(user,true);
+    public List<BadgesGiven> getListOfGiver(User user) {
+        return badgesGivenRepository.findByGiverAndActive(user, true);
     }
 
-   public List<BadgesGiven> getListOfReciever(User user){
-
-        return badgesGivenRepository.findByReceiverAndActive(user,true);
-
+    public List<BadgesGiven> getListOfReciever(User user) {
+        return badgesGivenRepository.findByReceiverAndActive(user, true);
     }
 
 
-    public BadgesGiven findById(int id){
-
+    public BadgesGiven findById(int id) {
         return badgesGivenRepository.findById(id).get();
     }
 
-    public List<BadgesGiven> findBetweenDate(LocalDateTime startDate, LocalDateTime endDate){
-
-        return badgesGivenRepository.findAllByCreateDateTimeBetween(startDate,endDate);
+    public List<BadgesGiven> findBetweenDate(LocalDateTime startDate, LocalDateTime endDate) {
+        return badgesGivenRepository.findAllByCreateDateTimeBetween(startDate, endDate);
     }
 
-    public List<BadgesGiven> findByGiverOrReciever(User user1,User user2){
-
-        return badgesGivenRepository.findAllByGiverOrReceiverOrderByIdDesc(user1,user2).stream().filter(e->e.isActive()==true).collect(Collectors.toList());
+    public List<BadgesGiven> findByGiverOrReciever(User user1, User user2) {
+        return badgesGivenRepository.findAllByGiverOrReceiverOrderByIdDesc(user1, user2).stream().filter(e -> e.isActive() == true).collect(Collectors.toList());
     }
 }

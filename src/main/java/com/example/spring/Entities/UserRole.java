@@ -40,19 +40,6 @@ public class UserRole{
 
     LocalDateTime updatedAt;
 
-    @Override
-    public String toString() {
-        return "UserRole{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", goldStar=" + goldStar +
-                ", silverStar=" + silverStar +
-                ", bronzeStar=" + bronzeStar +
-                ", priority=" + priority +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 
     public Integer getId() {
         return id;

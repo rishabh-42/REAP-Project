@@ -30,6 +30,20 @@ import java.util.Set;
 @Table(name = "user")
 public class User {
 
+    public User() {
+
+    }
+
+    public User(User user) {
+        this.password = user.getPassword();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.currentRoleId = user.getCurrentRoleId();
+        this.active = true;
+        this.roles = user.getRoles();
+        this.email = user.getEmail();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer userId;
@@ -37,10 +51,10 @@ public class User {
 
     @Column(nullable = false)
 //    @Size(min = 4, max = 30, message = "{user.first.name}")
-    String firstName;
+            String firstName;
 
 
-//    @Size(min = 4, max = 30, message = "{user.last.name}")
+    //    @Size(min = 4, max = 30, message = "{user.last.name}")
     String lastName;
 
 
@@ -55,12 +69,10 @@ public class User {
     String matchingPassword;
 
 
-
     String confirmationToken;
 
 
-        String currentRoleId;
-
+    String currentRoleId;
 
 
     Integer pointSpent = 0;
@@ -68,8 +80,6 @@ public class User {
     String resetToken;
 
     boolean active;
-
-
 
 
     @JsonManagedReference
@@ -94,48 +104,12 @@ public class User {
     List<Order> order = new ArrayList<>();
 
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" +userId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", imageUrl='" + photo+ '\'' +
-
-                ", resetToken='" + resetToken + '\'' +
-                ", active=" + active +
-                ", createdAt=" + createDateTime +
-                ", updatedAt=" + updateDateTime +
-                ", roles=" + roles +
-                '}';
-    }
-
     public UserStarReceived getUserStarReceived() {
         return userStarReceived;
     }
 
     public void setUserStarReceived(UserStarReceived userStarReceived) {
         this.userStarReceived = userStarReceived;
-    }
-
-    public User(User user) {
-
-        System.out.println("Constrc called");
-        this.password = user.getPassword();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.currentRoleId = user.getCurrentRoleId();
-        this.active = true;
-        this.roles= user.getRoles();
-        this.email=user.getEmail();
-
-//        System.out.println("id "+ user.getCurrentRoleId());
-    }
-
-    public User(){
-
     }
 
     public Integer getUserId() {
@@ -195,7 +169,6 @@ public class User {
     }
 
 
-
     public List<Order> getOrder() {
         return order;
     }
@@ -203,6 +176,7 @@ public class User {
     public void setOrder(List<Order> order) {
         this.order = order;
     }
+
     public Integer getPointSpent() {
         return pointSpent;
     }

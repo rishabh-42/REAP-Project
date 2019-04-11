@@ -24,17 +24,10 @@ public class CsvController {
     @GetMapping(value = "/download")
     public void download(@RequestParam("startDate") String s, @RequestParam("endDate") String e, HttpServletResponse response) throws IOException, ParseException {
         response.setHeader("Content-Disposition", "attachment; file=BadgesGiven.csv");
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateStart = LocalDateTime.parse(s, formatter);
         LocalDateTime dateEnd = LocalDateTime.parse(e, formatter);
-
-
-
-        System.out.println(dateEnd);
-        System.out.println(dateStart);
         List<BadgesGiven> badgesGivens = badgesGivenService.findBetweenDate(dateStart,dateEnd).stream().filter(f->f.isActive()==true).collect(Collectors.toList());
-
         WriteDataToCsv.writeObjectToCSV(response.getWriter(), badgesGivens);
     }
 }

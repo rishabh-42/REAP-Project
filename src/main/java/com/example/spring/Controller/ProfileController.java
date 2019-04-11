@@ -37,49 +37,25 @@ public class ProfileController {
     @Autowired
     BadgesGivenService badgesGivenService;
 
-
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
-    @RequestMapping(value ={"/dashboard/profile/"})
+    @RequestMapping(value = {"/dashboard/profile/"})
     @ResponseBody
-    ModelAndView getProfilePage (){
-
-
-        System.out.println("here iii ========");
-
-            ModelAndView modelAndView =new ModelAndView("pages/profile");
-
-            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-            System.out.println("=================" +((UserDetails)principal).getUsername());
-
-            User user = userService.findByEmail(((UserDetails)principal).getUsername());
-
-         if(user.isActive()==false) return new ModelAndView("pages/UserInactive");
-
-            modelAndView.addObject("user",user);
-
-            UserStarReceived userStarReceived = userStarRecievedService.findByUser(user);
-            modelAndView.addObject("userStarReceived",userStarReceived);
-
-            UserStarCount userStarCount = userStarCountService.findByUser(user);
-            modelAndView.addObject("userStarCount",userStarCount);
-            List<BadgesGiven> allSharedAndReceived = badgesGivenService.findByGiverOrReciever(user,user);
-            modelAndView.addObject("allSharedAndReceived",allSharedAndReceived);
-
-            List<BadgesGiven> given = badgesGivenService.getListOfGiver(user);
-            modelAndView.addObject("given",given);
-
-            List<BadgesGiven> received = badgesGivenService.getListOfReciever(user);
-            modelAndView.addObject("received",received);
-
-
-
-            return modelAndView;
-
-
-
-
+    public ModelAndView getProfilePage() {
+        ModelAndView modelAndView = new ModelAndView("pages/profile");
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findByEmail(((UserDetails) principal).getUsername());
+        if (user.isActive() == false) return new ModelAndView("pages/UserInactive");
+        modelAndView.addObject("user", user);
+        UserStarReceived userStarReceived = userStarRecievedService.findByUser(user);
+        modelAndView.addObject("userStarReceived", userStarReceived);
+        UserStarCount userStarCount = userStarCountService.findByUser(user);
+        modelAndView.addObject("userStarCount", userStarCount);
+        List<BadgesGiven> allSharedAndReceived = badgesGivenService.findByGiverOrReciever(user, user);
+        modelAndView.addObject("allSharedAndReceived", allSharedAndReceived);
+        List<BadgesGiven> given = badgesGivenService.getListOfGiver(user);
+        modelAndView.addObject("given", given);
+        List<BadgesGiven> received = badgesGivenService.getListOfReciever(user);
+        modelAndView.addObject("received", received);
+        return modelAndView;
     }
-
-
 }
