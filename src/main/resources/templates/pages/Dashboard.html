@@ -1089,7 +1089,7 @@
                         <div th:each="topUser:${topUsers}" class="row">
                             <div class="col-auto">
                                 <img id="avtr"
-                                     th:src="@{'/'+${topUser.getUser().getPhoto()}}"
+                                     th:src="@{''+${topUser.getUser().getPhoto()}}"
                                      class="avatar mt-3">
 
                             </div>

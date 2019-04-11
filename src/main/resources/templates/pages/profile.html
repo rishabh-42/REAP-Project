@@ -775,7 +775,7 @@
 
                 <a id="profileMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="recieverImage"
-                         th:src="@{'/'+${user.getPhoto()}}">
+                         th:src="@{''+${user.getPhoto()}}">
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileMenu">
@@ -790,7 +790,7 @@
 
                                 <!--Profile Image-->
                                 <div class="col-md-4">
-                                    <img th:src="@{'/'+${user.getPhoto()}}"
+                                    <img th:src="@{''+${user.getPhoto()}}"
                                          width="80px" height="80px">
                                     <form method="post" action="/uploadFile" enctype="multipart/form-data">
 
@@ -882,7 +882,7 @@
                                 <div class="col-sm-1">
 
                                     <img class="recieverImage"
-                                         th:src="@{'/'+${user.getPhoto()}}">
+                                         th:src="@{''+${user.getPhoto()}}">
 
                                 </div>
 
@@ -976,7 +976,7 @@
                                         <div id="first-name" th:each="post1:${allSharedAndReceived}" class="row comment">
                                             <div class="col-1">
                                                 <img id="avtr"
-                                                     th:src="@{'/'+${post1.getReceiver().getPhoto()}}"
+                                                     th:src="@{''+${post1.getReceiver().getPhoto()}}"
                                                      class="avatar mt-2">
                                             </div>
                                             <div class="col-11 all-posts">
@@ -1016,7 +1016,7 @@
                                         <div id="first-name" th:each="post1:${received}" class="row comment">
                                             <div class="col-1">
                                                 <img id="avtr"
-                                                     th:src="@{'/'+${post1.getReceiver().getPhoto()}}"
+                                                     th:src="@{''+${post1.getReceiver().getPhoto()}}"
                                                      class="avatar mt-2">
                                             </div>
                                             <div class="col-11 all-posts">
@@ -1054,7 +1054,7 @@
                                         <div id="first-name" th:each="post1:${given}" class="row comment">
                                             <div class="col-1">
                                                 <img id="avtr"
-                                                     th:src="@{'/'+${post1.getReceiver().getPhoto()}}"
+                                                     th:src="@{''+${post1.getReceiver().getPhoto()}}"
                                                      class="avatar mt-2">
                                             </div>
                                             <div class="col-11 all-posts">

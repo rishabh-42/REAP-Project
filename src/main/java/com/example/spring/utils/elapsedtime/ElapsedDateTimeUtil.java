@@ -31,9 +31,11 @@ public class ElapsedDateTimeUtil {
 
        if(days!=0){
            s= s.append(days + " days ");
-       }
 
-       s=s.append(hours+" hours "+minutes+" minutes ");
+       }
+        if(hours!=0) s=s.append(hours+" hours ");
+
+       s=s.append(minutes+" minutes ");
        return s.toString();
 
    }

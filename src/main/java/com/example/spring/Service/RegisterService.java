@@ -74,7 +74,7 @@ public class RegisterService {
             Set<UserRole> roles = new HashSet<>();
             roles.add(userRoleService.getRole("User"));
             user.setRoles(roles);
-            user.setPhoto("assets/profileImages/default.png");
+            user.setPhoto("/assets/profileImages/default.png");
             User newUser = userService.saveUser(user);
 
             UserStarCount userStarCount = new UserStarCount();
