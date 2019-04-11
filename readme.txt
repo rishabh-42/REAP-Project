@@ -17,4 +17,7 @@ Adding Stars :
 
     Now , proceed to "localhost:8080/loginSignup"
 
-assign role '4' to your user for admin , in user_role table .
+assign role 'Admin' to your user for admin , in user_role table .
+
+
+Note : You can ignore the Id's or use any id you want to use.

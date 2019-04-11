@@ -38,8 +38,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping("/getUserRoles")
     Set<UserRole> getRoles(@RequestParam("email") String email){
-        Set<UserRole> userRoles= userService.findByEmail(email).getRoles();
-        return userRoles;
+        return userService.findByEmail(email).getRoles();
     }
     @PreAuthorize("hasAnyRole('Admin')")
     @PostMapping("/updateRoles")
@@ -52,14 +51,6 @@ public class UserController {
     @PreAuthorize("hasAnyRole('Admin')")
     @PostMapping("/setActive")
     public int setActive(@RequestParam("email") String email ,@RequestParam("checked") String checked){
-        User user = userService.findByEmail(email);
-        if(checked.equals("true")){
-            user.setActive(true);
-        }
-        else {
-            user.setActive(false);
-        }
-        userService.saveUser(user);
-        return 1;
+       return userService.setActive(email,checked);
     }
 }

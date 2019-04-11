@@ -2,6 +2,7 @@ package com.example.spring.Controller;
 
 import com.example.spring.Entities.BadgesGiven;
 import com.example.spring.Service.BadgesGivenService;
+import com.example.spring.Service.WriteToCSVService;
 import com.example.spring.utils.writecsv.WriteDataToCsv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,15 +20,10 @@ import java.util.stream.Collectors;
 @Controller
 public class CsvController {
 
-    @Autowired
-    BadgesGivenService badgesGivenService;
+   @Autowired
+    WriteToCSVService writeToCSVService;
     @GetMapping(value = "/download")
     public void download(@RequestParam("startDate") String s, @RequestParam("endDate") String e, HttpServletResponse response) throws IOException, ParseException {
-        response.setHeader("Content-Disposition", "attachment; file=BadgesGiven.csv");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime dateStart = LocalDateTime.parse(s, formatter);
-        LocalDateTime dateEnd = LocalDateTime.parse(e, formatter);
-        List<BadgesGiven> badgesGivens = badgesGivenService.findBetweenDate(dateStart,dateEnd).stream().filter(f->f.isActive()==true).collect(Collectors.toList());
-        WriteDataToCsv.writeObjectToCSV(response.getWriter(), badgesGivens);
+       writeToCSVService.writeCsv(s,e,response);
     }
 }
