@@ -21,4 +21,6 @@ public interface BadgesGivenRepository extends JpaRepository<BadgesGiven,Integer
     Optional<BadgesGiven> findById(Integer i);
 
     List<BadgesGiven> findAllByCreateDateTimeBetween(LocalDateTime startDate ,LocalDateTime endDate);
+
+    List<BadgesGiven> findAllByGiverOrReceiverOrderByIdDesc(User user1,User user2);
 }

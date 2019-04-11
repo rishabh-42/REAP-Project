@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BadgesGivenService {
@@ -47,5 +48,10 @@ public class BadgesGivenService {
     public List<BadgesGiven> findBetweenDate(LocalDateTime startDate, LocalDateTime endDate){
 
         return badgesGivenRepository.findAllByCreateDateTimeBetween(startDate,endDate);
+    }
+
+    public List<BadgesGiven> findByGiverOrReciever(User user1,User user2){
+
+        return badgesGivenRepository.findAllByGiverOrReceiverOrderByIdDesc(user1,user2).stream().filter(e->e.isActive()==true).collect(Collectors.toList());
     }
 }

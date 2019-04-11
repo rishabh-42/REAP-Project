@@ -9,6 +9,7 @@ import com.example.spring.Service.UserService;
 import com.example.spring.Service.UserStarCountService;
 import com.example.spring.Service.UserStarRecievedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ public class WarehouseController {
     @Autowired
     UserStarRecievedService userStarRecievedService;
 
+    @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping("/warehouse")
     public ModelAndView getWarehouse(){
 
@@ -57,7 +59,7 @@ public class WarehouseController {
         return modelAndView;
 
     }
-
+    @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @PostMapping("/warehouse")
     @ResponseBody
     public String redeemPoints(@RequestParam("items") String items,@RequestParam("price") String price,@RequestParam("imgUrl") String imgUrl,@RequestParam("totalPrice") String totalPrice){

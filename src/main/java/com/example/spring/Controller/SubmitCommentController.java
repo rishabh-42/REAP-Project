@@ -42,7 +42,7 @@ public class SubmitCommentController {
 
     @RequestMapping(value = "/submitComment", method = RequestMethod.POST)
     @ResponseBody
-    int submitComment(@RequestParam Map<String, String> fields) {
+    public String submitComment(@RequestParam Map<String, String> fields) {
 
         System.out.println("===========");
         System.out.println(fields);
@@ -50,9 +50,20 @@ public class SubmitCommentController {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        if(fields.get("email").equals(((UserDetails)principal).getUsername())){
+            return "cannot recognize yourself";
+
+        }
+
 
         User userGiver = userService.findByEmail(((UserDetails)principal).getUsername());
         User userReciever = userService.findByEmail(fields.get("email"));
+
+        if(userReciever==null){
+            return "Selected newer doesn't exists";
+        }
+
+
         BadgesGiven badgesGiven = new BadgesGiven();
 
         badgesGiven.setGiver(userGiver);
@@ -88,6 +99,6 @@ public class SubmitCommentController {
 
 
 
-        return 1;
+        return  "success";
     }
 }

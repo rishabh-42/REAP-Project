@@ -590,48 +590,10 @@
             var email;
             var badge;
             var reason;
-            $("#recognize-button").click(function () {
-                email = $("#tags").val();
-                badge = $("#badge").val();
-                reason = $("#reason").val();
-                console.log("badge" + badge);
 
-                if (email == "" || badge == null || reason == "") {
-
-                    alert("Please Fill all the details correctly !!")
-
-                }
-
-                else {
-
-                    $("#recognize-info-reason").text(reason);
-                    $("#recognize-info-star").text(badge);
-                    $("#recognize-info-receiver").text(email);
-                    $("#recognize-info-sender").text($("#logged-in-user").text());
-
-                }
-                console.log("hiding modal");
-                setTimeout(
-                    function () {
-                        //do something special
-                    }, 500);
-                $("#recognize-modal").hide();
-                // $("#recognize-modal .close-now").click();
-                // console.log("button clicked");
-
-                // $.ajax({
-                //     url: "/submitComment",
-                //     method: "post",
-                //     data: {email: email, badge: badge, reason:reason},
-                //     success: function () {
-                //
-                //     }
-                //
-                //
-                // });
-            });
 
             $(".user-active").change(function () {
+
 
                 var emaiil = $(this).parent().next().text();
 
@@ -660,21 +622,52 @@
                }
             });
             $("#submit-recognition").click(function () {
+                $(this).attr("disabled", true);
+                email = $("#tags").val();
+                badge = $("#badge").val();
+                reason = $("#reason").val();
+                console.log("badge" + badge);
 
-                if (email == "" || badge == "" || reason == "") {
+                if (email == "" || badge == null || reason == "") {
+
                     alert("Please Fill all the details correctly !!")
+
                 }
+
                 else {
 
-                    $(".loader-forgot").css("display", "block");
+                    $("#recognize-info-reason").text(reason);
+                    $("#recognize-info-star").text(badge);
+                    $("#recognize-info-receiver").text(email);
+                    $("#recognize-info-sender").text($("#logged-in-user").text());
+
+
+
+
                     $.ajax({
                         url: "/submitComment",
                         method: "post",
                         data: {email: email, badge: badge, reason: reason},
-                        success: function () {
-                            $(".loader-forgot").css("display", "none");
-                            alert("post submitted");
-                            location.reload(this);
+                        success: function (e) {
+
+                            if(e=="Selected newer doesn't exists")
+                            {
+                                alert(e);
+                                $(this).attr("disabled", false);
+                            }
+                            else if (e=="cannot recognize yourseff"){
+                                alert(e);
+                                $(this).attr("disabled", false);
+                            }
+                            else
+                            {
+                                alert(e);
+                                $(this).attr("disabled", false);
+                                location.reload(this);
+                            }
+
+
+
                         }
 
 
@@ -985,8 +978,7 @@
                                         <textarea style="height:140px" placeholder="I want to recognize because...."
                                                   class="form-control" id="reason"></textarea>
                                     </div>
-                                    <input id="recognize-button" type="button" data-toggle="modal"
-                                           data-target="#recognize-modal"
+                                    <input id="submit-recognition" type="button"
                                            class="btn btn-sm btn-primary float-right" value="Recognize">
 
                                 </form>
@@ -1310,36 +1302,36 @@
     </div>
 </div>
 
-<div id="recognize-modal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+<!--<div id="recognize-modal" class="modal fade" role="dialog">-->
+    <!--<div class="modal-dialog">-->
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close close-now" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <div class="modal-body">
+        <!--&lt;!&ndash; Modal content&ndash;&gt;-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close close-now" data-dismiss="modal">&times;</button>-->
+                <!--<h4 class="modal-title">Modal Header</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
 
-                <p id="recognize-info-sender" style="display: none"></p>
-                <strong> To : </strong>
-                <p id="recognize-info-receiver" s></p>
-                <strong> Star Type : </strong>
-                <p id="recognize-info-star"></p>
-                <strong> Reason : </strong>
-                <p id="recognize-info-reason"></p>
+                <!--<p id="recognize-info-sender" style="display: none"></p>-->
+                <!--<strong> To : </strong>-->
+                <!--<p id="recognize-info-receiver" s></p>-->
+                <!--<strong> Star Type : </strong>-->
+                <!--<p id="recognize-info-star"></p>-->
+                <!--<strong> Reason : </strong>-->
+                <!--<p id="recognize-info-reason"></p>-->
 
-                <input style="margin: 0 auto" id="submit-recognition" type="button" value="Submit Recognition">
+                <!--<input style="margin: 0 auto" id="submit-recognition" type="button" value="Submit Recognition">-->
 
-                <div class="loader loader-forgot" style="display: none;"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+                <!--<div class="loader loader-forgot" style="display: none;"></div>-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+            <!--</div>-->
+        <!--</div>-->
 
-    </div>
-</div>
+    <!--</div>-->
+<!--</div>-->
 
 <div id="recognize-revoke" class="modal fade" role="dialog">
     <div class="modal-dialog">

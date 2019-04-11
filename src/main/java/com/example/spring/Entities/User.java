@@ -1,6 +1,7 @@
 
 package com.example.spring.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -88,6 +89,7 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<UserRole> roles = new HashSet<>();
 
+    @JsonBackReference
     @OneToMany(mappedBy = "user")
     List<Order> order = new ArrayList<>();
 

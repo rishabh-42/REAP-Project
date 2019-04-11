@@ -125,12 +125,13 @@ public class RegisterController {
             System.out.println(user.getPassword());
             // Set user to enabled
             user.setActive(true);
+            user.setConfirmationToken("");
 
             Set<UserRole> roles = new HashSet<>();
-            roles.add(userRoleService.getRole(1));
+            roles.add(userRoleService.getRole("User"));
             user.setRoles(roles);
             // Save user
-            user.setPhoto("assets/profileImages/"+user.getUserId()+".png");
+            user.setPhoto("assets/profileImages/default.png");
 
 
 
@@ -144,9 +145,9 @@ public class RegisterController {
 
             userStarCount.setUser(newUser);
 
-            userStarCount.setGoldStarCount(userRoleService.getRole(1).getGoldStar());
-            userStarCount.setSilverStarCount(userRoleService.getRole(1).getSilverStar());
-            userStarCount.setBronzeStarCount(userRoleService.getRole(1).getBronzeStar());
+            userStarCount.setGoldStarCount(userRoleService.getRole("User").getGoldStar());
+            userStarCount.setSilverStarCount(userRoleService.getRole("User").getSilverStar());
+            userStarCount.setBronzeStarCount(userRoleService.getRole("User").getBronzeStar());
 
 
             userStarCountService.saveStars(userStarCount);

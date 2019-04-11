@@ -117,7 +117,7 @@ public class LoginController {
     @Autowired
     UserService userService;
 
-    @PreAuthorize("hasAnyRole('1','2','3','4')")
+    @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping(value="/dashboard")
     public ModelAndView dashboard() {
 

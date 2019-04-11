@@ -45,7 +45,7 @@
         }
 
         li.listItem.active a, .dashboardList li.listItem a:hover {
-            background: #d9177f;
+
             color: #ffffff;
         }
 
@@ -146,16 +146,14 @@
             box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px;
         }
 
-        .active, .btn:hover {
-            background-color: palevioletred;
-        }
+
 
         .nav-btn {
             background-color: #FFF;
         }
 
         li.listItem.active a, .dashboardList li.listItem a:hover {
-            background: #d9177f;
+
             color: #ffffff;
         }
 
@@ -219,7 +217,7 @@
         }
 
         li.listItem.active a, .dashboardList li.listItem a:hover {
-            background: #d9177f;
+
             color: #ffffff;
         }
 
@@ -246,9 +244,7 @@
             box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px;
         }
 
-        .active, .btn:hover {
-            background-color: palevioletred;
-        }
+
 
         .nav-btn {
             background-color: #FFF;
@@ -384,7 +380,7 @@
 
                 <a id="profileMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="recieverImage"
-                         th:src="@{'/'+${profileUser.getUser().getPhoto()}}">
+                         th:src="@{'/'+${user.getPhoto()}}">
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileMenu">
@@ -399,7 +395,7 @@
 
                                 <!--Profile Image-->
                                 <div class="col-md-4">
-                                    <img th:src="@{'/'+${profileUser.getUser().getPhoto()}}"
+                                    <img th:src="@{'/'+${user.getPhoto()}}"
                                          width="80px" height="80px">
                                 </div>
 
@@ -450,7 +446,7 @@
     </nav>
 
 </div>
-<div class="container-fluid" style="margin-top:110px;">
+<div class="container-fluid">
 
     <div class="content-wrapper" style="margin-top: 50px;padding-top: 30px;">
 
@@ -474,29 +470,29 @@
                                 <div class="col-sm-1">
 
                                     <img class="recieverImage"
-                                         th:src="@{'/'+${profileUser.getUser().getPhoto()}}">
+                                         th:src="@{'/'+${user.getPhoto()}}">
 
                                 </div>
 
                                 <div class="col-sm-6 userDetail" style="margin-left: 100px">
 
                                     <h3 id="myName"
-                                        th:text="${profileUser.getUser().getFirstName()}+' '+${profileUser.getUser().getLastName()}">
-                                        Gagan kushwaha</h3>
+                                        th:text="${user.getFirstName()}+' '+${user.getLastName()}">
+                                        </h3>
 
                                     <span>
                                                 <img th:src="@{/assets/images/gold.png}" height="18" width="20"/>
-                                                <i th:text="${profileUser.getGoldStarRecieved()}">0</i>
+                                                <i th:text="${userStarReceived.getGoldStarRecieved()}">0</i>
                                           </span>
 
                                     <span>
                                                 <img th:src="@{/assets/images/silver.png}" height="18" width="20"/>
-                                                 <i th:text="${profileUser.getSilverStarRecieved()}">0</i>
+                                                 <i th:text="${userStarReceived.getSilverStarRecieved()}">0</i>
                                           </span>
 
                                     <span>
                                                 <img th:src="@{/assets/images/bronze.png}" height="18" width="20"/>
-                                                 <i th:text="${profileUser.getBronzeStarRecieved()}">0</i>
+                                                 <i th:text="${userStarReceived.getBronzeStarRecieved()}">0</i>
                                           </span>
 
                                 </div>
@@ -513,7 +509,7 @@
                     </div>
 
                     <div>
-                        <input class="reedemBtn btn btn-default" type="button" th:value="${profileUser.getPoints()}">
+                        <input class="reedemBtn btn btn-default" type="button" th:value="${userStarReceived.getPoints()}">
 
 
                     </div>
@@ -565,43 +561,38 @@
                                          aria-labelledby="nav-home-tab">
 
 
-                                        <div class="row" th:each="post:${post}">
+                                        <div id="first-name" th:each="post1:${allSharedAndReceived}" class="row comment">
+                                            <div class="col-1">
+                                                <img id="avtr"
+                                                     th:src="@{''+${post1.getReceiver().getPhoto()}}"
+                                                     class="avatar mt-2">
+                                            </div>
+                                            <div class="col-11 all-posts">
+                                                <strong name="firstname" th:text="${post1.getReceiver().getFirstName()}"></strong>
+                                                <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
+                                                <span th:if="${post1.getStar().getId()}==1">
+                                        <img th:src="@{/assets/images/gold.png}">
+                                    </span>
+                                                <span th:if="${post1.getStar().getId()}==2">
+                                        <img th:src="@{/assets/images/silver.png}">
+                                    </span>
+                                                <span th:if="${post1.getStar().getId()}==3">
+                                        <img th:src="@{/assets/images/bronze.png}">
+                                    </span>
 
-                                            <div class="col-md-1" style="vertical-align: center">
+                                                from <strong
+                                                    th:text="${post1.getGiver().getFirstName()} + ' '+ ${post1.getGiver().getLastName()}">
+                                            </strong> <br>
+                                                <strong>Reason : </strong><span th:text="${post1.getComment()}"></span>
+                                                <br>
+                                                <i th:text="${post1.getElapsedTime()}"></i><span>ago</span>
 
-                                                <img class="recieverImage"
-                                                     th:src="@{'/'+${post.getReceiver().getPhoto()}}">
 
+
+                                                <br>
+                                                <hr>
                                             </div>
 
-                                            <div class="col-md-11 badgeInfo">
-
-                                                <p>
-
-                                                    <strong><a
-                                                            th:text="${post.getReceiver().getFirstName()}"></a></strong>
-
-                                                    <span> &nbsp; &nbsp;has &nbsp; recieved &nbsp;&nbsp; </span>
-
-                                                    <span th:switch="${post.getStar().getId()}">
-                                        <img th:case="1"
-                                             src="http://reap.tothenew.com/assets/ico-badge-orange-7487656ca410c0f2051788659278f212.png"
-                                             th:width="15" th:height="15" alt="gold">
-                                    <img th:case="2"
-                                         src="http://reap.tothenew.com/assets/ico-badge-grey-6e2741b0311f87111d40aac66392bf22.png"
-                                         th:width="15" th:height="15" alt="silver">
-                                    <img th:case="3"
-                                         src="http://reap.tothenew.com/assets/ico-badge-brown-6e5dc638c4ee9eef490cfcb0a5cce103.png"
-                                         th:width="15" th:height="15" alt="bronze"> </span>
-                                                    <span>&nbsp;&nbsp; from &nbsp;&nbsp;</span>
-                                                    <strong><a th:text="${post.getGiver().getFirstName()}"></a></strong>
-
-                                                    <br>
-                                                    <span>Reason:</span>
-                                                    <br>
-                                                    <span th:text="${post.getComment()}"></span>
-                                                </p>
-                                            </div>
 
                                         </div>
 
@@ -610,12 +601,77 @@
 
                                     <div class="tab-pane fade" id="nav-profile" role="tabpanel"
                                          aria-labelledby="nav-profile-tab">
-                                        .......coming soon
+                                        <div id="first-name" th:each="post1:${given}" class="row comment">
+                                            <div class="col-1">
+                                                <img id="avtr"
+                                                     th:src="@{''+${post1.getReceiver().getPhoto()}}"
+                                                     class="avatar mt-2">
+                                            </div>
+                                            <div class="col-11 all-posts">
+                                                <strong name="firstname" th:text="${post1.getReceiver().getFirstName()}"></strong>
+                                                <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
+                                                <span th:if="${post1.getStar().getId()}==1">
+                                        <img th:src="@{/assets/images/gold.png}">
+                                    </span>
+                                                <span th:if="${post1.getStar().getId()}==2">
+                                        <img th:src="@{/assets/images/silver.png}">
+                                    </span>
+                                                <span th:if="${post1.getStar().getId()}==3">
+                                        <img th:src="@{/assets/images/bronze.png}">
+                                    </span>
+
+                                                from <strong
+                                                    th:text="${post1.getGiver().getFirstName()} + ' '+ ${post1.getGiver().getLastName()}">
+                                            </strong> <br>
+                                                <strong>Reason : </strong><span th:text="${post1.getComment()}"></span>
+                                                <br>
+                                                <i th:text="${post1.getElapsedTime()}"></i><span>ago</span>
+
+
+
+                                                <br>
+                                                <hr>
+                                            </div>
+
+
+                                        </div>
                                     </div>
 
                                     <div class="tab-pane fade" id="nav-contact" role="tabpanel"
                                          aria-labelledby="nav-contact-tab">
-                                        ..........coming soon
+                                        <div id="first-name" th:each="post1:${received}" class="row comment">
+                                            <div class="col-1">
+                                                <img id="avtr"
+                                                     th:src="@{''+${post1.getReceiver().getPhoto()}}"
+                                                     class="avatar mt-2">
+                                            </div>
+                                            <div class="col-11 all-posts">
+                                                <strong name="firstname" th:text="${post1.getReceiver().getFirstName()}"></strong>
+                                                <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
+                                                <span th:if="${post1.getStar().getId()}==1">
+                                        <img th:src="@{/assets/images/gold.png}">
+                                    </span>
+                                                <span th:if="${post1.getStar().getId()}==2">
+                                        <img th:src="@{/assets/images/silver.png}">
+                                    </span>
+                                                <span th:if="${post1.getStar().getId()}==3">
+                                        <img th:src="@{/assets/images/bronze.png}">
+                                    </span>
+
+                                                from <strong
+                                                    th:text="${post1.getGiver().getFirstName()} + ' '+ ${post1.getGiver().getLastName()}">
+                                            </strong> <br>
+                                                <strong>Reason : </strong><span th:text="${post1.getComment()}"></span>
+                                                <br>
+                                                <i th:text="${post1.getElapsedTime()}"></i><span>ago</span>
+
+
+                                                <br>
+                                                <hr>
+                                            </div>
+
+
+                                        </div>
                                     </div>
 
                                 </div>

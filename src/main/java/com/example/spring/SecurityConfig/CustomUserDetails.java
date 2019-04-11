@@ -23,7 +23,7 @@ public class CustomUserDetails extends User implements UserDetails {
 //        return Arrays.asList(new SimpleGrantedAuthority("ROLE_"+getCurrentRoleId()));
 
         return getRoles().stream().map(
-                e-> new SimpleGrantedAuthority("ROLE_"+e.getId().toString()))
+                e-> new SimpleGrantedAuthority("ROLE_"+e.getName()))
                 .collect(Collectors.toSet());
 
     }

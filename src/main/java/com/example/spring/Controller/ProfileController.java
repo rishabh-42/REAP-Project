@@ -38,7 +38,7 @@ public class ProfileController {
     BadgesGivenService badgesGivenService;
 
 
-    @PreAuthorize("hasAnyRole('1','2','3','4')")
+    @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping(value ={"/dashboard/profile/"})
     @ResponseBody
     ModelAndView getProfilePage (){
@@ -56,19 +56,21 @@ public class ProfileController {
 
          if(user.isActive()==false) return new ModelAndView("pages/UserInactive");
 
-         modelAndView.addObject("user",user);
+            modelAndView.addObject("user",user);
+
+            UserStarReceived userStarReceived = userStarRecievedService.findByUser(user);
+            modelAndView.addObject("userStarReceived",userStarReceived);
 
             UserStarCount userStarCount = userStarCountService.findByUser(user);
             modelAndView.addObject("userStarCount",userStarCount);
+            List<BadgesGiven> allSharedAndReceived = badgesGivenService.findByGiverOrReciever(user,user);
+            modelAndView.addObject("allSharedAndReceived",allSharedAndReceived);
 
-            UserStarReceived userStarReceived = userStarRecievedService.findByUser(user);
-            modelAndView.addObject("profileUser",userStarReceived);
+            List<BadgesGiven> given = badgesGivenService.getListOfGiver(user);
+            modelAndView.addObject("given",given);
 
-            List<BadgesGiven> badgesGiven= badgesGivenService.getListOfGiver(user);
-            modelAndView.addObject("post",badgesGiven);
-
-            List<BadgesGiven> badgesRecieved = badgesGivenService.getListOfReciever(user);
-            modelAndView.addObject("badgesRecieved",badgesRecieved);
+            List<BadgesGiven> received = badgesGivenService.getListOfReciever(user);
+            modelAndView.addObject("received",received);
 
 
 
