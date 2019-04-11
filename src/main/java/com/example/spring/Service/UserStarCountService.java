@@ -25,7 +25,6 @@ public class UserStarCountService {
 
     public void update(User user, String star) {
         UserStarCount userStarCount = userStarCountRepository.findByUser(user);
-        System.out.println(userStarCount);
         if (star.equals("Gold")) {
             userStarCount.setGoldStarCount(userStarCount.getGoldStarCount() - 1);
         } else if (star.equals("Silver")) {

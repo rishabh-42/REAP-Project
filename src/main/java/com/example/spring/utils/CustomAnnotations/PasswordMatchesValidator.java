@@ -1,4 +1,4 @@
-package com.example.spring.others.CustomAnnotations;
+package com.example.spring.utils.CustomAnnotations;
 
 import com.example.spring.Entities.User;
 

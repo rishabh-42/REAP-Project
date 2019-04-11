@@ -2,7 +2,7 @@ package com.example.spring.Controller;
 
 import com.example.spring.Entities.BadgesGiven;
 import com.example.spring.Service.BadgesGivenService;
-import com.example.spring.others.WriteDataToCsv;
+import com.example.spring.utils.writecsv.WriteDataToCsv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

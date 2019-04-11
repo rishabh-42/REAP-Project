@@ -1,6 +1,5 @@
-package com.example.spring.others;
+package com.example.spring.utils.elapsedtime;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 

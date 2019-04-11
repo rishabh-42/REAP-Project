@@ -51,6 +51,24 @@ public class SubmitCommentController {
         if (userReceiver == null) {
             return "Selected newer doesn't exists";
         }
+        if(fields.get("badge").equals("Gold")){
+            if(userStarCountService.findByUser(userGiver).getGoldStarCount()<=0)
+            {
+                return "Not enough stars";
+            }
+        }
+        else if(fields.get("badge").equals("Silver")){
+            if(userStarCountService.findByUser(userGiver).getSilverStarCount()<=0)
+            {
+                return "Not enough stars";
+            }
+        }
+        else if(fields.get("badge").equals("Bronze")){
+            if(userStarCountService.findByUser(userGiver).getBronzeStarCount()<=0)
+            {
+                return "Not enough stars";
+            }
+        }
         BadgesGiven badgesGiven = new BadgesGiven();
         badgesGiven.setGiver(userGiver);
         badgesGiven.setReceiver(userReceiver);

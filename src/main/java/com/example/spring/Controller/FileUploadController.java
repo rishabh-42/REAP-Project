@@ -1,4 +1,4 @@
-package com.example.spring.others;
+package com.example.spring.Controller;
 
 
 import java.io.BufferedOutputStream;

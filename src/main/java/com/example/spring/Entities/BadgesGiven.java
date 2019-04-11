@@ -2,7 +2,7 @@ package com.example.spring.Entities;
 
 
 
-import com.example.spring.others.ElapsedDateTimeUtil;
+import com.example.spring.utils.elapsedtime.ElapsedDateTimeUtil;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 

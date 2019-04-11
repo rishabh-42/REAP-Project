@@ -892,19 +892,10 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="User:${allUsers}">
-                                        <!--<td>-->
-                                        <!--<button class="showinfo" >Click me</button>-->
 
-
-                                        <!--</td>-->
                                         <td th:text="${User.getFirstName()} +' '+${User.getLastName()}"></td>
                                         <td>
-                                            <!--<select class="form-control">-->
-                                            <!--<option th:each="role:${User.getRoles()}"-->
-                                            <!--th:value="${role.getName()}"-->
-                                            <!--th:text="${role.getName()}"-->
-                                            <!--&gt;</option>-->
-                                            <!--</select>-->
+
                                             <button class="btn showinfo btn-xs btn-primary">Manage Roles</button>
                                         </td>
                                         <td>

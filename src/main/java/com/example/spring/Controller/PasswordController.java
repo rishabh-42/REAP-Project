@@ -69,6 +69,7 @@ public class PasswordController {
         return modelAndView;
     }
 
+
     // Process reset password form
     @RequestMapping(value = "/reset", method = RequestMethod.POST)
     public ModelAndView setNewPassword(ModelAndView modelAndView, @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
