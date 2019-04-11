@@ -415,86 +415,86 @@
             background-color: white;
         }
     </style>
-    <script>
-        $(document).ready(function(){
-            var totalCart=0;
-            $('.cartBtn').on('click',function(){
-                $(this).attr('disabled');
-                var price = $(this).prev().text();
-                var name =$(this).parent().prev().attr("src");
-                var nameee =name.substring(name.lastIndexOf("/")+1,name.lastIndexOf(".png"));
-                var url="assets/images/shopItems/"+nameee+".png";
-                price = price.substring(0,price.indexOf(" "));
-                var row = ' <div class="row item-row-r">' +
-                    '<div class="col-md-2">' +
-                    '<img class="item-img"' +"src="+'"'+url+'"'+
-                    'height="30" width="30"/>' +
-                    '</div>' +
-                    '<div class="col-md-3">' +
-                    '<p class="item-name">'+nameee+'</p>' +
-                    '</div>' +
-                    '<div class="col-md-3">' +
-                    '' +
-                    '</div>' +
-                    '<div class="col-md-2 item-price">' +
-                    ''+price+'' +
-                    '</div>' +
-                    '<div><button class="clear-item">&times;</button>' +
-                    '' +
-                    '</div>'
-                +'';
-                $(".item-data-r").append(row);
-                totalCart+=parseInt(price);
-                $("#points").text(totalCart);
-            });
-            $(".RButton").click(function () {
-                if(!$(".item-data-r").children().length>0){
-                    alert("Select item first");
-                }
-                else {
-                    var imgs="";
-                    var item="";
-                    var price="";
-                    var child = $(".item-data-r").children();
-                    child.each(function (index) {
-                             var itemName= $(this).find($(".item-name")).text();
-                        var itemPrice= $(this).find($(".item-price")).text();
-                        var imgUrl =$(this).find($(".item-img")).text()
+        <script>
+            $(document).ready(function(){
+                var totalCart=0;
+                $('.cartBtn').on('click',function(){
+                    $(this).attr('disabled');
+                    var price = $(this).prev().text();
+                    var name =$(this).parent().prev().attr("src");
+                    var nameee =name.substring(name.lastIndexOf("/")+1,name.lastIndexOf(".png"));
+                    var url="assets/images/shopItems/"+nameee+".png";
+                    price = price.substring(0,price.indexOf(" "));
+                    var row = ' <div class="row item-row-r">' +
+                        '<div class="col-md-2">' +
+                        '<img class="item-img"' +"src="+'"'+url+'"'+
+                        'height="30" width="30"/>' +
+                        '</div>' +
+                        '<div class="col-md-3">' +
+                        '<p class="item-name">'+nameee+'</p>' +
+                        '</div>' +
+                        '<div class="col-md-3">' +
+                        '' +
+                        '</div>' +
+                        '<div class="col-md-2 item-price">' +
+                        ''+price+'' +
+                        '</div>' +
+                        '<div><button class="clear-item">&times;</button>' +
+                        '' +
+                        '</div>'
+                    +'';
+                    $(".item-data-r").append(row);
+                    totalCart+=parseInt(price);
+                    $("#points").text(totalCart);
+                });
+                $(".RButton").click(function () {
+                    if(!$(".item-data-r").children().length>0){
+                        alert("Select item first");
+                    }
+                    else {
+                        var imgs="";
+                        var item="";
+                        var price="";
+                        var child = $(".item-data-r").children();
+                        child.each(function (index) {
+                                 var itemName= $(this).find($(".item-name")).text();
+                            var itemPrice= $(this).find($(".item-price")).text();
+                            var imgUrl =$(this).find($(".item-img")).text()
 
-                        imgs=imgs+imgUrl+" ";
-                        item=item+itemName+" ";
-                        price=price+itemPrice+" ";
-                    })
-                   $.ajax({
-                       url:"/warehouse",
-                       method:"post",
-                       data:{items:item,price:price,imgUrl:imgs,totalPrice:totalCart},
-                       success: function (e) {
-                           if(e=="done") {
-                               alert("Order Placed");
-                               location.reload(this);
+                            imgs=imgs+imgUrl+" ";
+                            item=item+itemName+" ";
+                            price=price+itemPrice+" ";
+                        })
+                       $.ajax({
+                           url:"/warehouse",
+                           method:"post",
+                           data:{items:item,price:price,imgUrl:imgs,totalPrice:totalCart},
+                           success: function (e) {
+                               if(e=="done") {
+                                   alert("Order Placed");
+                                   location.reload(this);
+                               }
+                               else {
+                                   alert("Not enough points , please remove some items");
+
+                               }
                            }
-                           else {
-                               alert("Not enough points , please remove some items");
-
-                           }
-                       }
-                   });
-                }
+                       });
+                    }
+                });
+                $('body').on('click','.clear-item',function () {
+                    console.log("clickedd");
+                    var priceee = parseInt($(this).parent().prev().text());
+                    console.log(priceee);
+                    totalCart =totalCart-priceee;
+                    $("#points").text(totalCart);
+                    $(this).parent().parent().remove();
+                });
             });
-            $('body').on('click','.clear-item',function () {
-                console.log("clickedd");
-                var priceee = parseInt($(this).parent().prev().text());
-                console.log(priceee);
-                totalCart =totalCart-priceee;
-                $("#points").text(totalCart);
-                $(this).parent().parent().remove();
-            });
-        });
 
 
 
-    </script>
+        </script>
     <style>
         .recieverImage {
             width: 50px;

@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface  UserRepository extends CrudRepository<User,Integer> {
-    User findByFirstName(String firstName);
     User findByEmail(String email);
     User findByConfirmationToken(String confirmationToken);
     User findByResetToken(String resetToken);

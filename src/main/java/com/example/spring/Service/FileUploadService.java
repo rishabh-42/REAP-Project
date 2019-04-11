@@ -43,11 +43,14 @@ public class FileUploadService {
                 User user = userService.findByEmail(username);
                 File serverFile = new File(dir.getAbsolutePath()
                         + File.separator + user.getUserId() + ".png");
+                user.setPhoto("/assets/profileImages/"+user.getUserId()+".png");
+                userService.saveUser(user);
 
                 BufferedOutputStream stream = new BufferedOutputStream(
                         new FileOutputStream(serverFile));
                 stream.write(bytes);
                 stream.close();
+
 
                 logger.info("Server File Location="
                         + serverFile.getAbsolutePath());

@@ -544,7 +544,8 @@
                }
             });
             $("#submit-recognition").click(function () {
-                $(this).attr("disabled", true);
+                console.log("clicked");
+                // $(this).attr("disabled", true);
                 email = $("#tags").val();
                 badge = $("#badge").val();
                 reason = $("#reason").val();
@@ -552,10 +553,7 @@
                     alert("Please Fill all the details correctly !!")
                 }
                 else {
-                    $("#recognize-info-reason").text(reason);
-                    $("#recognize-info-star").text(badge);
-                    $("#recognize-info-receiver").text(email);
-                    $("#recognize-info-sender").text($("#logged-in-user").text());
+
                     $.ajax({
                         url: "/submitComment",
                         method: "post",
@@ -564,16 +562,16 @@
                             if(e=="Selected newer doesn't exists")
                             {
                                 alert(e);
-                                $(this).attr("disabled", false);
+                                // $(this).attr("disabled", false);
                             }
-                            else if (e=="cannot recognize yourseff"){
+                            else if (e=="cannot recognize yourself"){
                                 alert(e);
-                                $(this).attr("disabled", false);
+                                // $(this).attr("disabled", false);
                             }
                             else
                             {
                                 alert(e);
-                                $(this).attr("disabled", false);
+                                // $(this).attr("disabled", false);
                                 location.reload(this);
                             }
                         }
@@ -695,7 +693,7 @@
                                     <form method="post" action="/uploadFile" enctype="multipart/form-data">
 
                                         <input type="file" name="file">
-                                        <input type="submit">
+                                        <input type="submit" value="Upload">
 
                                     </form>
                                 </div>

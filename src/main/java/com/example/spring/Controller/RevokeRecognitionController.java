@@ -1,9 +1,7 @@
 package com.example.spring.Controller;
 
-import com.example.spring.Entities.*;
 import com.example.spring.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
