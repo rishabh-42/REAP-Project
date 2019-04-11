@@ -28,10 +28,11 @@ public class PasswordController {
     @Autowired
     private EmailService emailService;
     @RequestMapping(value = "/forgot", method = RequestMethod.POST)
-    public ModelAndView processForgotPasswordForm(ModelAndView modelAndView, @RequestParam("emailReset") String userEmail, HttpServletRequest request) {
+    @ResponseBody
+    public String processForgotPasswordForm(ModelAndView modelAndView, @RequestParam("emailReset") String userEmail, HttpServletRequest request) {
         User optional = userService.findByEmail(userEmail);
         if (optional==null) {
-            modelAndView.addObject("errorMessage", "We didn't find an account for that e-mail address.");
+            return "Username does'not exists";
         } else {
             User user =optional;
             user.setResetToken(UUID.randomUUID().toString());
@@ -50,7 +51,7 @@ public class PasswordController {
         }
         modelAndView.setViewName("pages/Login");
         modelAndView.addObject("user",new User());
-        return modelAndView;
+        return "Email sent";
     }
 
     // Display form to reset password
@@ -74,7 +75,6 @@ public class PasswordController {
         User user = userService.findByResetToken(requestParams.get("token"));
         // This should always be non-null but we check just in case
         if (user!=null) {
-
             User resetUser = user;
             // Set new password
             resetUser.setPassword(BCrypt.hashpw(requestParams.get("password"), BCrypt.gensalt(4)));

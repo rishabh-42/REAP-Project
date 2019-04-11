@@ -44,7 +44,6 @@ public class UserController {
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @PostMapping("/updateRoles")
     public  int updateRoles(@RequestParam("email") String email,@RequestParam("newRoles") String newRoles){
-
         String roles[] =newRoles.split(" ");
          userRoleService.updateRoles(email,roles);
         return 1;

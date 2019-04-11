@@ -49,40 +49,10 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "loginSignup", method = RequestMethod.POST)
-    public ModelAndView registerUserAccount
-            (@ModelAttribute("user") @Valid User accountDto,
-             BindingResult result, WebRequest request, Errors errors) {
-        User registered = null;
-        if (!result.hasErrors()) {
-            registered = createUserAccount(accountDto, result);
-        }
-
-        if (result.hasErrors()) {
-            result.getGlobalErrors().forEach(System.out::println);
-            return new ModelAndView("pages/Login", "user", accountDto);
-        } else {
-            return new ModelAndView("pages/Dashboard", "user", accountDto);
-        }
-    }
-
-    private User createUserAccount(User accountDto, BindingResult result) {
-        User registered = null;
-        try {
-
-            registered = userRepository.save(accountDto);
-        } catch (Exception e) {
-
-        }
-        return registered;
-    }
-
 
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping(value = "/dashboard")
     public ModelAndView dashboard() {
-
-
         ModelAndView modelAndView = new ModelAndView("pages/Dashboard");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByEmail(((UserDetails) principal).getUsername());

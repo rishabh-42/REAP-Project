@@ -6,15 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         Dashboard</title>
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -24,14 +20,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
             integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
             crossorigin="anonymous"></script>
-
-    <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"
           crossorigin="anonymous">
     <style>
@@ -431,15 +423,9 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
     <script>
-
         $(document).ready(function () {
-
-
             $('span[name="dates"]').daterangepicker({
-
-
             },function (start,end,label) {
                 console.log(start.format('YYYY-MM-DD') +end.format('YYYY-MM-DD') )
                 var startDate = start.format('YYYY-MM-DD HH:mm:ss');
@@ -447,33 +433,23 @@
                 $('#startDate').val(startDate);
                 $('#endDate').val(endDate);
             });
-
             function format(tr, email) {
-
-
                 $.ajax({
-                    url: '/getUserRoles' +
-                        '',
+                    url: '/getUserRoles',
                     data: {
                         email: email
                     },
                     dataType: 'json',
                     success: function (json) {
-                        console.log(json);
-
                         var roles = "";
                         var user = "<input id='User' type='checkbox' value='User' checked> User";
                         var usernot = "<input id='User' type='checkbox'> User";
-
                         var practiceHead = "<input id='PracticeHead' value='PracticeHead' type='checkbox' checked> PracticeHead";
                         var practiceHeadNot = "<input id='PracticeHead' type='checkbox'> PracticeHead";
-
                         var superVisor = "<input id='Supervisor' type='checkbox' value='Supervisor' checked> Supervisor";
                         var superVisorNot = "<input id='Supervisor' type='checkbox'> Supervisor";
-
                         var Admin = "<input id='Admin' type='checkbox' value='Admin' checked> Admin";
                         var AdminNot = "<input id='Admin' type='checkbox'> Admin";
-
                         for (i = 0; i < json.length; i++) {
                             if (json[i].name == "User") {
                                 roles = roles + user;
@@ -487,7 +463,6 @@
                             if (json[i].name == "PracticeHead") {
                                 roles = roles + practiceHead;
                             }
-
                         }
                         if(roles.indexOf("Admin")==-1){
                             roles=roles+AdminNot;
@@ -498,105 +473,54 @@
                         if(roles.indexOf("PracticeHead")==-1){
                             roles=roles+practiceHeadNot;
                         }
-
                         $('<tr class="detail-row" ><td colspan="6">' + roles +'&nbsp;&nbsp;&nbsp;&nbsp;<button class="updateRole btn btn-primary btn-xs">Update Roles</button> '+ '</td></tr>').insertAfter(tr);
-
                     }
                 });
-
-
             }
-
             $('#data-table tbody').on('click', '.showinfo', function () {
-
-                console.log("butttttttttt")
                 var tr = $(this).closest('tr');
-                console.log(tr);
                 if ($(this).closest('tr').next().hasClass("detail-row")) {
                     $(this).closest('tr').next().remove();
                 }
                 else {
-
                     var email1 = $(this).closest('tr').find($(".email")).text();
-
-                    console.log(email1);
                     format(tr, email1);
-
                 }
             });
-
             $("#data-table").on('click','.updateRole',function () {
-
-                console.log("update button clicked");
-
                 var a=$(this).parent();
                 var radioValue = a.find($("input[type='checkbox']:checked"));
-                console.log(radioValue);
-
-
                 var values="";
                 var updateEmail= $(this).parent().parent().prev().find($(".email")).text();
                radioValue.each(function (index) {
-                   // console.log($(this).attr('id'));
                    values=values+ $(this).attr('id') + " ";
-
-
-                   
-               })
-                console.log(values);
-
+               });
                $.ajax({
                    url:"/updateRoles",
                    method:"post",
                    data:{email:updateEmail,newRoles:values},
                    success:function (e) {
                        location.reload(this);
-
                    }
-
                })
-
-
-
             });
-
-            //
-            // $("#mySearch").keyup(function () {
-            //     var value = $(this).val().toLowerCase();
-            //     $(" #torecord #record ").filter(function () {
-            //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            //     });
-            // });
-
             $('.showinfo').click(function (e) {
                 e.preventDefault();
-                console.log("href");
                 $("#form1").toggle();
                 $(this).closest('tr').find(".test").toggle();
             });
-
-
             $("#mySearch").on("keyup", function () {
-                console.log("mysearch")
                 var value = $(this).val().toLowerCase();
                 $("#all-post #first-name").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
-
-
             $('#data-table').DataTable();
-
             var email;
             var badge;
             var reason;
-
-
             $(".user-active").change(function () {
-
-
                 var emaiil = $(this).parent().next().text();
-
                if($(this).is(":checked")){
                    $.ajax({
                    url:"/setActive",
@@ -604,7 +528,6 @@
                        method:"post",
                        success: function (e) {
                        alert("user "+ emaiil +" set to Active");
-
                        }
                })
                }
@@ -616,7 +539,6 @@
                        method:"post",
                        success: function (e) {
                            alert("user "+ emaiil +" set to inactive");
-
                        }
                    })
                }
@@ -626,30 +548,19 @@
                 email = $("#tags").val();
                 badge = $("#badge").val();
                 reason = $("#reason").val();
-                console.log("badge" + badge);
-
                 if (email == "" || badge == null || reason == "") {
-
                     alert("Please Fill all the details correctly !!")
-
                 }
-
                 else {
-
                     $("#recognize-info-reason").text(reason);
                     $("#recognize-info-star").text(badge);
                     $("#recognize-info-receiver").text(email);
                     $("#recognize-info-sender").text($("#logged-in-user").text());
-
-
-
-
                     $.ajax({
                         url: "/submitComment",
                         method: "post",
                         data: {email: email, badge: badge, reason: reason},
                         success: function (e) {
-
                             if(e=="Selected newer doesn't exists")
                             {
                                 alert(e);
@@ -665,36 +576,18 @@
                                 $(this).attr("disabled", false);
                                 location.reload(this);
                             }
-
-
-
                         }
-
-
                     });
                 }
-
             });
-
-
             $(".all-posts").on('click', '.selected-row', function (e) {
-                console.log("button clicked.......")
                 var id = $(this).find(".del-row-id").val();
-                console.log(id + " ssssssssssss");
-
                 $("#hidden-id-del").val(id);
-
             });
             $("#revoke-post").click(function () {
-                console.log("revoke clicked");
                 var radioValue = $("input[name='reason']:checked").val();
-
                 var delId = $("#hidden-id-del").val();
-
                 var additionalComment = $("#additional-comment").val();
-
-                console.log(radioValue + delId);
-
                 if (radioValue != undefined || additionalComment != "") {
                     $(".loader-forgot").css("display", "block");
                     $.ajax({
@@ -706,61 +599,33 @@
                             $(".loader-forgot").css("display", "none");
                             alert("post revoked");
                             location.reload(this);
-
                         }
-
-
                     });
                 }
                 else {
                     alert("select a reason first or add comment");
                 }
-
             });
         });
-
-
         $(function () {
             console.log("here i am");
             var availableTags = [];
-
             $.ajax({
                 url: "/getAllUsers",
                 method: "get",
                 data: {},
-
-
                 success: function (data) {
-
                     for (var i = 0; i < data.length; i++) {
-
-
                         availableTags.push(data[i].email);
-
                     }
-
-
                 }
-
             });
-
             $("#tags").autocomplete({
                 source: availableTags
             });
         });
     </script>
-
-
-    <style>
-        .ui-autocomplete{
-            overflow-y: scroll;
-            background-color: #ced4da;
-            height: 120px;
-            position: absolute;
-            cursor: pointer;
-        }
-    </style>
-</head>
+ </head>
 
 <body>
 
@@ -1302,44 +1167,13 @@
     </div>
 </div>
 
-<!--<div id="recognize-modal" class="modal fade" role="dialog">-->
-    <!--<div class="modal-dialog">-->
-
-        <!--&lt;!&ndash; Modal content&ndash;&gt;-->
-        <!--<div class="modal-content">-->
-            <!--<div class="modal-header">-->
-                <!--<button type="button" class="close close-now" data-dismiss="modal">&times;</button>-->
-                <!--<h4 class="modal-title">Modal Header</h4>-->
-            <!--</div>-->
-            <!--<div class="modal-body">-->
-
-                <!--<p id="recognize-info-sender" style="display: none"></p>-->
-                <!--<strong> To : </strong>-->
-                <!--<p id="recognize-info-receiver" s></p>-->
-                <!--<strong> Star Type : </strong>-->
-                <!--<p id="recognize-info-star"></p>-->
-                <!--<strong> Reason : </strong>-->
-                <!--<p id="recognize-info-reason"></p>-->
-
-                <!--<input style="margin: 0 auto" id="submit-recognition" type="button" value="Submit Recognition">-->
-
-                <!--<div class="loader loader-forgot" style="display: none;"></div>-->
-            <!--</div>-->
-            <!--<div class="modal-footer">-->
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-            <!--</div>-->
-        <!--</div>-->
-
-    <!--</div>-->
-<!--</div>-->
-
 <div id="recognize-revoke" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
                 <h4 class="modal-title">Revoke Recognition</h4>
             </div>
             <div class="modal-body">

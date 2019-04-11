@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username);
         if (user == null) {
-            throw new UsernameNotFoundException("User 404");
+            throw new UsernameNotFoundException("User not found");
         } else
             return new CustomUserDetails(user);
     }

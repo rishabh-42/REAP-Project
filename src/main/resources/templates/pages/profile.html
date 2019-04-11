@@ -277,6 +277,400 @@
             background-color: white;
         }
     </style>
+    <style>
+        .loader, .loader-register {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 60px;
+            height: 60px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+
+            margin: 0 auto;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #logo-br {
+            margin: 0;
+        }
+
+        .nav-menu {
+            line-height: 48px;
+            float: left;
+            margin-left: 16px;
+        }
+
+        .menu-item {
+            margin-left: 150px;
+        }
+
+        .menu-item a {
+            font-size: 18px;
+        }
+
+        .dashboardList li.listItem a {
+
+            border-radius: 5px;
+            color: #000000;
+            padding: 8px 15px 8px 35px;
+
+        }
+
+        li.listItem.active a, .dashboardList li.listItem a:hover {
+            background: #d9177f;
+            color: #ffffff;
+        }
+
+        .userDetail {
+            margin-left: -10px;
+        }
+
+        .userDetail span {
+            display: block;
+            width: 33%;
+            float: left;
+            text-align: left;
+        }
+
+        .userDetail span i {
+            display: block;
+            padding-left: 2px;
+
+        }
+
+        .inset {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6),
+            0 1px 1px rgba(0, 0, 0, 0.1);
+            background-color: transparent !important;
+            z-index: 999;
+        }
+
+        nav {
+            z-index: 1030;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12),
+            0 2px 4px 0 rgba(0, 0, 0, 0.08);
+        }
+
+        .content-wrapper {
+            /*margin: 70px 0 0 0;*/
+            padding-left: 10px;
+            padding-right: 10px;
+            background-color: #f1f4f5;
+            padding-top: 10px;
+            min-height: 515px;
+        }
+
+        .customNav {
+            background-color: white;
+        }
+
+        .container-fluid {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            padding-top: 20px;
+        }
+
+        .inset img {
+            border-radius: inherit;
+            width: inherit;
+            height: inherit;
+            display: block;
+            position: relative;
+            z-index: 998;
+        }
+
+        .leftPanel {
+            margin-top: 10px;
+            position: relative;
+            min-height: 1px;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        .rightPanel {
+            padding-right: 15px;
+            padding-left: 15px;
+            position: fixed;
+            margin-top: 10px;
+            float: right;
+            margin-left: 74%;
+        }
+
+        .card {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .card-header {
+            height: auto;
+            background-color: #0E5A80;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            border: 1px solid #0E5A80;
+            text-transform: uppercase;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .card-text {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .custom-heigth20 {
+            line-height: 20px;
+        }
+
+        .custom-heigthSelect20 {
+            height: 20px;
+            line-height: 20px;
+        }
+
+        .recognizeBtn {
+            height: auto;
+            font-size: 12px;
+            font-weight: bold;
+            float: right;
+            margin-top: 20px;
+            border: 1px solid #505B72;
+            color: white;
+            width: 120px;
+            background-color: #505B72;
+        }
+
+        .reason-area {
+            padding: 20px;
+            height: 150px !important;
+            border: 1px solid #e5e5e5;
+            width: 100%;
+            font-size: 13px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .badegeInfo {
+            font-size: 14px;
+        }
+
+        .recieverImage {
+            width: 50px;
+            height: 50px;
+            border-radius: 20%;
+            align-items: center;
+        }
+
+        .bottomMargin20 {
+            margin-bottom: 20px;
+        }
+
+        .profileModalContent {
+            width: 500px;
+            padding: 20px;
+            height: auto;
+            margin-bottom: -20px;
+        }
+
+        .profileModalFontNormal {
+            font-size: 12px;
+        }
+
+        .profileModalFontBold {
+            font-size: 12px;
+            font-weight: bolder;
+            margin-left: -30px
+        }
+
+        .profileFooter {
+            align-items: center;
+            vertical-align: center;
+            text-align: center;
+            height: 35px;
+            padding: 0 !important;
+            margin-bottom: -10px;
+            background-color: #E8E8E8;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.10);
+        }
+
+        .footerLeft {
+            padding-top: 5px;
+            float: left;
+            margin-left: 20px;
+        }
+
+        .footerRight {
+            padding-top: 5px;
+            float: right;
+            margin-right: 20px;
+        }
+
+        .fa-input {
+            font-family: FontAwesome, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .fa-style {
+            float: right;
+            margin-right: 20px;
+            font-size: 20px;
+            background: transparent;
+        }
+
+        /*//*/
+        .nav-menu {
+            line-height: 48px;
+            float: left;
+            margin-left: 16px;
+        }
+
+        .menu-item {
+            margin-left: 150px;
+        }
+
+        .menu-item a {
+            font-size: 18px;
+        }
+
+        .dashboardList li.listItem a {
+
+            border-radius: 5px;
+            color: #000000;
+            padding: 8px 15px 8px 35px;
+
+        }
+
+        li.listItem.active a, .dashboardList li.listItem a:hover {
+            background: #d9177f;
+            color: #ffffff;
+        }
+
+        .userDetail {
+            margin-left: -10px;
+        }
+
+        .userDetail span {
+            display: block;
+            width: 33%;
+            float: left;
+            text-align: left;
+        }
+
+        .userDetail span i {
+            display: block;
+            padding-left: 2px;
+
+        }
+
+        #recognize-button {
+            background-color: #505b72;
+            color: white;
+            border: none;
+        }
+
+        .avatar {
+            vertical-align: middle;
+            width: 44px;
+            height: 44px;
+            border-radius: 20%;
+        }
+
+        #avtr {
+            vertical-align: middle;
+            width: 44px;
+            height: 44px;
+            border-radius: 20%;
+        }
+
+        #nav-div {
+            background-color: #FFF;
+            padding: 5px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px;
+        }
+
+        .active, .btn:hover {
+            background-color: palevioletred;
+        }
+
+        .nav-btn {
+            background-color: #FFF;
+        }
+
+        body {
+            background-color: #f1f4f5;
+        }
+
+        .full-width-div {
+            position: absolute;
+            width: 100%;
+            left: 0;
+
+        }
+
+        #card1 {
+            margin-bottom: 30px;
+
+        }
+
+        .dropdown {
+            color: white;
+        }
+
+        .main-id-row {
+
+            margin: 0 0 0 10px;
+            padding: 0;
+        }
+
+        .card-body {
+            background-color: white;
+        }
+
+        .btn-xs {
+            height: 22px;
+            padding: 2px 5px;
+            font-size: 12px;
+            line-height: 1.5;
+            /* If Placeholder of the input is moved up, rem/modify this. */
+            border-radius: 3px;
+        }
+
+        .card-header {
+            width: 100%;
+            float: left;
+            padding: 4px 20px;
+            border-radius: 5px 5px 0 0;
+            /* height: 38px; */
+            color: white;
+            background-color: #0e5a80;
+            font-size: 14px;
+        }
+
+        .user-icon {
+            background-color: white;
+        }
+    </style>
 
     <script>
 
@@ -357,10 +751,11 @@
             <a href="/dashboard">
                 <button class="btn btn-sm nav-btn active"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button>
             </a>
-            <button class="btn btn-sm nav-btn"><img
-                    src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Badges
-            </button>
-
+            <a href="/warehouse">
+                <button class="btn btn-sm nav-btn"><img
+                        src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Shop
+                </button>
+            </a>
             <a href="/dashboard/profile/">
                 <button class="btn btn-sm nav-btn"><img
                         src="http://reap.tothenew.com/assets/ico-certificate-d6437fe43be76d37d084caa8f0788b9c.png"
@@ -380,7 +775,7 @@
 
                 <a id="profileMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="recieverImage"
-                         th:src="@{'/'+${user.getPhoto()}}">
+                         th:src="@{''+${user.getPhoto()}}">
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileMenu">
@@ -389,15 +784,22 @@
 
                         <div class="profileModalContent">
 
-                            <h4>Your Name</h4>
+                            <h4>Your Profile</h4>
 
                             <div class="row" style="margin-top: 10px">
 
                                 <!--Profile Image-->
                                 <div class="col-md-4">
-                                    <img th:src="@{'/'+${user.getPhoto()}}"
+                                    <img th:src="@{''+${user.getPhoto()}}"
                                          width="80px" height="80px">
+                                    <form method="post" action="/uploadFile" enctype="multipart/form-data">
+
+                                        <input type="file" name="file">
+                                        <input type="submit">
+
+                                    </form>
                                 </div>
+
 
                                 <!--Profile Info-->
                                 <div class="col-md-8">
@@ -409,8 +811,18 @@
                                         </div>
                                         <div class="col-md-8 profileModalFontBold">
                                             <p th:text="${user.getFirstName()+ '  ' + user.getLastName()}">user </p>
-                                            <p th:text="${user.getEmail()}">UserMail@mail.com</p>
+                                            <p id="logged-in-user" th:text="${user.getEmail()}">UserMail@mail.com</p>
 
+
+                                        </div>
+                                        <div class="row  profileModalFontNormal">
+                                            <span>Badge Balance : </span> &nbsp;&nbsp;
+                                            <img th:src="@{/assets/images/gold.png}">&nbsp;:&nbsp; <span
+                                                th:text="${userStarCount.getGoldStarCount()}"></span>&nbsp;&nbsp;
+                                            <img th:src="@{/assets/images/silver.png}"> : <span
+                                                th:text="${userStarCount.getSilverStarCount()}"></span>&nbsp;&nbsp;
+                                            <img th:src="@{/assets/images/bronze.png}"> : <span
+                                                th:text="${userStarCount.getBronzeStarCount()}"></span>
 
                                         </div>
                                     </div>
