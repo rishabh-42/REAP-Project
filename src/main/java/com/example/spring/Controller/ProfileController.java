@@ -1,13 +1,7 @@
 package com.example.spring.Controller;
 
-import com.example.spring.Entities.BadgesGiven;
-import com.example.spring.Entities.User;
-import com.example.spring.Entities.UserStarCount;
-import com.example.spring.Entities.UserStarReceived;
-import com.example.spring.Service.BadgesGivenService;
-import com.example.spring.Service.UserService;
-import com.example.spring.Service.UserStarCountService;
-import com.example.spring.Service.UserStarRecievedService;
+import com.example.spring.Entities.*;
+import com.example.spring.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,6 +31,9 @@ public class ProfileController {
     @Autowired
     BadgesGivenService badgesGivenService;
 
+    @Autowired
+    OrderService orderService;
+
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping(value = {"/dashboard/profile/"})
     @ResponseBody
@@ -56,6 +53,8 @@ public class ProfileController {
         modelAndView.addObject("given", given);
         List<BadgesGiven> received = badgesGivenService.getListOfReciever(user);
         modelAndView.addObject("received", received);
+        List<Order> userOrders = orderService.findAllByUser(user);
+        modelAndView.addObject("orders",userOrders);
         return modelAndView;
     }
 }

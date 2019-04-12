@@ -35,7 +35,8 @@ public class RegisterController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request, Errors errors) {
-       if(bindingResult.hasErrors()){
+
+        if(bindingResult.hasErrors()){
           return new  ModelAndView("pages/Login").addObject("errorMessage",
                   bindingResult.getFieldErrors().stream()
                           .map(f -> f.getField().toUpperCase() + " --> " + f.getDefaultMessage() + "\n")

@@ -146,8 +146,6 @@
             box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px;
         }
 
-
-
         .nav-btn {
             background-color: #FFF;
         }
@@ -243,8 +241,6 @@
             padding: 5px;
             box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 4px;
         }
-
-
 
         .nav-btn {
             background-color: #FFF;
@@ -747,7 +743,7 @@
         <div style="width:180px;"></div>
         <div class="m-auto">
             <a href="http://newersworld.tothenew.com">
-            <button class="btn btn-sm nav-btn"><i class="far fa-arrow-alt-circle-left"></i>Newers World</button>
+                <button class="btn btn-sm nav-btn"><i class="far fa-arrow-alt-circle-left"></i>Newers World</button>
             </a>
             <a href="/dashboard">
                 <button class="btn btn-sm nav-btn active"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button>
@@ -870,7 +866,8 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <img src="http://reap.tothenew.com/assets/ico-badge-hover-6ad40a50088b6e0747f43352ae621d8c.png" height="20" width="20"/>&nbsp;&nbsp; Badges And
+                            <img src="http://reap.tothenew.com/assets/ico-badge-hover-6ad40a50088b6e0747f43352ae621d8c.png"
+                                 height="20" width="20"/>&nbsp;&nbsp; Badges And
                             Points
                         </div>
 
@@ -887,25 +884,28 @@
 
                                 <div class="col-sm-6 userDetail" style="margin-left: 140px">
 
-                                    <h3 id="myName" th:text="${user.getFirstName()}+' '+${user.getLastName()}">Gagan kushwaha</h3>
+                                    <h3 id="myName" th:text="${user.getFirstName()}+' '+${user.getLastName()}">Gagan
+                                        kushwaha</h3>
 
                                     <span>
-                                                        <img th:src="@{/assets/images/gold.png}" height="18" width="20"/>
+                                                        <img th:src="@{/assets/images/gold.png}" height="18"
+                                                             width="20"/>
                                                         <i th:text="${userStarReceived.getGoldStarRecieved()}"></i>
                                                   </span>
 
                                     <span>
-                                                         <img th:src="@{/assets/images/silver.png}" height="18" width="20"/>
+                                                         <img th:src="@{/assets/images/silver.png}" height="18"
+                                                              width="20"/>
                                                          <i th:text="${userStarReceived.getSilverStarRecieved()}"></i>
                                                   </span>
 
                                     <span>
-                                                        <img th:src="@{/assets/images/bronze.png}" height="18" width="20"/>
+                                                        <img th:src="@{/assets/images/bronze.png}" height="18"
+                                                             width="20"/>
                                                          <i th:text="${userStarReceived.getBronzeStarRecieved()}"></i>
                                                   </span>
 
                                 </div>
-
 
 
                             </div>
@@ -917,59 +917,60 @@
 
                     <!--<div class="card">-->
 
-                        <!--<div class="card-header">-->
-                            <!--<img src="http://reap.tothenew.com/assets/ico-badge-hover-6ad40a50088b6e0747f43352ae621d8c.png" height="20" width="20"/>&nbsp;&nbsp; Badges And-->
-                            <!--Points-->
-                        <!--</div>-->
+                    <!--<div class="card-header">-->
+                    <!--<img src="http://reap.tothenew.com/assets/ico-badge-hover-6ad40a50088b6e0747f43352ae621d8c.png" height="20" width="20"/>&nbsp;&nbsp; Badges And-->
+                    <!--Points-->
+                    <!--</div>-->
 
-                        <!--<div class="card-body userInfo coins">-->
+                    <!--<div class="card-body userInfo coins">-->
 
-                            <!--<div class="row">-->
+                    <!--<div class="row">-->
 
-                                <!--<div class="col-sm-1">-->
+                    <!--<div class="col-sm-1">-->
 
-                                    <!--<img class="recieverImage" style="height: 125px;width: 150px"-->
-                                         <!--th:src="@{''+${user.getPhoto()}}">-->
+                    <!--<img class="recieverImage" style="height: 125px;width: 150px"-->
+                    <!--th:src="@{''+${user.getPhoto()}}">-->
 
-                                <!--</div>-->
+                    <!--</div>-->
 
-                                <!--<div class="col-sm-6 userDetail" style="margin-left: 100px">-->
+                    <!--<div class="col-sm-6 userDetail" style="margin-left: 100px">-->
 
-                                    <!--<h3 id="myName"-->
-                                        <!--th:text="${user.getFirstName()}+' '+${user.getLastName()}">-->
-                                        <!--</h3>-->
+                    <!--<h3 id="myName"-->
+                    <!--th:text="${user.getFirstName()}+' '+${user.getLastName()}">-->
+                    <!--</h3>-->
 
-                                    <!--<span>-->
-                                                <!--<img th:src="@{/assets/images/gold.png}" height="18" width="20"/>-->
-                                                <!--<i th:text="${userStarReceived.getGoldStarRecieved()}">0</i>-->
-                                          <!--</span>-->
+                    <!--<span>-->
+                    <!--<img th:src="@{/assets/images/gold.png}" height="18" width="20"/>-->
+                    <!--<i th:text="${userStarReceived.getGoldStarRecieved()}">0</i>-->
+                    <!--</span>-->
 
-                                    <!--<span>-->
-                                                <!--<img th:src="@{/assets/images/silver.png}" height="18" width="20"/>-->
-                                                 <!--<i th:text="${userStarReceived.getSilverStarRecieved()}">0</i>-->
-                                          <!--</span>-->
+                    <!--<span>-->
+                    <!--<img th:src="@{/assets/images/silver.png}" height="18" width="20"/>-->
+                    <!--<i th:text="${userStarReceived.getSilverStarRecieved()}">0</i>-->
+                    <!--</span>-->
 
-                                    <!--<span>-->
-                                                <!--<img th:src="@{/assets/images/bronze.png}" height="18" width="20"/>-->
-                                                 <!--<i th:text="${userStarReceived.getBronzeStarRecieved()}">0</i>-->
-                                          <!--</span>-->
+                    <!--<span>-->
+                    <!--<img th:src="@{/assets/images/bronze.png}" height="18" width="20"/>-->
+                    <!--<i th:text="${userStarReceived.getBronzeStarRecieved()}">0</i>-->
+                    <!--</span>-->
 
-                                <!--</div>-->
-                                <!--<div class="col-sm-3">-->
-                                    <!--<h3 style="position:absolute; bottom:-15px; right:-25px; font-size:24px; padding-left: 10px; color: white; font-weight: bolder">-->
-                                        <!--0 coins</h3>-->
-                                <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-3">-->
+                    <!--<h3 style="position:absolute; bottom:-15px; right:-25px; font-size:24px; padding-left: 10px; color: white; font-weight: bolder">-->
+                    <!--0 coins</h3>-->
+                    <!--</div>-->
 
 
-                            <!--</div>-->
+                    <!--</div>-->
 
-                        <!--</div>-->
+                    <!--</div>-->
 
                     <!--</div>-->
 
                     <div>
                         <a href="/warehouse">
-                        <input class="reedemBtn btn btn-default btn-primary" type="button" th:value="'Reedem Points : '+${userStarReceived.getPoints()}">
+                            <input class="reedemBtn btn btn-default btn-primary" type="button"
+                                   th:value="'Reedem Points : '+${userStarReceived.getPoints()}">
                         </a>
 
                     </div>
@@ -1010,10 +1011,19 @@
                                     </a>
                                 </li>
 
+                                <li>
+                                    <a class="nav-item nav-link" id="points-redeemed-tab" data-toggle="tab"
+                                       href="#points-redeemed"
+                                       role="tab" aria-controls="points-redeemed" aria-selected="false">
+                                        Points Redeemed
+                                    </a>
+                                </li>
+
+
                             </ul>
 
 
-                            <div class="card-body" >
+                            <div class="card-body">
 
                                 <div class="tab-content" id="nav-tabContent">
 
@@ -1021,15 +1031,18 @@
                                          aria-labelledby="nav-home-tab" style="background-color: #FFF">
 
 
-                                        <div id="first-name" th:each="post1:${allSharedAndReceived}" class="row comment">
+                                        <div id="first-name" th:each="post1:${allSharedAndReceived}"
+                                             class="row comment">
                                             <div class="col-1">
                                                 <img id="avtr"
                                                      th:src="@{''+${post1.getReceiver().getPhoto()}}"
                                                      class="avatar mt-2">
                                             </div>
                                             <div class="col-11 all-posts">
-                                                <strong name="firstname" th:text="${post1.getReceiver().getFirstName()}"></strong>
-                                                <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
+                                                <strong name="firstname"
+                                                        th:text="${post1.getReceiver().getFirstName()}"></strong>
+                                                <strong th:text="${post1.getReceiver().getLastName()}"></strong> has
+                                                received
                                                 <span th:if="${post1.getStar().getId()}==1">
                                         <img th:src="@{/assets/images/gold.png}">
                                     </span>
@@ -1046,7 +1059,6 @@
                                                 <strong>Reason : </strong><span th:text="${post1.getComment()}"></span>
                                                 <br>
                                                 <i th:text="${post1.getElapsedTime()}"></i><span>ago</span>
-
 
 
                                                 <br>
@@ -1068,8 +1080,10 @@
                                                      class="avatar mt-2">
                                             </div>
                                             <div class="col-11 all-posts">
-                                                <strong name="firstname" th:text="${post1.getReceiver().getFirstName()}"></strong>
-                                                <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
+                                                <strong name="firstname"
+                                                        th:text="${post1.getReceiver().getFirstName()}"></strong>
+                                                <strong th:text="${post1.getReceiver().getLastName()}"></strong> has
+                                                received
                                                 <span th:if="${post1.getStar().getId()}==1">
                                         <img th:src="@{/assets/images/gold.png}">
                                     </span>
@@ -1086,7 +1100,6 @@
                                                 <strong>Reason : </strong><span th:text="${post1.getComment()}"></span>
                                                 <br>
                                                 <i th:text="${post1.getElapsedTime()}"></i><span>ago</span>
-
 
 
                                                 <br>
@@ -1106,8 +1119,10 @@
                                                      class="avatar mt-2">
                                             </div>
                                             <div class="col-11 all-posts">
-                                                <strong name="firstname" th:text="${post1.getReceiver().getFirstName()}"></strong>
-                                                <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
+                                                <strong name="firstname"
+                                                        th:text="${post1.getReceiver().getFirstName()}"></strong>
+                                                <strong th:text="${post1.getReceiver().getLastName()}"></strong> has
+                                                received
                                                 <span th:if="${post1.getStar().getId()}==1">
                                         <img th:src="@{/assets/images/gold.png}">
                                     </span>
@@ -1134,11 +1149,42 @@
                                         </div>
                                     </div>
 
+                                    <div class="tab-pane fade" id="points-redeemed" role="tabpanel"
+                                         aria-labelledby="points-redeemed-tab" style="background-color: #FFF">
+                                        <table class="table">
+                                            <thead>
+                                            <th>
+                                                Items
+                                            </th>
+                                            <th>
+                                                Total Price
+                                            </th>
+                                            <th>
+                                                Order Date & Time
+                                            </th>
+                                            </thead>
+                                        <tbody >
+                                        <tr th:each="order:${orders}">
+
+
+                                               <td><img style="height: 50px; width: 50px" th:each="item:${order.getItemUrl()}" th:src="@{'/assets/images/shopItems/'+${item}+'.png'}">
+                                               </td>
+                                            <td><strong th:text="''+${order.getTotalPrice()}"></strong></td>
+                                                <td th:text="${order.getOrderDate()}"></td>
+                                        </tr>
+
+
+                                        </tbody>
+                                        </table>
+
+
+                                    </div>
+
+
                                 </div>
-
                             </div>
-
                         </div>
+
 
                     </div>
 
@@ -1149,6 +1195,12 @@
         </div>
 
     </div>
+
+</div>
+
+</div>
+
+</div>
 </div>
 
 </body>
