@@ -650,136 +650,141 @@
 </head>
 <body>
 <div class="wrapper">
-    <nav class="navbar navbar-expand-lg  ">
+    <div id="nav-div" class="fixed-top" style="z-index :1">
 
-        <div>
+        <nav class="navbar navbar-expand-lg  ">
 
-            <a class="navbar-brand ml-4 " href="#">
+            <div>
 
-                <div>
-                    <img th:src="@{/assets/Reap_Main.png}" width="107px">
-                </div>
-            </a>
-            <img class="ml-1" th:src="@{/assets/reap.png}" width="445px">
-        </div>
-        <div style="width:180px;"></div>
-        <div class="m-auto">
+                <a class="navbar-brand ml-4 " href="#">
 
-            <button class="btn btn-sm nav-btn"><i class="far fa-arrow-alt-circle-left"></i>Newers World</button>
-            <a href="/dashboard">
-                <button class="btn btn-sm nav-btn active"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button>
-            </a>
-            <a href="/warehouse">
-                <button class="btn btn-sm nav-btn"><img
-                        src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Shop
-                </button>
-            </a>
-            <a href="/dashboard/profile/">
-                <button class="btn btn-sm nav-btn"><img
-                        src="http://reap.tothenew.com/assets/ico-certificate-d6437fe43be76d37d084caa8f0788b9c.png"
-                        height="19px" width="18px">
-                    &nbsp;Profile
-                </button>
-            </a>
-            <button class="btn btn-sm nav-btn"><i class="fas fa-bell"></i></button>
+                    <div>
+                        <img th:src="@{/assets/Reap_Main.png}" width="107px">
+                    </div>
+                </a>
+                <img class="ml-1" th:src="@{/assets/reap.png}" width="445px">
+            </div>
+            <div style="width:180px;"></div>
+            <div class="m-auto">
 
-
-        </div>
-
-
-        <ul class="navbar-nav" style="margin-right: 30px;">
-
-            <li class="nav-item dropdown">
-
-                <a id="profileMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="recieverImage"
-                         th:src="@{''+${user.getPhoto()}}">
+                <a href="http://newersworld.tothenew.com">
+                    <button class="btn btn-sm nav-btn"><i class="far fa-arrow-alt-circle-left"></i>Newers World</button>
+                </a>
+                <a href="/dashboard">
+                    <button class="btn btn-sm nav-btn active"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button>
+                </a>
+                <a href="/warehouse">
+                    <button class="btn btn-sm nav-btn" style="background-color: #d9177f"><img
+                            src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Shop
+                    </button>
+                </a>
+                <a href="/dashboard/profile/">
+                    <button class="btn btn-sm nav-btn"><img
+                            src="http://reap.tothenew.com/assets/ico-certificate-d6437fe43be76d37d084caa8f0788b9c.png"
+                            height="19px" width="18px">
+                        &nbsp;Profile
+                    </button>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileMenu">
 
-                    <div class="profileModal">
-
-                        <div class="profileModalContent">
-
-                            <h4>Your Profile</h4>
-
-                            <div class="row" style="margin-top: 10px">
-
-                                <!--Profile Image-->
-                                <div class="col-md-4">
-                                    <img th:src="@{''+${user.getPhoto()}}"
-                                         width="80px" height="80px">
-                                    <form method="post" action="/uploadFile" enctype="multipart/form-data">
-
-                                        <input type="file" name="file">
-                                        <input type="submit">
-
-                                    </form>
-                                </div>
+            </div>
 
 
-                                <!--Profile Info-->
-                                <div class="col-md-8">
+            <ul class="navbar-nav" style="margin-right: 30px;">
 
-                                    <div class="row">
-                                        <div class="col-md-4 profileModalFontNormal">
-                                            <p>Name:</p>
-                                            <p>Email:</p>
+                <li class="nav-item dropdown">
+
+                    <a id="profileMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="recieverImage"
+                             th:src="@{''+${user.getPhoto()}}">
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileMenu">
+
+                        <div class="profileModal">
+
+                            <div class="profileModalContent">
+
+                                <h4>Your Profile</h4>
+
+                                <div class="row" style="margin-top: 10px">
+
+                                    <!--Profile Image-->
+                                    <div class="col-md-4">
+                                        <img th:src="@{''+${user.getPhoto()}}"
+                                             width="80px" height="80px">
+                                        <form method="post" action="/uploadFile" enctype="multipart/form-data">
+
+                                            <input type="file" name="file">
+                                            <input type="submit" value="Upload">
+
+                                        </form>
+                                    </div>
+
+
+                                    <!--Profile Info-->
+                                    <div class="col-md-8">
+
+                                        <div class="row">
+                                            <div class="col-md-4 profileModalFontNormal">
+                                                <p>Name:</p>
+                                                <p>Email:</p>
+                                            </div>
+                                            <div class="col-md-8 profileModalFontBold">
+                                                <p th:text="${user.getFirstName()+ '  ' + user.getLastName()}">user </p>
+                                                <p id="logged-in-user" th:text="${user.getEmail()}">UserMail@mail.com</p>
+
+
+                                            </div>
+                                            <div class="row  profileModalFontNormal">
+                                                <span>Badge Balance : </span> &nbsp;&nbsp;
+                                                <img th:src="@{/assets/images/gold.png}">&nbsp;:&nbsp; <span
+                                                    th:text="${userStarCount.getGoldStarCount()}"></span>&nbsp;&nbsp;
+                                                <img th:src="@{/assets/images/silver.png}"> : <span
+                                                    th:text="${userStarCount.getSilverStarCount()}"></span>&nbsp;&nbsp;
+                                                <img th:src="@{/assets/images/bronze.png}"> : <span
+                                                    th:text="${userStarCount.getBronzeStarCount()}"></span>
+
+                                            </div>
                                         </div>
-                                        <div class="col-md-8 profileModalFontBold">
-                                            <p th:text="${user.getFirstName()+ '  ' + user.getLastName()}">user </p>
-                                            <p id="logged-in-user" th:text="${user.getEmail()}">UserMail@mail.com</p>
 
-
-                                        </div>
-                                        <div class="row  profileModalFontNormal">
-                                            <span>Badge Balance : </span> &nbsp;&nbsp;
-                                            <img th:src="@{/assets/images/gold.png}">&nbsp;:&nbsp; <span
-                                                th:text="${userStarCount.getGoldStarCount()}"></span>&nbsp;&nbsp;
-                                            <img th:src="@{/assets/images/silver.png}"> : <span
-                                                th:text="${userStarCount.getSilverStarCount()}"></span>&nbsp;&nbsp;
-                                            <img th:src="@{/assets/images/bronze.png}"> : <span
-                                                th:text="${userStarCount.getBronzeStarCount()}"></span>
-
-                                        </div>
                                     </div>
 
                                 </div>
-
                             </div>
-                        </div>
 
-                        <br>
+                            <br>
 
-                        <!--Profile Footer-->
-                        <div class="clearfix profileFooter">
-                            <a class="footerLeft">Guidelines</a>
-                            <span class="footerRight"><form th:action="@{/logout}" method="post">
+                            <!--Profile Footer-->
+                            <div class="clearfix profileFooter">
+                                <a class="footerLeft">Guidelines</a>
+                                <span class="footerRight"><form th:action="@{/logout}" method="post">
 
                             <input type="submit" value="logout">
                         </form></span>
 
 
+                            </div>
+
                         </div>
 
                     </div>
 
-                </div>
+
+                </li>
+
+            </ul>
 
 
-            </li>
+        </nav>
 
-        </ul>
-
-
-    </nav>
+    </div>
 
 
 
 
 
-<div class="content-wrapper" style="margin-top: 70px;">
+<div class="content-wrapper" style="margin-top:110px;">
 
     <div class="container-fluid">
 
@@ -790,7 +795,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <img th:src="@{assets/images/badgeicon.png}" height="20" width="20"/>&nbsp;&nbsp; Badges And
+                        <img src="http://reap.tothenew.com/assets/ico-badge-hover-6ad40a50088b6e0747f43352ae621d8c.png" height="20" width="20"/>&nbsp;&nbsp; Badges And
                         Points
                     </div>
 
@@ -800,12 +805,12 @@
 
                             <div class="col-sm-1">
 
-                                <img class="recieverImage"
+                                <img class="recieverImage" style="height: 125px;width: 150px"
                                      th:src="@{' '+${user.getPhoto()}}">
 
                             </div>
 
-                            <div class="col-sm-6 userDetail">
+                            <div class="col-sm-6 userDetail" style="margin-left: 140px">
 
                                 <h3 id="myName" th:text="${user.getFirstName()}+' '+${user.getLastName()}">Gagan kushwaha</h3>
 
@@ -815,7 +820,7 @@
                                                   </span>
 
                                 <span>
-                                                        <img th:src="@{assets/images/silver.png}" height="18" width="20"/>
+                                                         <img th:src="@{assets/images/silver.png}" height="18" width="20"/>
                                                          <i th:text="${userStarRecieved.getSilverStarRecieved()}"></i>
                                                   </span>
 
@@ -826,11 +831,11 @@
 
                             </div>
 
-                            <div class="col-sm-3">
-                                <h3 style="position:absolute; bottom:-15px; right:-25px; font-size:24px; padding-left: 10px; color: pink; font-weight: bolder" th:text="${userStarRecieved.getPoints()}"></h3>
-                            </div>
 
 
+                        </div>
+                        <div>
+                            <input class="reedemBtn btn btn-default btn-primary" type="button" th:value="'Points : '+${userStarRecieved.getPoints()}+' '">
                         </div>
 
                     </div>
@@ -850,10 +855,7 @@
                                 <strong><p>Detail</p></strong>
 
                             </div>
-                            <div class="col-md-3">
-                                <strong><p>Quantity</p></strong>
 
-                            </div>
                             <div class="col-md-2">
                                 <strong><p>Sub total</p></strong>
 

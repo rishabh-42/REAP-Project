@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 public class RegisterController {
@@ -34,6 +35,12 @@ public class RegisterController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request, Errors errors) {
+       if(bindingResult.hasErrors()){
+          return new  ModelAndView("pages/Login").addObject("errorMessage",
+                  bindingResult.getFieldErrors().stream()
+                          .map(f -> f.getField().toUpperCase() + " --> " + f.getDefaultMessage() + "\n")
+                          .collect(Collectors.joining(System.lineSeparator())));
+                  }
         return  registerService.processRegistrationForm(modelAndView,user,bindingResult,request,errors);
     }
     // Process confirmation link

@@ -1,6 +1,7 @@
 
 package com.example.spring.Entities;
 
+import com.example.spring.utils.CustomAnnotations.PasswordMatches;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
@@ -24,7 +25,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "user")
@@ -50,17 +50,17 @@ public class User {
 
 
     @Column(nullable = false)
-//    @Size(min = 4, max = 30, message = "{user.first.name}")
-            String firstName;
+    @Size(min = 3, max = 30, message = "First Name should be of minimum 3 characters")
+    String firstName;
 
-
-    //    @Size(min = 4, max = 30, message = "{user.last.name}")
+    @Size(min = 3, max = 30, message = "Last Name should be of minimum 3 characters")
     String lastName;
 
 
+    @Email(message = "Please Enter a valid email")
     String email;
 
-    @Size(min = 4)
+    @Size(min = 4 , max = 64)
     String password;
 
     String photo;

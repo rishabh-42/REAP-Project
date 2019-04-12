@@ -37,7 +37,7 @@ public class SubmitCommentService {
         }
         User userGiver = userService.findByEmail(((UserDetails) principal).getUsername());
         User userReceiver = userService.findByEmail(fields.get("email"));
-        if (userReceiver == null) {
+        if (userReceiver == null || fields.get("badge").equals("")) {
             return "Selected newer doesn't exists";
         }
         if(fields.get("badge").equals("Gold")){
@@ -73,7 +73,7 @@ public class SubmitCommentService {
         SimpleMailMessage commentEmail = new SimpleMailMessage();
         commentEmail.setTo(fields.get("email"));
         commentEmail.setSubject("You have been recognised.");
-        commentEmail.setText("You recieved a star from " + userGiver.getFirstName() + " " + userGiver.getLastName() + "\n"
+        commentEmail.setText("You recieved a "+fields.get("badge")+" star from " + userGiver.getFirstName() + " " + userGiver.getLastName() + "\n"
                 + "Message : " + fields.get("reason"));
         commentEmail.setFrom("no-reply@tothenew.com");
         emailService.sendEmail(commentEmail);

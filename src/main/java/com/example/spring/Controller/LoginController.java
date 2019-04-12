@@ -44,7 +44,7 @@ public class LoginController {
 
     @RequestMapping(value = "/loginSignup", method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView, User user) {
-        modelAndView.addObject("user", user);
+         modelAndView.addObject("user", user);
         modelAndView.setViewName("pages/Login");
         return modelAndView;
     }
@@ -57,6 +57,7 @@ public class LoginController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByEmail(((UserDetails) principal).getUsername());
         if (user.isActive() == false) return new ModelAndView("pages/UserInactive");
+
         modelAndView.addObject("user", user);
         UserStarCount userStarCount = userStarCountService.findByUser(user);
         modelAndView.addObject("userStarCount", userStarCount);
