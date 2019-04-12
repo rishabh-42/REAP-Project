@@ -1,6 +1,7 @@
 package com.example.spring.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,8 +22,10 @@ public class UserStarCount {
     Integer id;
 
 
+    @JsonBackReference
     @OneToOne(fetch = FetchType.EAGER)
     User user;
+
 
     Integer goldStarCount;
 

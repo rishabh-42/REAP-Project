@@ -26,14 +26,20 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"
           crossorigin="anonymous">
+
+    <!--<link rel="stylesheet" type="text/css" href="../../static/assets/css/dashboard.css">-->
     <style>
+        input[type=file]{
+            width:90px;
+            color:transparent;
+        }
         .loader, .loader-register {
             border: 16px solid #f3f3f3;
             border-radius: 50%;
             border-top: 16px solid #3498db;
             width: 60px;
             height: 60px;
-            -webkit-animation: spin 2s linear infinite; /* Safari */
+             -webkit-animation: spin 2s linear infinite; /* Safari */
             animation: spin 2s linear infinite;
 
             margin: 0 auto;
@@ -42,10 +48,10 @@
         /* Safari */
         @-webkit-keyframes spin {
             0% {
-                -webkit-transform: rotate(0deg);
+                 -webkit-transform: rotate(0deg);
             }
             100% {
-                -webkit-transform: rotate(360deg);
+                 -webkit-transform: rotate(360deg);
             }
         }
 
@@ -490,6 +496,7 @@
             $("#data-table").on('click','.updateRole',function () {
                 var a=$(this).parent();
                 var radioValue = a.find($("input[type='checkbox']:checked"));
+
                 var values="";
                 var updateEmail= $(this).parent().parent().prev().find($(".email")).text();
                radioValue.each(function (index) {
@@ -514,6 +521,12 @@
                 $("#all-post #first-name").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
+            });
+
+            $("#profile-image").change(function () {
+                console.log("ghjkl");
+                $("#profile-image-form").submit();
+
             });
             $('#data-table').DataTable();
             var email;
@@ -625,6 +638,7 @@
     </script>
  </head>
 
+
 <body>
 
 
@@ -652,9 +666,9 @@
                 <button class="btn btn-sm nav-btn active" style="background-color: #d9177f"><i class="fas fa-tachometer-alt"></i>&nbsp;Dashboard</button>
             </a>
             <a href="/warehouse">
-            <button class="btn btn-sm nav-btn"><img
-                    src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Shop
-            </button>
+                <button class="btn btn-sm nav-btn" ><img
+                        src="http://reap.tothenew.com/assets/ico-badge-f806ef61da2bf4d67425de6f36f427a9.png">&nbsp;Shop
+                </button>
             </a>
             <a href="/dashboard/profile/">
                 <button class="btn btn-sm nav-btn"><img
@@ -663,7 +677,6 @@
                     &nbsp;Profile
                 </button>
             </a>
-
 
 
         </div>
@@ -692,10 +705,10 @@
                                 <div class="col-md-4">
                                     <img th:src="@{''+${user.getPhoto()}}"
                                          width="80px" height="80px">
-                                    <form method="post" action="/uploadFile" enctype="multipart/form-data">
+                                    <form method="post" id="profile-image-form" action="/uploadFile" enctype="multipart/form-data">
 
-                                        <input type="file" name="file">
-                                        <input type="submit" value="Upload">
+                                        <input id="profile-image" type="file" name="file">
+                                        <label for="profile-image">Change Profile Photo</label>
 
                                     </form>
                                 </div>
@@ -736,7 +749,8 @@
 
                         <!--Profile Footer-->
                         <div class="clearfix profileFooter">
-                            <a class="footerLeft">Guidelines</a>
+                            <a class="footerLeft" >Roles : </a>
+                            <span th:each="role:${user.getRoles()}" th:text="${role.getName()}+' '"></span>
                             <span class="footerRight"><form th:action="@{/logout}" method="post">
 
                             <input type="submit" value="logout">
@@ -907,10 +921,14 @@
                                         <td class="email" th:text="${User.getEmail()}"></td>
                                         <td th:text="${User.getUserStarReceived().getPoints()}"></td>
                                         <td>
-                                            <span th:text="${User.getUserStarReceived().getGoldStarRecieved()}"></span>&nbsp;&nbsp;
-                                            <span th:text="${User.getUserStarReceived().getSilverStarRecieved()}"></span>&nbsp;
-                                            <span th:text="${User.getUserStarReceived().getBronzeStarRecieved()}"></span>&nbsp;&nbsp;
+                                            <span th:text="${User.getUserStarCount().getGoldStarCount()}"></span>&nbsp;&nbsp;
+                                            <span th:text="${User.getUserStarCount().getSilverStarCount()}"></span>&nbsp;
+                                            <span th:text="${User.getUserStarCount().getBronzeStarCount()}"></span>&nbsp;&nbsp;
 
+
+                                            <!--<span th:text="${User.getUserStarReceived().getGoldStarRecieved()}"></span>&nbsp;&nbsp;-->
+                                            <!--<span th:text="${User.getUserStarReceived().getSilverStarRecieved()}"></span>&nbsp;-->
+                                            <!--<span th:text="${User.getUserStarReceived().getBronzeStarRecieved()}"></span>&nbsp;&nbsp;-->
                                         </td>
 
 

@@ -70,7 +70,7 @@ public class RegisterService {
         } else { // Token found
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(4)));
             user.setActive(true);
-            user.setConfirmationToken("");
+//            user.setConfirmationToken("");
             Set<UserRole> roles = new HashSet<>();
             roles.add(userRoleService.getRole("User"));
             user.setRoles(roles);
@@ -92,6 +92,8 @@ public class RegisterService {
             userStarReceived.setPoints(new Integer(0));
             userStarRecievedService.save(userStarReceived);
 
+
+            newUser.setUserStarCount(userStarCount);
             newUser.setUserStarReceived(userStarReceived);
             userService.update(user);
             modelAndView.addObject("confirmationToken", "Hurray !! Signup success , login to proceed.");

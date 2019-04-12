@@ -86,6 +86,11 @@ public class User {
     @OneToOne
     UserStarReceived userStarReceived;
 
+
+    @JsonManagedReference
+    @OneToOne
+    UserStarCount userStarCount;
+
     @Column(name = "createDateTime")
     @CreationTimestamp
     private LocalDateTime createDateTime;
@@ -106,6 +111,13 @@ public class User {
 
     public UserStarReceived getUserStarReceived() {
         return userStarReceived;
+    }
+    public UserStarCount getUserStarCount() {
+        return userStarCount;
+    }
+
+    public void setUserStarCount(UserStarCount userStarCount) {
+        this.userStarCount = userStarCount;
     }
 
     public void setUserStarReceived(UserStarReceived userStarReceived) {
