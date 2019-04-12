@@ -31,22 +31,23 @@ import java.util.stream.Collectors;
 public class RegisterController {
 
     @Autowired
-    RegisterService registerService;
+    private RegisterService registerService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request, Errors errors) {
 
-        if(bindingResult.hasErrors()){
-          return new  ModelAndView("pages/Login").addObject("errorMessage",
-                  bindingResult.getFieldErrors().stream()
-                          .map(f -> f.getField().toUpperCase() + " --> " + f.getDefaultMessage() + "\n")
-                          .collect(Collectors.joining(System.lineSeparator())));
-                  }
-        return  registerService.processRegistrationForm(modelAndView,user,bindingResult,request,errors);
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("pages/Login").addObject("errorMessage",
+                    bindingResult.getFieldErrors().stream()
+                            .map(f -> f.getField().toUpperCase() + " --> " + f.getDefaultMessage() + "\n")
+                            .collect(Collectors.joining(System.lineSeparator())));
+        }
+        return registerService.processRegistrationForm(modelAndView, user, bindingResult, request, errors);
     }
+
     // Process confirmation link
-    @RequestMapping(value="/confirm", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirm", method = RequestMethod.GET)
     public ModelAndView showConfirmationPageAndSaveUser(ModelAndView modelAndView, @RequestParam("token") String token) {
-        return  registerService.showConfirmationPageAndSaveUser(modelAndView,token);
+        return registerService.showConfirmationPageAndSaveUser(modelAndView, token);
     }
 }

@@ -16,34 +16,39 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-    public List<User> findAllUsers(){
+
+    public List<User> findAllUsers() {
         return userRepository.findAll();
     }
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-    public User findByResetToken(String resetToken){
+
+    public User findByResetToken(String resetToken) {
         return userRepository.findByResetToken(resetToken);
     }
+
     public User findByConfirmationToken(String confirmationToken) {
         return userRepository.findByConfirmationToken(confirmationToken);
     }
+
     public User saveUser(User user) {
         return userRepository.save(user);
     }
-    public void update(User user){
+
+    public void update(User user) {
         userRepository.save(user);
     }
 
-    public int setActive(@RequestParam("email") String email , @RequestParam("checked") String checked) {
+    public int setActive(@RequestParam("email") String email, @RequestParam("checked") String checked) {
         User user = findByEmail(email);
-        if(checked.equals("true")){
+        if (checked.equals("true")) {
             user.setActive(true);
-        }
-        else {
+        } else {
             user.setActive(false);
         }
         saveUser(user);
         return 1;
     }
-    }
+}

@@ -30,21 +30,17 @@ import java.util.List;
 public class LoginController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    UserStarRecievedService userStarRecievedService;
+    private UserStarRecievedService userStarRecievedService;
     @Autowired
-    UserRepository userRepository;
+    private UserStarCountService userStarCountService;
     @Autowired
-    JavaMailSender mailSender;
-    @Autowired
-    UserStarCountService userStarCountService;
-    @Autowired
-    BadgesGivenService badgesGivenService;
+    private BadgesGivenService badgesGivenService;
 
     @RequestMapping(value = "/loginSignup", method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView, User user) {
-         modelAndView.addObject("user", user);
+        modelAndView.addObject("user", user);
         modelAndView.setViewName("pages/Login");
         return modelAndView;
     }

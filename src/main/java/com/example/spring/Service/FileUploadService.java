@@ -17,15 +17,15 @@ import java.io.FileOutputStream;
 @Service
 public class FileUploadService {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    FileUploadService fileUploadService;
+    private FileUploadService fileUploadService;
 
     private static final Logger logger = LoggerFactory
             .getLogger(FileUploadController.class);
 
-    public String uploadFile(MultipartFile file){
+    public String uploadFile(MultipartFile file) {
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
@@ -43,7 +43,7 @@ public class FileUploadService {
                 User user = userService.findByEmail(username);
                 File serverFile = new File(dir.getAbsolutePath()
                         + File.separator + user.getUserId() + ".png");
-                user.setPhoto("/assets/profileImages/"+user.getUserId()+".png");
+                user.setPhoto("/assets/profileImages/" + user.getUserId() + ".png");
                 userService.saveUser(user);
 
                 BufferedOutputStream stream = new BufferedOutputStream(

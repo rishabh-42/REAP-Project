@@ -13,36 +13,32 @@ import java.util.List;
 public class UserStarRecievedService {
 
     @Autowired
-    UserStarRecievedRepository userStarRecievedRepository;
+    private UserStarRecievedRepository userStarRecievedRepository;
 
-    public void giveStar(User user, String star)
-    {
-        UserStarReceived userStarReceived =   userStarRecievedRepository.findByUser(user);
-        if(star.equals("Gold"))
-        {
-            userStarReceived.setGoldStarRecieved(userStarReceived.getGoldStarRecieved()+1);
-            userStarReceived.setPoints(userStarReceived.getPoints()+30);
-        }
-        else if(star.equals("Silver")){
-            userStarReceived.setSilverStarRecieved(userStarReceived.getSilverStarRecieved()+1);
-            userStarReceived.setPoints(userStarReceived.getPoints()+20);
-        }
-        else if(star.equals("Bronze")){
-            userStarReceived.setBronzeStarRecieved(userStarReceived.getBronzeStarRecieved()+1);
-            userStarReceived.setPoints(userStarReceived.getPoints()+10);
+    public void giveStar(User user, String star) {
+        UserStarReceived userStarReceived = userStarRecievedRepository.findByUser(user);
+        if (star.equals("Gold")) {
+            userStarReceived.setGoldStarRecieved(userStarReceived.getGoldStarRecieved() + 1);
+            userStarReceived.setPoints(userStarReceived.getPoints() + 30);
+        } else if (star.equals("Silver")) {
+            userStarReceived.setSilverStarRecieved(userStarReceived.getSilverStarRecieved() + 1);
+            userStarReceived.setPoints(userStarReceived.getPoints() + 20);
+        } else if (star.equals("Bronze")) {
+            userStarReceived.setBronzeStarRecieved(userStarReceived.getBronzeStarRecieved() + 1);
+            userStarReceived.setPoints(userStarReceived.getPoints() + 10);
         }
         userStarRecievedRepository.save(userStarReceived);
     }
-    public void save(UserStarReceived userStarReceived){
+
+    public void save(UserStarReceived userStarReceived) {
         userStarRecievedRepository.save(userStarReceived);
     }
 
-    public UserStarReceived findByUser(User user)
-    {
+    public UserStarReceived findByUser(User user) {
         return userStarRecievedRepository.findByUser(user);
     }
 
-    public List<UserStarReceived> getSomeUser(){
+    public List<UserStarReceived> getSomeUser() {
         return userStarRecievedRepository.findFirst6ByOrderByPointsDesc();
     }
 }

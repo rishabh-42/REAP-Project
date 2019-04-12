@@ -13,12 +13,12 @@ import java.util.Map;
 @Controller
 public class SubmitCommentController {
 
-   @Autowired
-   SubmitCommentService submitCommentService;
+    @Autowired
+    private SubmitCommentService submitCommentService;
 
     @RequestMapping(value = "/submitComment", method = RequestMethod.POST)
     @ResponseBody
     public String submitComment(@RequestParam Map<String, String> fields) {
-                return  submitCommentService.submitComment(fields);
+        return submitCommentService.submitComment(fields);
     }
 }

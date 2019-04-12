@@ -17,10 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class FileUploadController {
 
   @Autowired
-  FileUploadService fileUploadService;
+  private FileUploadService fileUploadService;
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-
     public String uploadFileHandler(@RequestParam("file") MultipartFile file) {
         fileUploadService.uploadFile(file);
        return "redirect:/dashboard";

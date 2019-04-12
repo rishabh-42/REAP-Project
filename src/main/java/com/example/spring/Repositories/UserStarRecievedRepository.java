@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UserStarRecievedRepository extends JpaRepository<UserStarReceived,Integer> {
+public interface UserStarRecievedRepository extends JpaRepository<UserStarReceived, Integer> {
 
     UserStarReceived findByUser(User user);
+
     List<UserStarReceived> findFirst6ByOrderByPointsDesc();
 }

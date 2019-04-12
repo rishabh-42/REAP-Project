@@ -8,11 +8,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface  UserRepository extends CrudRepository<User,Integer> {
+public interface UserRepository extends CrudRepository<User, Integer> {
     User findByEmail(String email);
+
     User findByConfirmationToken(String confirmationToken);
+
     User findByResetToken(String resetToken);
+
     List<User> findAll();
-    @Override
-    <S extends User> S save(S entity);
+
+
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OrderRepository extends CrudRepository<Order,Integer> {
+public interface OrderRepository extends CrudRepository<Order, Integer> {
 
     List<Order> findByUserOrderByIdDesc(User user);
 }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Service
 public class BadgesGivenService {
     @Autowired
-    BadgesGivenRepository badgesGivenRepository;
+    private BadgesGivenRepository badgesGivenRepository;
 
     public void save(BadgesGiven badgesGiven) {
         badgesGivenRepository.save(badgesGiven);

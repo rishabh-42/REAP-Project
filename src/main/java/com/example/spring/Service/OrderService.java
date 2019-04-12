@@ -12,12 +12,13 @@ import java.util.List;
 public class OrderService {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
-    public void saveOrder(Order order){
+    public void saveOrder(Order order) {
         orderRepository.save(order);
     }
-   public List<Order> findAllByUser(User user) {
+
+    public List<Order> findAllByUser(User user) {
         return orderRepository.findByUserOrderByIdDesc(user);
     }
 }

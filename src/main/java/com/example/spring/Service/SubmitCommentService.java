@@ -17,19 +17,20 @@ public class SubmitCommentService {
     private EmailService emailService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    BadgesGivenService badgesGivenService;
+    private BadgesGivenService badgesGivenService;
 
     @Autowired
-    StarRepository starRepository;
+    private StarRepository starRepository;
 
     @Autowired
-    UserStarCountService userStarCountService;
+    private UserStarCountService userStarCountService;
 
     @Autowired
-    UserStarRecievedService userStarRecievedService;
+    private UserStarRecievedService userStarRecievedService;
+
     public String submitComment(Map<String, String> fields) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (fields.get("email").equals(((UserDetails) principal).getUsername())) {
@@ -40,21 +41,16 @@ public class SubmitCommentService {
         if (userReceiver == null || fields.get("badge").equals("")) {
             return "Selected newer doesn't exists";
         }
-        if(fields.get("badge").equals("Gold")){
-            if(userStarCountService.findByUser(userGiver).getGoldStarCount()<=0)
-            {
+        if (fields.get("badge").equals("Gold")) {
+            if (userStarCountService.findByUser(userGiver).getGoldStarCount() <= 0) {
                 return "Not enough stars";
             }
-        }
-        else if(fields.get("badge").equals("Silver")){
-            if(userStarCountService.findByUser(userGiver).getSilverStarCount()<=0)
-            {
+        } else if (fields.get("badge").equals("Silver")) {
+            if (userStarCountService.findByUser(userGiver).getSilverStarCount() <= 0) {
                 return "Not enough stars";
             }
-        }
-        else if(fields.get("badge").equals("Bronze")){
-            if(userStarCountService.findByUser(userGiver).getBronzeStarCount()<=0)
-            {
+        } else if (fields.get("badge").equals("Bronze")) {
+            if (userStarCountService.findByUser(userGiver).getBronzeStarCount() <= 0) {
                 return "Not enough stars";
             }
         }
@@ -73,11 +69,11 @@ public class SubmitCommentService {
         SimpleMailMessage commentEmail = new SimpleMailMessage();
         commentEmail.setTo(fields.get("email"));
         commentEmail.setSubject("You have been recognised.");
-        commentEmail.setText("You recieved a "+fields.get("badge")+" star from " + userGiver.getFirstName() + " " + userGiver.getLastName() + "\n"
+        commentEmail.setText("You recieved a " + fields.get("badge") + " star from " + userGiver.getFirstName() + " " + userGiver.getLastName() + "\n"
                 + "Message : " + fields.get("reason"));
         commentEmail.setFrom("no-reply@tothenew.com");
         emailService.sendEmail(commentEmail);
         return "success";
     }
 
-    }
+}

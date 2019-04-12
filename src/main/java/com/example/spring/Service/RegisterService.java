@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -20,19 +21,19 @@ import java.util.UUID;
 @Service
 public class RegisterService {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
     @Autowired
-    UserStarCountService userStarCountService;
+    private UserStarCountService userStarCountService;
 
     @Autowired
-    UserStarRecievedService userStarRecievedService;
+    private UserStarRecievedService userStarRecievedService;
 
     @Autowired
-    UserRoleService userRoleService;
+    private UserRoleService userRoleService;
 
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request, Errors errors) {
 
@@ -62,9 +63,9 @@ public class RegisterService {
         return modelAndView;
     }
 
-    public ModelAndView showConfirmationPageAndSaveUser(ModelAndView modelAndView,String token) {
+    public ModelAndView showConfirmationPageAndSaveUser(ModelAndView modelAndView, String token) {
         User user = userService.findByConfirmationToken(token);
-        modelAndView.addObject("user",user);
+        modelAndView.addObject("user", user);
         if (user == null) { // No token found in DB
             modelAndView.addObject("invalidToken", "This is an invalid confirmation link.");
         } else { // Token found

@@ -13,7 +13,7 @@ import java.util.List;
 public class UserStarCountService {
 
     @Autowired
-    UserStarCountRepository userStarCountRepository;
+    private UserStarCountRepository userStarCountRepository;
 
     public UserStarCount findByUser(User user) {
         return userStarCountRepository.findByUser(user);

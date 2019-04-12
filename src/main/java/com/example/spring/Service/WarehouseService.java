@@ -16,16 +16,16 @@ import java.util.Arrays;
 @Service
 public class WarehouseService {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @Autowired
-    UserStarCountService userStarCountService;
+    private UserStarCountService userStarCountService;
 
     @Autowired
-    UserStarRecievedService userStarRecievedService;
+    private UserStarRecievedService userStarRecievedService;
 
     public ModelAndView getWarehouse() {
         ModelAndView modelAndView = new ModelAndView("pages/Warehouse");

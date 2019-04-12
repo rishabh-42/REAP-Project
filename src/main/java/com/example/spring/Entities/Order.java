@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="order_table")
+@Table(name = "order_table")
 public class Order {
 
     @Id
@@ -21,7 +21,7 @@ public class Order {
     private User user;
 
     @ElementCollection
-    private List<String> itemUrl=new ArrayList<>();
+    private List<String> itemUrl = new ArrayList<>();
 
     @Column(nullable = true)
     private Integer quantity;

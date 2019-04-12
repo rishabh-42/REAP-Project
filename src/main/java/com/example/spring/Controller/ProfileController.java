@@ -20,19 +20,19 @@ public class ProfileController {
 
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    UserStarCountService userStarCountService;
+    private UserStarCountService userStarCountService;
 
     @Autowired
-    UserStarRecievedService userStarRecievedService;
+    private UserStarRecievedService userStarRecievedService;
 
     @Autowired
-    BadgesGivenService badgesGivenService;
+    private BadgesGivenService badgesGivenService;
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
 
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping(value = {"/dashboard/profile/"})
@@ -54,7 +54,7 @@ public class ProfileController {
         List<BadgesGiven> received = badgesGivenService.getListOfReciever(user);
         modelAndView.addObject("received", received);
         List<Order> userOrders = orderService.findAllByUser(user);
-        modelAndView.addObject("orders",userOrders);
+        modelAndView.addObject("orders", userOrders);
         return modelAndView;
     }
 }

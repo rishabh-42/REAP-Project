@@ -1,7 +1,6 @@
 package com.example.spring.Entities;
 
 
-
 import com.example.spring.utils.elapsedtime.ElapsedDateTimeUtil;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -46,7 +45,6 @@ public class BadgesGiven {
     }
 
     boolean active;
-
 
 
     public Integer getId() {

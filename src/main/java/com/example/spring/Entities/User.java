@@ -1,18 +1,14 @@
 
 package com.example.spring.Entities;
 
-import com.example.spring.utils.CustomAnnotations.PasswordMatches;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -60,7 +56,7 @@ public class User {
     @Email(message = "Please Enter a valid email")
     String email;
 
-    @Size(min = 4 , max = 64)
+    @Size(min = 4, max = 64)
     String password;
 
     String photo;
@@ -112,6 +108,7 @@ public class User {
     public UserStarReceived getUserStarReceived() {
         return userStarReceived;
     }
+
     public UserStarCount getUserStarCount() {
         return userStarCount;
     }

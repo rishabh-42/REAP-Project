@@ -17,13 +17,13 @@ import java.util.Set;
 public class UserRoleService {
 
     @Autowired
-    UserRoleRepository userRoleRepository;
+    private UserRoleRepository userRoleRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    UserStarCountService userStarCountService;
+    private UserStarCountService userStarCountService;
 
     public UserRole getRole(String name) {
         return userRoleRepository.findByName(name);

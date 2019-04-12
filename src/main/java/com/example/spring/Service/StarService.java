@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class StarService {
 
     @Autowired
-    StarRepository starRepository;
+    private StarRepository starRepository;
 
-    public Star getStar(String s){
+    public Star getStar(String s) {
         return starRepository.findByName(s);
     }
 }

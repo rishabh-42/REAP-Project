@@ -22,31 +22,31 @@ import java.util.List;
 @Table(name = "item")
 public class Item {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
 
-  @Column(nullable = false)
-  @Size(min = 2, max = 30, message = "{user.item.name}")
-  String name;
+    @Column(nullable = false)
+    @Size(min = 2, max = 30, message = "{user.item.name}")
+    String name;
 
-  @Column(nullable = false)
-  Integer points;
+    @Column(nullable = false)
+    Integer points;
 
-  @Column(nullable = false)
-  boolean size;
+    @Column(nullable = false)
+    boolean size;
 
-  @Column(nullable = false)
-  boolean active;
+    @Column(nullable = false)
+    boolean active;
 
-  String imageUrl;
+    String imageUrl;
 
-  @Column(name = "createDateTime")
-  @CreationTimestamp
-  private LocalDateTime createDateTime;
+    @Column(name = "createDateTime")
+    @CreationTimestamp
+    private LocalDateTime createDateTime;
 
-  @Column(name = "updateDateTime")
-  @UpdateTimestamp
-  private LocalDateTime updateDateTime;
+    @Column(name = "updateDateTime")
+    @UpdateTimestamp
+    private LocalDateTime updateDateTime;
 
 }

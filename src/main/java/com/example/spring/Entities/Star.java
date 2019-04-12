@@ -1,7 +1,6 @@
 package com.example.spring.Entities;
 
 
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;

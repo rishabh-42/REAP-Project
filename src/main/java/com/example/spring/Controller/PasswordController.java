@@ -27,20 +27,20 @@ public class PasswordController {
     private UserService userService;
 
     @Autowired
-    PasswordService passwordService;
+    private PasswordService passwordService;
 
     @RequestMapping(value = "/forgot", method = RequestMethod.POST)
     @ResponseBody
     public String processForgotPasswordForm(ModelAndView modelAndView, @RequestParam("emailReset") String userEmail, HttpServletRequest request) {
-        return passwordService.processForgotPasswordForm(modelAndView,userEmail,request);
+        return passwordService.processForgotPasswordForm(modelAndView, userEmail, request);
     }
 
     // Display form to reset password
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
     public ModelAndView displayResetPasswordPage(ModelAndView modelAndView, @RequestParam("token") String token) {
         User user = userService.findByResetToken(token);
-        modelAndView.addObject("user",user);
-        if (user!=null) { // Token found in DB
+        modelAndView.addObject("user", user);
+        if (user != null) { // Token found in DB
             modelAndView.addObject("resetToken", token);
         } else { // Token not found in DB
             modelAndView.addObject("errorMessage", "Oops!  This is an invalid password reset link.");
@@ -53,8 +53,9 @@ public class PasswordController {
     // Process reset password form
     @RequestMapping(value = "/reset", method = RequestMethod.POST)
     public ModelAndView setNewPassword(ModelAndView modelAndView, @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
-        return  passwordService.setNewPassword(modelAndView,requestParams,redir);
+        return passwordService.setNewPassword(modelAndView, requestParams, redir);
     }
+
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ModelAndView handleMissingParams(MissingServletRequestParameterException ex) {
         return new ModelAndView("pages/Login");
