@@ -67,11 +67,13 @@ public class RegisterService {
         User user = userService.findByConfirmationToken(token);
         modelAndView.addObject("user", user);
         if (user == null) { // No token found in DB
-            modelAndView.addObject("invalidToken", "This is an invalid confirmation link.");
+            modelAndView.setViewName("pages/Login");
+            modelAndView.addObject("confirmationMessage", "This is an invalid confirmation link.");
+            return modelAndView;
         } else { // Token found
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(4)));
             user.setActive(true);
-//            user.setConfirmationToken("");
+            user.setConfirmationToken("");
             Set<UserRole> roles = new HashSet<>();
             roles.add(userRoleService.getRole("User"));
             user.setRoles(roles);

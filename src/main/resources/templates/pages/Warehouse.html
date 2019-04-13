@@ -324,7 +324,9 @@
                 });
                 $(".RButton").click(function () {
                     if(!$(".item-data-r").children().length>0){
-                        alert("Select item first");
+                        $("#cart-messages").text("Please select items");
+                        $("#cart-messages").css("display","block");
+                        setTimeout(function(){ $("#cart-messages").css("display","none"); }, 2000);
                     }
                     else {
                         var imgs="";
@@ -346,11 +348,18 @@
                            data:{items:item,price:price,imgUrl:imgs,totalPrice:totalCart},
                            success: function (e) {
                                if(e=="done") {
-                                   alert("Order Placed");
+                                   $("#cart-messages").removeClass("alert alert-danger");
+                                   $("#cart-messages").addClass("bg-success");
+                                   $("#cart-messages").text("Order Placed");
+                                   $("#cart-messages").css("display","block");
+                                   setTimeout(function(){ $("#cart-messages").css("display","none"); }, 2000);
                                    location.reload(this);
                                }
                                else {
-                                   alert("Not enough points , please remove some items");
+                                   $("#cart-messages").text("Not enough points, please remove some items");
+                                   $("#cart-messages").css("display","block");
+                                   setTimeout(function(){ $("#cart-messages").css("display","none"); }, 2000);
+                                   // alert("Not enough points , please remove some items");
 
                                }
                            }
@@ -725,6 +734,7 @@
                         <img th:src="@{assets/images/bag.png}" height="24" width="24"/>&nbsp;&nbsp;Bag
                     </div>
                     <div class="card-body">
+                        <div id="cart-messages" class="alert alert-danger" style="display: none"></div>
                         <div class="cartHead row">
                             <div class="col-md-2">
                                 <strong><p>Item</p></strong>

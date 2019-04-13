@@ -455,7 +455,9 @@
                 badge = $("#badge").val();
                 reason = $("#reason").val();
                 if (email == "" || badge == null || reason == "") {
-                    alert("Please Fill all the details correctly !!")
+                    $("#recognition-error").text("Please fill all the details correctly");
+                    $("#recognition-error").css("display","block");
+                    setTimeout(function(){ $("#recognition-error").css("display","none"); }, 2000);
                 }
                 else {
 
@@ -466,16 +468,26 @@
                         success: function (e) {
                             if(e=="Selected newer doesn't exists")
                             {
-                                alert(e);
+                                $("#recognition-error").text(e);
+                                $("#recognition-error").css("display","block");
+                                setTimeout(function(){ $("#recognition-error").css("display","none"); }, 2000);
+                                // alert(e);
                                 // $(this).attr("disabled", false);
                             }
                             else if (e=="cannot recognize yourself"){
-                                alert(e);
+                                $("#recognition-error").text("Can not Recognize Yourself");
+                                $("#recognition-error").css("display","block");
+                                setTimeout(function(){ $("#recognition-error").css("display","none"); }, 2000);
                                 // $(this).attr("disabled", false);
                             }
                             else
                             {
-                                alert(e);
+                                $("#recognition-error").removeClass("alert alert-danger");
+                                $("#recognition-error").addClass("bg-success");
+                                $("#recognition-error").text("Recognition Successful");
+                                $("#recognition-error").css("display","block");
+
+                                setTimeout(function(){ $("#recognition-error").css("display","none"); }, 2000);
                                 // $(this).attr("disabled", false);
                                 location.reload(this);
                             }
@@ -513,6 +525,7 @@
         $(function () {
             console.log("here i am");
             var availableTags = [];
+            var availableUsers=[];
             $.ajax({
                 url: "/getAllUsers",
                 method: "get",
@@ -520,11 +533,15 @@
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
                         availableTags.push(data[i].email);
+                        availableUsers.push(data[i].firstName+" "+data[i].lastName);
                     }
                 }
             });
             $("#tags").autocomplete({
                 source: availableTags
+            });
+            $("#mySearch").autocomplete({
+                source: availableUsers
             });
         });
     </script>
@@ -684,6 +701,8 @@
                     <br>
                     <div id="comment-form">
                         <div class="card-body ">
+                            <div id="recognition-error"  class="alert alert-danger" style="display: none;"></div>
+                            <br>
                             <div class="input-group">
                                 <form class="from-inline">
                                     <div class="form-row ">
@@ -694,7 +713,7 @@
                                                     </div>
                                                 </div>
                                                 <input type="text" class="form-control form-control-sm" id="tags"
-                                                       placeholder="Select a newer">
+                                                       placeholder="Select a newer" required maxlength="50">
 
                                             </div>
                                         </div>
@@ -704,7 +723,7 @@
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         </div>
                                         <div class="form-group col-auto">
-                                            <select id="badge">
+                                            <select id="badge" required>
                                                 <option value="" disabled selected>Choose Badge Type</option>
                                                 <!--<option th:value="Gold" th:text="${userStarCount.getGoldStarCount()}+' : Gold'">Gold</option>-->
                                                 <!--<option value="Silver" th:text="${userStarCount.getSilverStarCount()}+' : Silver'">Silver</option>-->
@@ -874,7 +893,7 @@
 
 
                         <br>
-                        <div id="all-post" class="card-body">
+                        <div id="all-post" style="overflow-y:scroll;overflow-x:hidden; height:500px;" class="card-body">
                             <div id="first-name" th:each="post1:${post}" class="row comment">
                                 <div class="col-1">
                                     <img id="avtr"

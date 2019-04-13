@@ -30,9 +30,12 @@ public class FileUploadService {
             try {
                 byte[] bytes = file.getBytes();
                 String rootPath = "/home/ttn/Reap/out/production/resources/static/assets/profileImages";
+                String rootPath1 = "/home/ttn/Reap/src/main/resources/static/assets/profileImages";
                 File dir = new File(rootPath);
+                File dirLocal = new File(rootPath1);
                 if (!dir.exists())
                     dir.mkdirs();
+                if(!dirLocal.exists()) dirLocal.mkdirs();
                 String username;
                 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 if (principal instanceof UserDetails) {
@@ -43,12 +46,18 @@ public class FileUploadService {
                 User user = userService.findByEmail(username);
                 File serverFile = new File(dir.getAbsolutePath()
                         + File.separator + user.getUserId() + ".png");
+                File localFile = new File(dirLocal.getAbsolutePath()
+                        + File.separator + user.getUserId() + ".png");
                 user.setPhoto("/assets/profileImages/" + user.getUserId() + ".png");
                 userService.saveUser(user);
 
                 BufferedOutputStream stream = new BufferedOutputStream(
                         new FileOutputStream(serverFile));
+                BufferedOutputStream localFileStream = new BufferedOutputStream(
+                        new FileOutputStream(localFile));
                 stream.write(bytes);
+                localFileStream.write(bytes);
+                localFileStream.close();
                 stream.close();
 
 
