@@ -3,6 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Warehouse</title>
+    <link rel="shortcut icon" href="http://learning.tothenew.com/assets/favicon-c06e02ee158e94e25e754cb87a2328fd.ico"
+          type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
@@ -349,7 +352,7 @@
                            success: function (e) {
                                if(e=="done") {
                                    $("#cart-messages").removeClass("alert alert-danger");
-                                   $("#cart-messages").addClass("bg-success");
+                                   $("#cart-messages").addClass("alert alert-success");
                                    $("#cart-messages").text("Order Placed");
                                    $("#cart-messages").css("display","block");
                                    setTimeout(function(){ $("#cart-messages").css("display","none"); }, 2000);

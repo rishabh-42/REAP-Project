@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
         Dashboard</title>
+    <link rel="shortcut icon" href="http://learning.tothenew.com/assets/favicon-c06e02ee158e94e25e754cb87a2328fd.ico"
+          type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
@@ -340,14 +342,14 @@
                     dataType: 'json',
                     success: function (json) {
                         var roles = "";
-                        var user = "<input id='User' type='checkbox' value='User' checked> User";
+                        var user = "<input id='User' type='checkbox' value='User' checked> User &nbsp;&nbsp;&nbsp;&nbsp;";
                         var usernot = "<input id='User' type='checkbox'> User";
-                        var practiceHead = "<input id='PracticeHead' value='PracticeHead' type='checkbox' checked> PracticeHead";
-                        var practiceHeadNot = "<input id='PracticeHead' type='checkbox'> PracticeHead";
-                        var superVisor = "<input id='Supervisor' type='checkbox' value='Supervisor' checked> Supervisor";
-                        var superVisorNot = "<input id='Supervisor' type='checkbox'> Supervisor";
-                        var Admin = "<input id='Admin' type='checkbox' value='Admin' checked> Admin";
-                        var AdminNot = "<input id='Admin' type='checkbox'> Admin";
+                        var practiceHead = "<input id='PracticeHead' value='PracticeHead' type='checkbox' checked> PracticeHead &nbsp;&nbsp;&nbsp;&nbsp;";
+                        var practiceHeadNot = "<input id='PracticeHead' type='checkbox'> PracticeHead &nbsp;&nbsp;&nbsp;&nbsp;";
+                        var superVisor = "<input id='Supervisor' type='checkbox' value='Supervisor' checked> Supervisor &nbsp;&nbsp;&nbsp;&nbsp;";
+                        var superVisorNot = "<input id='Supervisor' type='checkbox'> Supervisor &nbsp;&nbsp;&nbsp;&nbsp;";
+                        var Admin = "<input id='Admin' type='checkbox' value='Admin' checked> Admin &nbsp;&nbsp;&nbsp;&nbsp;";
+                        var AdminNot = "<input id='Admin' type='checkbox'> Admin &nbsp;&nbsp;&nbsp;&nbsp;";
                         for (i = 0; i < json.length; i++) {
                             if (json[i].name == "User") {
                                 roles = roles + user;
@@ -432,7 +434,13 @@
                        data: {email:emaiil,checked:true},
                        method:"post",
                        success: function (e) {
-                       alert("user "+ emaiil +" set to Active");
+
+                               $("#success-message").css("display","block");
+                               $("#success-message").text("User "+emaiil+" set to ACTIVE");
+                               setTimeout(function(){ $("#success-message").css("display","none"); }, 2000);
+
+
+
                        }
                })
                }
@@ -443,7 +451,9 @@
                        data: {email:emaiil,checked:false},
                        method:"post",
                        success: function (e) {
-                           alert("user "+ emaiil +" set to inactive");
+                           $("#success-message").css("display","block");
+                           $("#success-message").text("User "+emaiil+" set to INACTIVE");
+                           setTimeout(function(){ $("#success-message").css("display","none"); }, 2000);
                        }
                    })
                }
@@ -483,7 +493,7 @@
                             else
                             {
                                 $("#recognition-error").removeClass("alert alert-danger");
-                                $("#recognition-error").addClass("bg-success");
+                                $("#recognition-error").addClass("alert alert-success");
                                 $("#recognition-error").text("Recognition Successful");
                                 $("#recognition-error").css("display","block");
 
@@ -543,6 +553,110 @@
             $("#mySearch").autocomplete({
                 source: availableUsers
             });
+
+            $(".user-points").change(function () {
+                var userEmail = $(this).parent().prev().text();
+                var newPoints = $(this).val();
+                $.ajax({
+                    url:"/updatePoints",
+                    method:"post",
+                    data:{email:userEmail,points:newPoints},
+                    success:function (e) {
+                        if(e=="done"){
+                            $("#success-message").css("display","block");
+                            $("#success-message").text("Points set to "+ newPoints+" for username "+userEmail);
+                            setTimeout(function(){ $("#success-message").css("display","none"); }, 2000);
+
+                        }
+                        else {
+                            $("#failure-message").css("display","block");
+                            $("#failure-message").text(e);
+                            setTimeout(function(){ $("#failure-message").css("display","none"); }, 2000);
+
+                        }
+
+
+                    }
+                })
+            });
+
+            $(".gold-count").change(function () {
+                var userEmail = $(this).parent().prev().prev().text();
+                var newCount = $(this).val();
+                $.ajax({
+                    url:"/updateGoldBadges",
+                    method:"post",
+                    data:{email:userEmail,count:newCount},
+                    success:function (e) {
+                        if(e=="done"){
+                            $("#success-message").css("display","block");
+                            $("#success-message").text("Gold Stars set to "+ newCount+" for username "+userEmail);
+                            setTimeout(function(){ $("#success-message").css("display","none"); }, 2000);
+
+                        }
+                        else {
+                            $("#failure-message").css("display","block");
+                            $("#failure-message").text(e);
+                            setTimeout(function(){ $("#failure-message").css("display","none"); }, 2000);
+
+                        }
+
+                    }
+                })
+            });
+
+            $(".silver-count").change(function () {
+                var userEmail = $(this).parent().prev().prev().text();
+                var newCount = $(this).val();
+                $.ajax({
+                    url:"/updateSilverBadges",
+                    method:"post",
+                    data:{email:userEmail,count:newCount},
+                    success:function (e) {
+                        if(e=="done"){
+                            $("#success-message").css("display","block");
+                            $("#success-message").text("Silver Stars set to "+ newCount+" for username "+userEmail);
+                            setTimeout(function(){ $("#success-message").css("display","none"); }, 2000);
+
+                        }
+                        else {
+                            $("#failure-message").css("display","block");
+                            $("#failure-message").text(e);
+                            setTimeout(function(){ $("#failure-message").css("display","none"); }, 2000);
+
+                        }
+
+
+                    }
+                })
+            });
+
+            $(".bronze-count").change(function () {
+                var userEmail = $(this).parent().prev().prev().text();
+                var newCount = $(this).val();
+                $.ajax({
+                    url:"/updateBronzeBadges",
+                    method:"post",
+                    data:{email:userEmail,count:newCount},
+                    success:function (e) {
+                        if(e=="done"){
+                            $("#success-message").css("display","block");
+                            $("#success-message").text("Bronze Stars set to "+ newPoints+" for username "+userEmail);
+                            setTimeout(function(){ $("#success-message").css("display","none"); }, 2000);
+
+                        }
+                        else {
+                            $("#failure-message").css("display","block");
+                            $("#failure-message").text(e);
+                            setTimeout(function(){ $("#failure-message").css("display","none"); }, 2000);
+
+                        }
+
+
+                    }
+                })
+            });
+
         });
     </script>
  </head>
@@ -785,7 +899,8 @@
 
                         <!--Card Body-->
                         <div class="card-body">
-
+                            <div class="alert alert-danger" id="failure-message" style="display: none"></div>
+                            <div class="alert alert-success" id="success-message" style="display: none"></div>
                             <div class="table-responsive">
 
                                 <table id="data-table" class=" row-border order-column"
@@ -830,11 +945,16 @@
                                                    th:value="${User.isActive()}">
                                         </td>
                                         <td class="email" th:text="${User.getEmail()}"></td>
-                                        <td th:text="${User.getUserStarReceived().getPoints()}"></td>
                                         <td>
-                                            <span th:text="${User.getUserStarCount().getGoldStarCount()}"></span>&nbsp;&nbsp;
-                                            <span th:text="${User.getUserStarCount().getSilverStarCount()}"></span>&nbsp;
-                                            <span th:text="${User.getUserStarCount().getBronzeStarCount()}"></span>&nbsp;&nbsp;
+                                        <input class="user-points" th:value="${User.getUserStarReceived().getPoints()}" type="number" step="1" style="width:100px;">
+                                        </td>
+                                        <td>
+                                            <input type="number" class="gold-count" th:value="${User.getUserStarCount().getGoldStarCount()}" step="1" style="width:50px;">&nbsp;&nbsp;
+                                            <input type="number" class="silver-count" th:value="${User.getUserStarCount().getSilverStarCount()}" step="1" style="width:50px;">&nbsp;
+                                            <input type="number" class="bronze-count" th:value="${User.getUserStarCount().getBronzeStarCount()}" step="1" style="width:50px;">&nbsp;&nbsp;
+                                            <!--<span th:text="${User.getUserStarCount().getGoldStarCount()}"></span>&nbsp;&nbsp;-->
+                                            <!--<span th:text="${User.getUserStarCount().getSilverStarCount()}"></span>&nbsp;-->
+                                            <!--<span th:text="${User.getUserStarCount().getBronzeStarCount()}"></span>&nbsp;&nbsp;-->
 
 
                                             <!--<span th:text="${User.getUserStarReceived().getGoldStarRecieved()}"></span>&nbsp;&nbsp;-->
@@ -901,7 +1021,7 @@
                                          class="avatar mt-2">
                                 </div>
                                 <div class="col-11 all-posts">
-                                    <strong name="firstname" th:text="${post1.getReceiver().getFirstName()}"></strong>
+                                    <strong th:text="${post1.getReceiver().getFirstName()}"></strong>
                                     <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
                                     <span th:if="${post1.getStar().getId()}==1">
                                         <img th:src="@{/assets/images/gold.png}">

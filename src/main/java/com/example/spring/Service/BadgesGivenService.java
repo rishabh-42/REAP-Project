@@ -25,11 +25,11 @@ public class BadgesGivenService {
 
 
     public List<BadgesGiven> getListOfGiver(User user) {
-        return badgesGivenRepository.findByGiverAndActive(user, true);
+        return badgesGivenRepository.findByGiverAndActiveOrderByIdDesc(user, true);
     }
 
     public List<BadgesGiven> getListOfReciever(User user) {
-        return badgesGivenRepository.findByReceiverAndActive(user, true);
+        return badgesGivenRepository.findByReceiverAndActiveOrderByIdDesc(user, true);
     }
 
 

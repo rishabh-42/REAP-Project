@@ -13,9 +13,9 @@ import java.util.Optional;
 public interface BadgesGivenRepository extends JpaRepository<BadgesGiven, Integer> {
     List<BadgesGiven> findByActiveOrderByIdDesc(boolean active);
 
-    List<BadgesGiven> findByGiverAndActive(User user, boolean active);
+    List<BadgesGiven> findByGiverAndActiveOrderByIdDesc(User user, boolean active);
 
-    List<BadgesGiven> findByReceiverAndActive(User user, boolean active);
+    List<BadgesGiven> findByReceiverAndActiveOrderByIdDesc(User user, boolean active);
 
     Optional<BadgesGiven> findById(Integer i);
 
