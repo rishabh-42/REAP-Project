@@ -38,7 +38,7 @@ public class BadgesGivenService {
     }
 
     public List<BadgesGiven> findBetweenDate(LocalDateTime startDate, LocalDateTime endDate) {
-        return badgesGivenRepository.findAllByCreateDateTimeBetween(startDate, endDate);
+        return badgesGivenRepository.findAllByCreateDateTimeBetweenOrderByIdDesc(startDate, endDate);
     }
 
     public List<BadgesGiven> findByGiverOrReciever(User user1, User user2) {

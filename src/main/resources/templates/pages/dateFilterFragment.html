@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body id="main-body">
+<div id="first-name" th:each="post1:${post}" class="row comment">
+    <div class="col-1">
+        <img id="avtr"
+             th:src="@{''+${post1.getReceiver().getPhoto()}}"
+             class="avatar mt-2">
+    </div>
+    <div class="col-11 all-posts">
+        <strong th:text="${post1.getReceiver().getFirstName()}"></strong>
+        <strong th:text="${post1.getReceiver().getLastName()}"></strong> has received
+        <span th:if="${post1.getStar().getId()}==1">
+                                        <img th:src="@{/assets/images/gold.png}">
+                                    </span>
+        <span th:if="${post1.getStar().getId()}==2">
+                                        <img th:src="@{/assets/images/silver.png}">
+                                    </span>
+        <span th:if="${post1.getStar().getId()}==3">
+                                        <img th:src="@{/assets/images/bronze.png}">
+                                    </span>
+
+        from <strong
+            th:text="${post1.getGiver().getFirstName()} + ' '+ ${post1.getGiver().getLastName()}">
+    </strong> <br>
+        <strong>Reason : </strong><span th:text="${post1.getComment()}"></span>
+        <br>
+        <i th:text="${post1.getElapsedTime()}"></i><span>ago</span>
+
+        <span th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}">
+
+                                        <button style="float: right" class="btn btn-danger selected-row"
+                                                data-toggle="modal" data-target="#recognize-revoke">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                        <input type="text" style="display: none" class="del-row-id"
+                                               th:value="${post1.getId()}">
+                                            </button>
+                                    </span>
+
+        <br>
+        <hr>
+    </div>
+
+
+</div>
+
+</body>
+</html>

@@ -342,7 +342,7 @@
                     dataType: 'json',
                     success: function (json) {
                         var roles = "";
-                        var user = "<input id='User' type='checkbox' value='User' checked> User &nbsp;&nbsp;&nbsp;&nbsp;";
+                        var user = "<input id='User' type='checkbox' value='User' checked disabled='true'> User &nbsp;&nbsp;&nbsp;&nbsp;";
                         var usernot = "<input id='User' type='checkbox'> User";
                         var practiceHead = "<input id='PracticeHead' value='PracticeHead' type='checkbox' checked> PracticeHead &nbsp;&nbsp;&nbsp;&nbsp;";
                         var practiceHeadNot = "<input id='PracticeHead' type='checkbox'> PracticeHead &nbsp;&nbsp;&nbsp;&nbsp;";
@@ -505,11 +505,14 @@
                     });
                 }
             });
-            $(".all-posts").on('click', '.selected-row', function (e) {
+            $("body").on('click', '.selected-row', function (e) {
+                console.log("row clicked");
                 var id = $(this).find(".del-row-id").val();
                 $("#hidden-id-del").val(id);
             });
-            $("#revoke-post").click(function () {
+            $("body").on('click','#revoke-post',function () {
+
+            // $("#revoke-post").click(function () {
                 var radioValue = $("input[name='reason']:checked").val();
                 var delId = $("#hidden-id-del").val();
                 var additionalComment = $("#additional-comment").val();
@@ -522,18 +525,27 @@
                         success: function () {
                             console.log("post revoked !!");
                             $(".loader-forgot").css("display", "none");
-                            alert("post revoked");
+                            $("#revoke-message").removeClass("alert-danger");
+                            $("#revoke-message").addClass("alert-success");
+                            $("#revoke-message").css("display","block");
+                            $("#revoke-message").text("Post Revoked ...");
+                            setTimeout(function(){ $("#revoke-message").css("display","none"); }, 2000);
                             location.reload(this);
                         }
                     });
                 }
                 else {
-                    alert("select a reason first or add comment");
+                    $("#revoke-message").removeClass("alert-sucess");
+                    $("#revoke-message").addClass("alert-danger");
+
+                    $("#revoke-message").css("display","block");
+                    $("#revoke-message").text("Please choose a reason or enter a comment...");
+                    setTimeout(function(){ $("#revoke-message").css("display","none"); }, 2000);
                 }
             });
         });
         $(function () {
-            console.log("here i am");
+
             var availableTags = [];
             var availableUsers=[];
             $.ajax({
@@ -641,7 +653,7 @@
                     success:function (e) {
                         if(e=="done"){
                             $("#success-message").css("display","block");
-                            $("#success-message").text("Bronze Stars set to "+ newPoints+" for username "+userEmail);
+                            $("#success-message").text("Bronze Stars set to "+ newCount+" for username "+userEmail);
                             setTimeout(function(){ $("#success-message").css("display","none"); }, 2000);
 
                         }
@@ -655,6 +667,25 @@
 
                     }
                 })
+            });
+
+            $("#filter-date").click(function () {
+
+                if((document.getElementById('startDate').value.toString()) ==''){
+                    alert('select a date first');
+                }
+                else {
+                    $.ajax({
+                        url:"/filterBetweenDate",
+                        data:{startDate:document.getElementById('startDate').value,endDate:document.getElementById('endDate').value},
+                        success:function (e) {
+                            $("#all-post").empty();
+                          $("#all-post").append(e);
+
+                        }
+                    })
+                  // var a =  this.href = '?startDate=' + document.getElementById('startDate').value + '&endDate=' + document.getElementById('endDate').value;
+                }
             });
 
         });
@@ -1001,10 +1032,20 @@
                                 <span th:each="role:${user.getRoles()}" th:if="${role.getName()=='Admin'}">
                                 <span id="dt" name="dates"><i class="fa fa-calendar fa-style" aria-hidden="true"></i></span>
                                     <a href=""
-                                       onclick="this.href='/download?startDate='+document.getElementById('startDate').value+'&endDate='+document.getElementById('endDate').value" id="download">
+                                       onclick="
+                                       if((document.getElementById('startDate').value.toString()) ==''){
+                                           alert('select a date first');
+                                           }
+                                       else {
+                                       this.href='/download?startDate='+document.getElementById('startDate').value+'&endDate='+document.getElementById('endDate').value}" id="download">
                                         <i class="fa fa-download fa-style" aria-hidden="true" style="color: white"></i></a>
                                 </span>
                                 <!--</div>-->
+                                <span id="filter-date">&nbsp;
+
+
+                                        <i class="fas fa-filter"></i></a></i>
+                                </span>
 
                             </form>
 
@@ -1228,7 +1269,9 @@
                 <br>
                 <input style="margin: 0 auto" id="revoke-post" type="button" value="Revoke Recognition">
 
+
                 <div class="loader loader-forgot" style="display: none;"></div>
+                <div class="alert alert-danger" id="revoke-message" style="display: none;"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

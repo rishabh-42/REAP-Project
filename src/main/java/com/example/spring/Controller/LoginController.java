@@ -38,7 +38,7 @@ public class LoginController {
     @Autowired
     private BadgesGivenService badgesGivenService;
 
-    @RequestMapping(value = "/loginSignup", method = RequestMethod.GET)
+    @RequestMapping(value = {"/loginSignup", "/"}, method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView, User user) {
         modelAndView.addObject("user", user);
         modelAndView.setViewName("pages/Login");
