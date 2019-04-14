@@ -30,10 +30,11 @@ public class PasswordService {
             userService.saveUser(user);
             String appUrl = request.getScheme() + "://" + request.getServerName();
             // Email message
-            SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
+                SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
             passwordResetEmail.setFrom("support@demo.com");
             passwordResetEmail.setTo(user.getEmail());
             passwordResetEmail.setSubject("Password Reset Request");
+
             passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
                     + ":8080/reset?token=" + user.getResetToken());
             emailService.sendEmail(passwordResetEmail);

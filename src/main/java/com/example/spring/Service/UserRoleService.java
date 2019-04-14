@@ -24,6 +24,9 @@ public class UserRoleService {
 
     @Autowired
     private UserStarCountService userStarCountService;
+    public UserRole save(UserRole u){
+        return userRoleRepository.save(u);
+    }
 
     public UserRole getRole(String name) {
         return userRoleRepository.findByName(name);

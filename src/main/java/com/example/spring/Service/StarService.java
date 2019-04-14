@@ -14,4 +14,8 @@ public class StarService {
     public Star getStar(String s) {
         return starRepository.findByName(s);
     }
+
+    public Star save(Star s){
+       return starRepository.save(s);
+    }
 }
