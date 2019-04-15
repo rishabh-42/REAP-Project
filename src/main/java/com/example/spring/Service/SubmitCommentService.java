@@ -3,6 +3,8 @@ package com.example.spring.Service;
 import com.example.spring.Entities.BadgesGiven;
 import com.example.spring.Entities.User;
 import com.example.spring.Repositories.StarRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +33,8 @@ public class SubmitCommentService {
     @Autowired
     private UserStarRecievedService userStarRecievedService;
 
+
+    Logger logger = LoggerFactory.getLogger(SubmitCommentService.class);
     public String submitComment(Map<String, String> fields) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (fields.get("email").equals(((UserDetails) principal).getUsername())) {
@@ -54,6 +58,8 @@ public class SubmitCommentService {
                 return "Not enough stars";
             }
         }
+        logger.info("Submitting comment by " + userGiver.getEmail()+ " to "+ userReceiver.getEmail());
+
         BadgesGiven badgesGiven = new BadgesGiven();
         badgesGiven.setGiver(userGiver);
         badgesGiven.setReceiver(userReceiver);

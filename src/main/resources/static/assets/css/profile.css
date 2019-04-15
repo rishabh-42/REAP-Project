@@ -83,7 +83,6 @@ nav {
 
 /*profie*/
 .coins {
-    background-image: url('/assets/images/coins.png');
     background-repeat: no-repeat;
     background-position-x: 280px;
 }

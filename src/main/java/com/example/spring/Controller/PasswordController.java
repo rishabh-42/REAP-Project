@@ -4,6 +4,8 @@ import com.example.spring.Entities.User;
 import com.example.spring.Service.EmailService;
 import com.example.spring.Service.PasswordService;
 import com.example.spring.Service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -28,16 +30,21 @@ public class PasswordController {
 
     @Autowired
     private PasswordService passwordService;
+    Logger logger = LoggerFactory.getLogger(PasswordController.class);
+
 
     @RequestMapping(value = "/forgot", method = RequestMethod.POST)
     @ResponseBody
     public String processForgotPasswordForm(ModelAndView modelAndView, @RequestParam("emailReset") String userEmail, HttpServletRequest request) {
+        logger.info("Forgot password" + userEmail +" "+ request);
+
         return passwordService.processForgotPasswordForm(modelAndView, userEmail, request);
     }
 
     // Display form to reset password
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
     public ModelAndView displayResetPasswordPage(ModelAndView modelAndView, @RequestParam("token") String token) {
+        logger.info("Displaying reset form " + token);
         User user = userService.findByResetToken(token);
         modelAndView.addObject("user", user);
         if (user != null) { // Token found in DB

@@ -1,6 +1,9 @@
 package com.example.spring.Service;
 
+import com.example.spring.Controller.PasswordController;
 import com.example.spring.Entities.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -20,6 +23,9 @@ public class PasswordService {
     @Autowired
     private EmailService emailService;
 
+
+    Logger logger = LoggerFactory.getLogger(PasswordService.class);
+
     public String processForgotPasswordForm(ModelAndView modelAndView, String userEmail, HttpServletRequest request) {
         User optional = userService.findByEmail(userEmail);
         if (optional == null) {
@@ -27,6 +33,7 @@ public class PasswordService {
         } else {
             User user = optional;
             user.setResetToken(UUID.randomUUID().toString());
+            logger.info("reset token "+ user.getResetToken());
             userService.saveUser(user);
             String appUrl = request.getScheme() + "://" + request.getServerName();
             // Email message

@@ -10,6 +10,8 @@ import com.example.spring.Service.BadgesGivenService;
 import com.example.spring.Service.UserService;
 import com.example.spring.Service.UserStarCountService;
 import com.example.spring.Service.UserStarRecievedService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,9 +39,12 @@ public class LoginController {
     private UserStarCountService userStarCountService;
     @Autowired
     private BadgesGivenService badgesGivenService;
+    Logger logger = LoggerFactory.getLogger(LoginController.class);
+
 
     @RequestMapping(value = {"/loginSignup", "/"}, method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView, User user) {
+        logger.info("logging in");
         modelAndView.addObject("user", user);
         modelAndView.setViewName("pages/Login");
         return modelAndView;
@@ -49,11 +54,13 @@ public class LoginController {
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping(value = "/dashboard")
     public ModelAndView dashboard() {
+
         ModelAndView modelAndView = new ModelAndView("pages/Dashboard");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByEmail(((UserDetails) principal).getUsername());
         if (user.isActive() == false) return new ModelAndView("pages/UserInactive");
 
+        logger.info("Opening dashboard"+ user.getEmail());
         modelAndView.addObject("user", user);
         UserStarCount userStarCount = userStarCountService.findByUser(user);
         modelAndView.addObject("userStarCount", userStarCount);

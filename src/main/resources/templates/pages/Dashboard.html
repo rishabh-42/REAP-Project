@@ -325,6 +325,12 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script>
         $(document).ready(function () {
+
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = function() {
+                window.history.pushState(null, "", window.location.href);
+            };
+
             $('span[name="dates"]').daterangepicker({
             },function (start,end,label) {
                 console.log(start.format('YYYY-MM-DD') +end.format('YYYY-MM-DD') )
@@ -761,7 +767,7 @@
                                          width="80px" height="80px">
                                     <form method="post" id="profile-image-form" action="/uploadFile" enctype="multipart/form-data">
 
-                                        <input id="profile-image" type="file" name="file">
+                                        <input id="profile-image" type="file" accept="image/*" name="file">
                                         <label for="profile-image">Change Profile Photo</label>
 
                                     </form>

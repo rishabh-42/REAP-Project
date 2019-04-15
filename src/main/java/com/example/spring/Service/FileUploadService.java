@@ -28,6 +28,10 @@ public class FileUploadService {
     public String uploadFile(MultipartFile file) {
         if (!file.isEmpty()) {
             try {
+                if(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")).equals(".png") || file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")).equals(".jpg") ||file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")).equals(".jpeg")){
+                    System.out.println(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+
+
                 byte[] bytes = file.getBytes();
                 String rootPath = "/home/ttn/Reap/out/production/resources/static/assets/profileImages";
                 String rootPath1 = "/home/ttn/Reap/src/main/resources/static/assets/profileImages";
@@ -65,13 +69,15 @@ public class FileUploadService {
                         + serverFile.getAbsolutePath());
 
                 return "redirect:dashboard";
-            } catch (Exception e) {
+            } }catch (Exception e) {
                 return "You failed to upload " + " => " + e.getMessage();
             }
-        } else {
+        }
+        else {
             return "You failed to upload "
                     + " because the file was empty.";
         }
 
-    }
-}
+        return "fail";
+
+}}

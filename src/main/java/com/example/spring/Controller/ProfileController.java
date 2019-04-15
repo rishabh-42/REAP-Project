@@ -2,6 +2,8 @@ package com.example.spring.Controller;
 
 import com.example.spring.Entities.*;
 import com.example.spring.Service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,14 +36,19 @@ public class ProfileController {
     @Autowired
     private OrderService orderService;
 
+    Logger logger = LoggerFactory.getLogger(ProfileController.class);
+
+
     @PreAuthorize("hasAnyRole('User','Admin','PracticeHead','Supervisor')")
     @RequestMapping(value = {"/dashboard/profile/"})
     @ResponseBody
     public ModelAndView getProfilePage() {
+
         ModelAndView modelAndView = new ModelAndView("pages/profile");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByEmail(((UserDetails) principal).getUsername());
         if (user.isActive() == false) return new ModelAndView("pages/UserInactive");
+        logger.info("Displaying user's profile "+ user.getEmail());
         modelAndView.addObject("user", user);
         UserStarReceived userStarReceived = userStarRecievedService.findByUser(user);
         modelAndView.addObject("userStarReceived", userStarReceived);

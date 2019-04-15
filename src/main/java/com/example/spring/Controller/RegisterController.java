@@ -6,6 +6,8 @@ import com.example.spring.Entities.UserStarCount;
 import com.example.spring.Entities.UserStarReceived;
 import com.example.spring.Service.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -33,9 +35,11 @@ public class RegisterController {
     @Autowired
     private RegisterService registerService;
 
+    Logger logger = LoggerFactory.getLogger(RegisterService.class);
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request, Errors errors) {
-
+        logger.info("Registering User "+ user);
         if (bindingResult.hasErrors()) {
             return new ModelAndView("pages/Login").addObject("errorMessage",
                     bindingResult.getFieldErrors().stream()
