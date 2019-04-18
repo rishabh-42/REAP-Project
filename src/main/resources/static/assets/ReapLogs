@@ -234,3 +234,5 @@
 2019-04-18 10:12:27.195  INFO 21129 --- [http-nio-8080-exec-9] c.e.spring.Controller.LoginController    : Opening dashboardrishabh.rajput@tothenew.com
 2019-04-18 10:12:27.435  INFO 21129 --- [http-nio-8080-exec-2] c.e.spring.Controller.UserController     : getting all users
 2019-04-18 10:12:39.888  INFO 21129 --- [http-nio-8080-exec-4] c.e.spring.Controller.UserController     : setting user active/deactive
+2019-04-18 10:14:37.111  INFO 21129 --- [http-nio-8080-exec-10] c.e.spring.Controller.LoginController    : Opening dashboardrishabh.rajput@tothenew.com
+2019-04-18 10:14:37.305  INFO 21129 --- [http-nio-8080-exec-2] c.e.spring.Controller.UserController     : getting all users
