@@ -95,22 +95,34 @@
                     method:"post",
                     data: $('form.feedback').serialize(),
                     success:function (e) {
-                        if(e=="Username does'not exists"){
-                            $(".loader-forgot").css("display","none");
-                            if($("#message").children().length>0){
-                                $("#message").html("<h3 style='color:red;'>Username doesn't exists</h3>");
+                        if(e=="not active"){
+                            $(".loader-forgot").css("display", "none");
+                            if ($("#message").children().length > 0) {
+                                $("#message").html("<h3 style='color:red;'>Mail can not sent, Please make sure your account is activated." +
+                                    "For more details, please contact admin </h3>");
                             }
                             else {
-                                $("#message").append("<h3 style='color:red;'>Username doesn't exists</h3>");
+                                $("#message").append("<h3 style='color:red;'>Mail can not sent, Please make sure your account is activated.For more details, please contact admin</h3>");
                             }
                         }
-                        else{
-                            $(".loader-forgot").css("display","none");
-                            if($("#message").children().length>0){
-                                $("#message").html("<h3 style='color:green'>Email sent</h3>");
+                        else {
+                            if (e == "Username does'not exists") {
+                                $(".loader-forgot").css("display", "none");
+                                if ($("#message").children().length > 0) {
+                                    $("#message").html("<h3 style='color:red;'>Username doesn't exists</h3>");
+                                }
+                                else {
+                                    $("#message").append("<h3 style='color:red;'>Username doesn't exists</h3>");
+                                }
                             }
-                            else
-                            $("#message").append("<h3 style='color:green'>Email sent</h3>");
+                            else {
+                                $(".loader-forgot").css("display", "none");
+                                if ($("#message").children().length > 0) {
+                                    $("#message").html("<h3 style='color:green'>Email sent</h3>");
+                                }
+                                else
+                                    $("#message").append("<h3 style='color:green'>Email sent</h3>");
+                            }
                         }
 
                     },

@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class LoginController {
@@ -70,7 +71,7 @@ public class LoginController {
         modelAndView.addObject("post", post);
         List<UserStarReceived> topUsers = userStarRecievedService.getSomeUser();
         modelAndView.addObject("topUsers", topUsers);
-        List<User> allUsers = userService.findAllUsers();
+        List<User> allUsers = userService.findAllUsers().stream().filter(e->e.getConfirmationToken().equals("")).collect(Collectors.toList());
         modelAndView.addObject("allUsers", allUsers);
         return modelAndView;
     }

@@ -28,6 +28,9 @@ public class PasswordService {
 
     public String processForgotPasswordForm(ModelAndView modelAndView, String userEmail, HttpServletRequest request) {
         User optional = userService.findByEmail(userEmail);
+        if(!optional.isActive()){
+            return  "not active";
+        }
         if (optional == null) {
             return "Username does'not exists";
         } else {
